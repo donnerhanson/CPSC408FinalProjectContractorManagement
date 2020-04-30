@@ -204,7 +204,7 @@ def addFakeUsers(cursor):
     roleID = 0
     while roleID < int(lastRoleID):
         roleID += 1
-    args = fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(),
+    args = fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(), \
     fake.phone_number(), fake.email()
     cursor.callproc('CreateUser', args)
     return
