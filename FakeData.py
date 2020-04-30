@@ -1,5 +1,6 @@
 import csv
 import random
+import mysql.connector
 
 from faker import Faker
 
@@ -7,6 +8,13 @@ table_names_drop_order = ['JobSalesDetails', 'JobStatus', 'JobSubDetails', 'JobC
                           'Job', 'Contacts', 'Client', 'Users', 'StatusDefinition',
                           'CompanyCategoryTableLookup', 'Roles']
 
+
+
+
+connection = mysql.connector.connect(host='35.247.37.38',
+                                     database='ContractorManagementDB',
+                                     user='Donner Hanson',
+                                     password='DonnerPass1')
 
 #def exportFakeDataToCSV(file_name, num_entries, dataHandler: csvHandler):
  #   dataHandler(file_name, num_entries)
