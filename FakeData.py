@@ -173,7 +173,8 @@ def addFakeContacts(cursor, numEntries):
     fake = Faker()
     # name,url,email,phone,compcatID,Notes,deletedAt
     i = 0
-    while i < numEntries:
+    r_entries = round(numEntries/2)
+    while i < r_entries:
         args = (fake.name(), fake.url(), fake.email(), fake.phone_number(), getFakeCompanyCategoryID(), '')
         cursor.callproc('CreateContact', args)
         i += 1
