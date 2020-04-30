@@ -179,6 +179,24 @@ def getFakeCompanyCategoryID():
 def addFakeJobSubDetails():
     return
 
-
-def addUser():
+def addFakeUsers(cursor):
+    fake = Faker()
+    cursor.execute("SELECT Role_ID FROM Roles ORDER BY Role_ID DESC LIMIT 1")
+    lastRoleIDList = cursor.fetchall()
+    lastRoleID = 0
+    for value in lastRoleIDList:
+        for num in value:
+            if num > 0:
+                lastRoleID = num
+                break
+            elif num is None:
+                print('No users')
+            else:
+                print('Error')
+    roleID = 0
+    while roleID < int(lastRoleID):
+        roleID += 1
+    args = fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(),
+    fake.phone_number(), fake.email()
+    cursor.callproc('CreateUser', args)
     return
