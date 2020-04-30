@@ -35,6 +35,7 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      password='DonnerPass1')
 clientIndex = 5
 
+num_entries = 4
 
 mycursor = connection.cursor()
 print('Resetting Database')
@@ -51,19 +52,20 @@ print('Running Fake Data Generation')
 addFakeRolesToDB(mycursor)
 print('Roles added')
 
-addFakeClientsToDB(mycursor, 40)
+addFakeClientsToDB(mycursor, num_entries)
 # printClientTable(mycursor)  # Includes Field Header names
 print('Clients added')
 addFakeCompanyCategoryIDToDB(mycursor)  # done
 # printCompanyCategoryTableLookup(mycursor)
 print('Company Category table lookup added')
-addFakeStatusDefinitionToDB(mycursor, 40)  # done
+addFakeStatusDefinitionToDB(mycursor, num_entries)  # done
 # printAnyTable(mycursor, tableNamesAddOrder[2])
 print('status def added')
 addFakeJobToDB(mycursor)  # Links to all available clients
 print('jobs added')
 addFakeJobCostToDB(mycursor)  # links to all available jobs
 print('job cost added')
+addFakeContacts(mycursor, num_entries)
 #printJobCostCalculatedTable(mycursor)
 exportDataBaseToCSV(mycursor)
 print('CSV exported')

@@ -2,58 +2,34 @@ JobSalesDetails
 SalesDetails_ID,Job_ID,User_ID
 JobStatus
 JobStatus_ID,Job_ID,Status_ID,DateCreated
+1,1,1,2020-04-30 01:11:19
+2,2,1,2020-04-30 01:11:20
+3,3,1,2020-04-30 01:11:20
+4,4,1,2020-04-30 01:11:20
 JobSubDetails
 SubDetails_ID,Job_ID,Contact_ID
 JobCost
-JobCost_ID,Job_ID,MaterialsCost,Additions
+JobCost_ID,Job_ID,MaterialsCost,Additions,TotalCost
+1,1,3826.88,1322.11,0.0
+2,2,7949.01,5543.6,0.0
+3,3,7133.87,974.55,0.0
+4,4,3618.57,9712.05,0.0
 Job
 JOB_ID,Client_ID,Estimate,Payout,Hours,DATE,JobCost_ID
+1,1,7536.14,2172.85,8,2020-02-25 02:07:22,1
+2,2,9544.47,2109.9,16,2020-03-20 10:00:45,2
+3,3,8608.18,4970.67,4,2020-02-21 04:29:19,3
+4,4,9782.09,2983.01,4,2020-03-02 06:18:51,4
 Contacts
 Contact_ID,ContactName,URL,Email,Phone,CompanyCategory_ID,Notes,DeletedAt
 Client
 Client_ID,ClientName,Address,City,State,Zip,Email,Phone,NumJobs,deletedAt
-1,Timothy Miller,1152 Gregory Forks,New James,IL,38742,lopezrebecca@smith.biz,967.458.2419,0,
-2,Rachel Eaton,231 Calvin Cove Suite 152,Heathertown,WV,15828,jburke@parsons.com,(423)162-1516x1650,0,
-3,Brandon Bennett,2921 Jennifer Pine Apt. 900,Lake Sean,MT,79077,castillomichael@white.com,(192)534-2539x328,0,
-4,Betty Rangel,0549 Stephanie Grove,West Garrett,VA,74787,rayjohn@yahoo.com,+1-459-798-6215x80358,0,
-5,Richard Hodges,168 Matthews Crossing,Jessemouth,WA,56950,kathrynmunoz@johnson.com,591.566.4502x874,0,
-6,Jose Peterson,3726 Gregory Meadow Suite 234,East Amy,MO,55489,christiangrimes@nguyen.com,780.710.1392,0,
-7,Rebecca Fitzgerald,3308 Shannon Shores,Wilsonview,LA,03807,torresdakota@maxwell.com,001-145-945-9632x251,0,
-8,Douglas Evans,4859 Brady Locks,New Kayla,WA,84667,mary31@gmail.com,001-869-305-6913x999,0,
-9,Alicia Fuller,38801 Sanchez Estate Suite 578,South William,LA,51407,amy96@walker-scott.org,824.670.9951x936,0,
-10,Adam Ramsey,8269 Mcmillan Locks,New Mary,DC,81251,johnstevens@yahoo.com,924.700.6028x1727,0,
-11,Russell Hale,14330 Joseph Club,Walkerland,AZ,25150,torresapril@yahoo.com,001-855-846-1200x62934,0,
-12,Martin Green,7070 Davis Overpass Suite 696,South Shannon,SD,64812,hballard@wilson.com,(365)247-9714x674,0,
-13,Brian Norris,240 Castaneda Green,North Timothyborough,SD,29247,clarksamantha@perry.com,(646)332-1351x528,0,
-14,William Grant,15794 Myers Squares Suite 391,Jesusmouth,ID,81744,teresacole@yahoo.com,379.393.5491x63619,0,
-15,Cameron Robertson,2659 May Loop,Port John,VA,62367,jenniferkemp@lee.org,483.146.4907,0,
-16,Adam Nichols,3842 John Forges Apt. 418,South Heather,WV,84825,mark86@white.com,041-775-2897x1481,0,
-17,Christopher Wood,77632 Gregory Curve Suite 385,Port Hannah,OH,38941,chelseajones@oliver-long.com,+1-403-253-4816x56472,0,
-18,John Morales,7687 Perry Center,South Karenville,ND,19300,shannon22@shields-fox.net,533.898.5153x2064,0,
-19,James Walker,977 Ethan Glens Suite 252,Malonehaven,OR,65736,nataliebrewer@cruz.com,963.522.8006x949,0,
-20,David Rogers,258 Penny Fords Apt. 114,North Sarah,DE,28661,melanieriddle@yahoo.com,001-658-510-8458,0,
-21,Robert Lawrence,53124 Taylor Curve,Davisfort,VA,74087,kristen35@yang-skinner.com,(365)580-2753,0,
-22,Kim Green,221 Garcia Springs Suite 230,Port Whitneystad,IA,67385,bridget96@hotmail.com,(482)597-2881,0,
-23,Kevin Glass,6539 Wayne Course,Brandonchester,VT,58522,ngray@hubbard.info,836-628-4084,0,
-24,Dana Dunlap DDS,9229 Elizabeth Dale,Davidchester,IL,84410,davidjones@hotmail.com,001-740-851-3280,0,
-25,Susan Harvey,87500 John Meadows,South Emilyville,WY,44086,brandonkelly@hotmail.com,001-323-303-2977x5364,0,
-26,Sabrina Miranda,9492 Taylor Summit,East Zoe,IL,60600,tammy59@davis.com,717.281.6620x6938,0,
-27,Heather Hill,20979 Tommy Pines Suite 167,South Melanieland,PA,66539,bpotter@yahoo.com,001-572-035-3318x925,0,
-28,Andrea Conway,027 Mikayla Springs,Stokesmouth,MN,74405,kathleenhill@gmail.com,+1-565-238-9572x4625,0,
-29,Glen Lane MD,31325 Susan Tunnel Suite 316,Baileybury,TX,85193,trujillokevin@gmail.com,001-120-304-4945,0,
-30,Danielle Drake,3942 Gary Mission Suite 788,Jessefort,NM,24668,rzimmerman@rosales.com,017-047-9414x124,0,
-31,William Conway,512 Patton Loop,Margaretborough,NC,77349,ahuffman@watkins.com,091-333-4824x8598,0,
-32,Susan Andrews,4889 Stein Drive,Aaronchester,NY,18186,martinezemily@hotmail.com,+1-664-603-7515x2583,0,
-33,William Nash,604 Harper Mews Apt. 086,Rodriguezton,NC,37841,gortega@thompson.com,001-135-757-5717,0,
-34,Larry Hall,640 David Mountains Suite 874,East James,MT,51699,cantrellkathy@yahoo.com,205.679.3530,0,
-35,Raymond Meza,419 Swanson Lock,Port Brandon,SD,63346,norristyler@smith-wiggins.net,(837)362-8162,0,
-36,Brett Davis,328 Brittney Locks Apt. 619,North Timothy,RI,30166,jeffrey64@hotmail.com,975.083.3932x08251,0,
-37,Lori Walton,080 Scott Cove,Beasleymouth,MS,22352,jchristensen@guzman.com,+1-414-263-9890x74966,0,
-38,Manuel Robinson,59079 Robert Roads Suite 697,Ashleystad,TN,78297,pharris@gmail.com,(646)904-3134x7950,0,
-39,Kirsten Taylor,1382 Debra Loop Suite 297,Floresmouth,NH,59933,carterkeith@gibson.com,498.091.8979,0,
-40,Crystal Gonzalez,555 Barry Junctions,North Jackie,ME,97329,barreralynn@gmail.com,(381)856-4138x99561,0,
+1,Gregory Rosales,6919 Harvey Trafficway,Johnstad,MO,00686,sawyeralexander@gmail.com,001-431-498-9632x16183,0,
+2,Kimberly Parks,84274 Michael Lane Apt. 634,Wilsonton,WY,14841,john16@williams.com,081.770.5919x375,0,
+3,Jermaine Holmes,98748 Casey Alley,Dixonchester,KY,61298,baileytimothy@gmail.com,502-323-3374x0364,0,
+4,Lindsey Hubbard,7140 Erika Knolls Suite 955,New Timothyfurt,WA,21156,medinamelissa@hotmail.com,+1-062-653-0130x7642,0,
 Users
-User_ID,Role_ID,DeletedAt
+User_ID,Name,Role_ID,Address,City,State,Zip,Phone,Email,DeletedAt
 StatusDefinition
 Status_ID,Name,Description
 1,Lead,Client has made contact with Company regarding job
