@@ -35,7 +35,7 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      password='DonnerPass1')
 clientIndex = 5
 
-num_entries = 4
+num_entries = 9
 
 mycursor = connection.cursor()
 print('Resetting Database')
@@ -67,6 +67,8 @@ addFakeJobCostToDB(mycursor)  # links to all available jobs
 print('job cost added')
 addFakeContacts(mycursor, num_entries)
 print('contacts should be added')
+addFakeUsers(mycursor)
+print ('users Should be added')
 #printJobCostCalculatedTable(mycursor)
 exportDataBaseToCSV(mycursor)
 print('CSV exported')

@@ -8,17 +8,15 @@ table_names_drop_order = ['JobSalesDetails', 'JobStatus', 'JobSubDetails', 'JobC
                           'Job', 'Contacts', 'Client', 'Users', 'StatusDefinition',
                           'CompanyCategoryTableLookup', 'Roles']
 
-
-
-
 connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
                                      user='Donner Hanson',
                                      password='DonnerPass1')
 
-#def exportFakeDataToCSV(file_name, num_entries, dataHandler: csvHandler):
- #   dataHandler(file_name, num_entries)
-  #  print(dataHandler.addFakeClientsToCSV(5))
+
+# def exportFakeDataToCSV(file_name, num_entries, dataHandler: csvHandler):
+#   dataHandler(file_name, num_entries)
+#  print(dataHandler.addFakeClientsToCSV(5))
 
 # fp = open(file_name, 'w')
 
@@ -63,7 +61,7 @@ def addFakeClientsToDB(cursor, num_entries):
 
 
 def addFakeRolesToDB(cursor):
-    for x in range(0, 3):
+    for x in range(0, 4):
         if x == 0:
             arg = ['Sales']
         elif x == 1:
@@ -173,7 +171,7 @@ def addFakeContacts(cursor, numEntries):
     fake = Faker()
     # name,url,email,phone,compcatID,Notes,deletedAt
     i = 0
-    r_entries = round(numEntries/2)
+    r_entries = numEntries
     while i < r_entries:
         args = (fake.name(), fake.url(), fake.email(), fake.phone_number(), getFakeCompanyCategoryID(), '')
         cursor.callproc('CreateContact', args)
@@ -187,6 +185,7 @@ def getFakeCompanyCategoryID():
 
 def addFakeJobSubDetails():
     return
+
 
 def addFakeUsers(cursor):
     fake = Faker()
