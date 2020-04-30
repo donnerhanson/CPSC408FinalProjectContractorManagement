@@ -20,17 +20,17 @@ connection = mysql.connector.connect(host='35.247.37.38',
  #   dataHandler(file_name, num_entries)
   #  print(dataHandler.addFakeClientsToCSV(5))
 
-   # fp = open(file_name, 'w')
+# fp = open(file_name, 'w')
 
-    # want output in each to be ([tableName], [headers], [data, '\n', data...])
+# want output in each to be ([tableName], [headers], [data, '\n', data...])
 
-    #column_names = [i[0] for i in mycursor.description]
-    #tbl_list = [table_names_drop_order]  # convert to list so output as a single entry on the newest line
-    #my_file = csv.writer(fp, lineterminator='\n')  # fp is file path
-    #my_file.writerow(tbl_list)
-    #my_file.writerow(column_names)
-    #my_file.writerows(myresult)
-    #fp.close()
+# column_names = [i[0] for i in mycursor.description]
+# tbl_list = [table_names_drop_order]  # convert to list so output as a single entry on the newest line
+# my_file = csv.writer(fp, lineterminator='\n')  # fp is file path
+# my_file.writerow(tbl_list)
+# my_file.writerow(column_names)
+# my_file.writerows(myresult)
+# fp.close()
 
 
 def exportDataBaseToCSV(mycursor):
@@ -142,7 +142,7 @@ def addFakeJobCostToDB(cursor):
 
 def addFakeJobToDB(cursor):
     fake = Faker()
-    #"AddJob(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,IN DateIN datetime)"
+    # "AddJob(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,IN DateIN datetime)"
     cursor.execute("select Client_ID from Client ORDER BY Client_ID DESC LIMIT 1")  # get last Client
     lastClientIDList = cursor.fetchall()  # returns a list with a tuple inside
     lastClientID = 0
@@ -169,8 +169,19 @@ def addFakeJobToDB(cursor):
     return
 
 
-def addFakeContact():
+def addFakeContacts(cursor, numEntries):
+    fake = Faker()
+    # name,url,email,phone,compcatID,Notes,deletedAt
+    i = 0
+    while i < numEntries:
+        args = (fake.name(), fake.url(), fake.email(), fake.phone_number(), getFakeCompanyCategoryID(), '')
+        cursor.callproc('CreateContact', args)
+        i += 1
     return
+
+
+def getFakeCompanyCategoryID():
+    return random.randint(0, 4)
 
 
 def addFakeJobSubDetails():
