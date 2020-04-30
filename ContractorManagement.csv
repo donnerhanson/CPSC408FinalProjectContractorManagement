@@ -2,34 +2,63 @@ JobSalesDetails
 SalesDetails_ID,Job_ID,User_ID
 JobStatus
 JobStatus_ID,Job_ID,Status_ID,DateCreated
-1,1,1,2020-04-30 01:23:15
-2,2,1,2020-04-30 01:23:16
-3,3,1,2020-04-30 01:23:16
-4,4,1,2020-04-30 01:23:16
+1,1,1,2020-04-30 01:59:05
+2,2,1,2020-04-30 01:59:06
+3,3,1,2020-04-30 01:59:06
+4,4,1,2020-04-30 01:59:07
+5,5,1,2020-04-30 01:59:09
+6,6,1,2020-04-30 01:59:10
+7,7,1,2020-04-30 01:59:11
+8,8,1,2020-04-30 01:59:12
+9,9,1,2020-04-30 01:59:13
 JobSubDetails
 SubDetails_ID,Job_ID,Contact_ID
 JobCost
 JobCost_ID,Job_ID,MaterialsCost,Additions,TotalCost
-1,1,675.87,5626.79,0.0
-2,2,5636.58,3068.28,0.0
-3,3,2158.21,3818.07,0.0
-4,4,3436.5,9373.31,0.0
+1,1,4299.65,572.4,0.0
+2,2,9837.38,7704.54,0.0
+3,3,8857.92,134.48,0.0
+4,4,3737.53,8732.36,0.0
+5,5,9621.29,1275.4,0.0
+6,6,5303.92,1053.94,0.0
+7,7,4280.16,3283.35,0.0
+8,8,8593.44,470.04,0.0
+9,9,2351.54,5460.41,0.0
 Job
 JOB_ID,Client_ID,Estimate,Payout,Hours,DATE,JobCost_ID
-1,1,7692.0,5982.51,11,2020-04-07 05:41:50,1
-2,2,5594.87,6980.76,16,2020-04-05 10:14:42,2
-3,3,6553.04,9510.7,20,2020-03-06 22:30:47,3
-4,4,3229.65,4020.43,7,2020-02-20 03:30:29,4
+1,1,1713.27,1121.57,17,2020-01-04 01:25:46,1
+2,2,9722.84,3347.06,8,2020-03-17 01:01:36,2
+3,3,7180.09,5000.38,7,2020-02-03 19:42:47,3
+4,4,1199.25,7388.7,2,2020-03-06 18:47:07,4
+5,5,2842.04,5077.28,8,2020-02-01 05:18:15,5
+6,6,8404.37,9233.82,6,2020-02-11 10:22:09,6
+7,7,315.55,870.79,2,2020-01-04 03:56:53,7
+8,8,6174.31,7559.95,10,2020-01-02 18:37:32,8
+9,9,8265.56,688.31,4,2020-04-03 11:35:01,9
 Contacts
 Contact_ID,ContactName,URL,Email,Phone,CompanyCategory_ID,Notes,DeletedAt
+1,Emily Klein,http://www.thomas.com/,laurenjohnson@hotmail.com,066.596.2507x1943,1,,
+3,Joanna Woods,http://rodriguez-brown.com/,paynejames@gmail.com,972.177.0369,1,,
+4,George Allen,http://www.parker-dalton.com/,sroberts@mitchell.org,(578)115-0130,1,,
+5,Dr. Ryan Morgan,http://www.merritt.com/,jonesrebecca@yahoo.com,202-963-8448x11354,3,,
+6,Louis Nixon,https://martinez.biz/,jennifer56@gmail.com,(792)957-2509x7148,2,,
+7,Michael Nguyen,http://smith.com/,rebecca54@green.info,+1-248-761-6235x62999,4,,
+8,Lindsey Shepard,http://www.oliver-morgan.biz/,yallen@gmail.com,831.048.5807x458,4,,
+9,Stacy Cain,https://www.barry.com/,dixonlinda@gmail.com,+1-392-256-3776x3613,2,,
 Client
 Client_ID,ClientName,Address,City,State,Zip,Email,Phone,NumJobs,deletedAt
-1,Gwendolyn Ward,1895 Michelle Walks,Thompsontown,HI,30247,amendoza@gmail.com,+1-012-473-8069x6377,0,
-2,Roberta Jones,093 Kevin Spurs,Mitchellside,VA,53052,andrewhess@gmail.com,969-708-6739,0,
-3,Kristin Nguyen,717 Jimmy Hollow Suite 820,Michaelside,UT,46246,victoringram@hotmail.com,070.215.8664,0,
-4,Miss Stephanie Taylor,293 Taylor Circle,New Kevin,NC,71040,kgeorge@duke.com,(918)456-3886x728,0,
+1,Stephanie Finley,15727 Flowers Islands,New Angelicaside,TN,71170,johnsmith@meyer.org,050.796.8028x4225,0,
+2,Jennifer Sullivan DVM,79282 Bridget Route,Bennettstad,MT,71548,colinavila@olsen-ford.info,(770)502-6237x882,0,
+3,David Hanna,6361 Douglas Knoll,Johnport,VT,82021,qreed@yahoo.com,352-201-3561x6903,0,
+4,Darrell Navarro,7993 Coleman Orchard Apt. 205,Staceyhaven,SD,96750,ihaynes@morse-thomas.com,445.804.8746x42614,0,
+5,Holly Reeves,10255 Daniel Mountains,South Eugenemouth,TX,00955,teresa29@hotmail.com,250.423.0361x296,0,
+6,Todd Conner,58308 Wong Heights,South Christineshire,WI,56401,simonsherry@richmond.com,1734118573,0,
+7,Paul Blankenship,7179 Justin Wall Suite 919,New Hollyshire,TN,37864,brianna99@baker-baker.org,595-959-9754x889,0,
+8,Laura Salazar,54048 Walker Green Apt. 675,Graveshaven,FL,95739,lgray@brown.com,+1-346-603-2717,0,
+9,Robin Cole,232 Adam Cove Suite 231,Barnesburgh,ME,95063,rileywilliam@nichols-sharp.com,437.184.7243x27515,0,
 Users
 User_ID,Name,Role_ID,Address,City,State,Zip,Phone,Email,DeletedAt
+1,Jacqueline Bonilla,2,7716 James Oval Suite 503,East Ashley,OR,57864,580.979.3853,oliverrachel@rodgers.com,
 StatusDefinition
 Status_ID,Name,Description
 1,Lead,Client has made contact with Company regarding job
@@ -49,3 +78,4 @@ Role_ID,Description
 1,Sales
 2,Finance
 3,Marketing
+4,Owner
