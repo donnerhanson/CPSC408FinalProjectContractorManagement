@@ -2,61 +2,43 @@ JobSalesDetails
 SalesDetails_ID,Job_ID,User_ID
 JobStatus
 JobStatus_ID,Job_ID,Status_ID,DateCreated
-1,1,1,2020-04-30 01:54:44
-2,2,1,2020-04-30 01:54:44
-3,3,1,2020-04-30 01:54:45
-4,4,1,2020-04-30 01:54:45
-5,5,1,2020-04-30 01:54:45
-6,6,1,2020-04-30 01:54:46
-7,7,1,2020-04-30 01:54:46
-8,8,1,2020-04-30 01:54:46
-9,9,1,2020-04-30 01:54:47
 JobSubDetails
 SubDetails_ID,Job_ID,Contact_ID
 JobCost
-JobCost_ID,Job_ID,MaterialsCost,Additions,TotalCost
-1,1,1903.2,2116.39,0.0
-2,2,4395.0,8973.04,0.0
-3,3,5834.38,9117.79,0.0
-4,4,6436.38,7535.31,0.0
-5,5,7559.37,5899.25,0.0
-6,6,7803.46,7825.37,0.0
-7,7,5547.83,4695.81,0.0
-8,8,1188.04,8097.65,0.0
-9,9,861.93,1862.34,0.0
+JobCost_ID,Job_ID,MaterialsCost,Additions
 Job
 JOB_ID,Client_ID,Estimate,Payout,Hours,DATE,JobCost_ID
-1,1,8920.99,3619.84,2,2020-04-15 10:22:16,1
-2,2,936.97,4567.65,18,2020-02-25 05:14:41,2
-3,3,7438.92,2239.91,18,2020-02-28 15:01:09,3
-4,4,752.27,7965.75,18,2020-02-11 03:14:40,4
-5,5,8457.0,880.46,18,2020-03-12 22:05:56,5
-6,6,4713.22,6010.47,1,2020-01-22 19:10:52,6
-7,7,2176.21,3851.26,21,2020-04-12 19:29:33,7
-8,8,4825.65,2043.19,20,2020-01-08 01:23:10,8
-9,9,6712.39,7751.11,10,2020-04-02 17:41:22,9
 Contacts
 Contact_ID,ContactName,URL,Email,Phone,CompanyCategory_ID,Notes,DeletedAt
-1,Samuel Clark,http://nunez.com/,robertgraves@johnson.com,096-714-0802x3921,2,,
-2,Phillip Neal,http://www.boyd.com/,haleyjohn@yahoo.com,+1-130-157-2027x408,1,,
-3,Rodney Kemp,https://www.fletcher-willis.com/,brendasmith@hotmail.com,166-193-4634x9059,1,,
-4,Ellen Dorsey,http://rosario.com/,thomas29@hill.biz,(343)798-1228x19072,3,,
-6,Jennifer Melton,http://www.freeman.com/,annacarpenter@hotmail.com,517.189.8958x0455,2,,
-8,Patricia Gill,http://www.jackson.com/,gutierrezandre@lewis-williams.net,(707)059-2072x6517,2,,
+1,Tracey Lee,https://mckinney.com/,bryan42@anthony.com,+1-838-142-6778x2126,2,,
+2,Elaine Smith,http://santana.com/,mgraham@mora-schmidt.com,(729)545-5855x120,2,,
+3,Henry Huynh,https://wilson-lowery.com/,floresmichael@calhoun-leach.org,198.947.8210,4,,
+5,Jose Fox,https://campbell.org/,vickichaney@yahoo.com,973-492-5502x67473,1,,
+6,Jeffrey Castillo,https://burke.com/,gilmoremonica@lester.com,535.909.5514x20483,4,,
+8,David Bailey,http://campbell-roberson.com/,crystal66@yahoo.com,001-085-406-9479x2210,4,,
+9,Katrina Keith,https://hill-khan.com/,jasonday@yahoo.com,(569)253-6331,3,,
 Client
 Client_ID,ClientName,Address,City,State,Zip,Email,Phone,NumJobs,deletedAt
-1,Jennifer Reynolds,7534 Watson Vista Apt. 805,West Christopherview,AR,95233,kberger@gmail.com,(451)273-4736x4327,0,
-2,Sean Davis,68934 Zachary Crossroad,Joelburgh,ID,73024,kimberly97@hotmail.com,(926)881-4428x838,0,
-3,Robert Rocha,469 Sandy Center Apt. 378,North Maria,AR,93433,smithsierra@day.biz,(349)508-4641x2701,0,
-4,Kevin Jones,20116 Montoya Island,Morrisonberg,NJ,30400,xclark@smith.com,032-339-4589x438,0,
-5,Sierra Jones,161 Williams Port Apt. 192,East Cheryl,MT,01553,weberjoshua@gilbert.net,+1-374-973-0692x11541,0,
-6,Jennifer Olson MD,216 Prince Place Apt. 576,West Jonathanburgh,WV,58282,ckrause@gill.com,(312)880-7459x315,0,
-7,Nancy Cain,38979 Wright Viaduct Suite 700,East Brian,LA,26306,sellersricardo@hotmail.com,(268)357-2584x32396,0,
-8,Sally Lee,191 Griffin Glens,Port Rachel,VT,29324,jasonjohnson@yahoo.com,+1-597-928-4267x4747,0,
-9,Amber Parker,2811 Brittany Plaza Apt. 329,Webermouth,UT,60869,aaronvillarreal@gmail.com,(982)449-6405,0,
+1,Henry Sharp,62441 Ray Gardens,Yeseniaville,MN,10296,jimenezdesiree@hotmail.com,6116177898,0,
+2,Angela Phillips,2511 Carr Canyon,Perezshire,MD,81491,justindunlap@smith.com,479-271-7606x2403,0,
+3,Katrina Curtis,3077 Cook Springs Apt. 195,West Veronicamouth,MT,29389,scottwhite@fuller.com,001-105-890-6182x56446,0,
+4,Jodi Chavez,6582 Dawn Common,South Cheryl,NJ,89916,butlerroberta@hayes-nixon.info,(732)678-7691x84927,0,
+5,Suzanne Robertson,776 Berry Place Suite 308,Richardborough,NJ,30972,lwatson@yahoo.com,056.592.1357,0,
+6,Patricia Smith,8872 Hobbs Mount Apt. 439,Josephstad,NY,75533,dawn52@hotmail.com,(425)685-1142,0,
+7,Vincent Newton,10520 Hines Ferry,Smithfort,DC,02537,hmarshall@johnson.com,001-014-624-8212,0,
+8,David Horton,5245 Timothy Point Suite 747,Kingtown,IA,68954,bowersscott@wilson-nolan.info,341-845-6124,0,
+9,Ana Bauer,0478 Rosario Branch Suite 261,Paulberg,VA,68219,morrisbrittany@collins-lopez.com,(992)700-2066x0033,0,
 Users
 User_ID,Name,Role_ID,Address,City,State,Zip,Phone,Email,DeletedAt
-1,Tamara Greene,4,15713 Norris Rest Suite 433,Hallborough,AL,74253,(822)207-0843x516,kaylalane@hotmail.com,
+1,Patrick Zimmerman,3,902 Harris Flats,East Jasonland,CA,34720,001-598-847-4188x813,raymondwatson@yahoo.com,
+2,Miguel Black,3,06340 Frazier Junctions,Gillborough,NH,20774,257.628.0459x496,laurathompson@walker.com,
+3,Nathan Clark,1,964 Laurie Street,Brendabury,SD,93489,193-494-6584x02711,christopherortiz@gmail.com,
+4,Cassandra Trevino,1,048 Brandy Branch,Port Nicholasville,NJ,89503,(850)009-0593,kennedyjoshua@cameron-white.biz,
+5,Melissa Lopez,1,8072 Smith Forges,Ashleyhaven,FL,05847,310-326-0083,vjohnston@gmail.com,
+6,Brittney Davis,3,2973 Kaufman Ford Suite 494,Port Clairefort,SC,42157,001-683-121-2669x1240,qsalinas@hotmail.com,
+7,Sharon Hart,1,046 Collins Locks,Port Jessica,ID,72036,362.971.5066x89074,dpruitt@foster.net,
+8,Cassandra Bryan,4,299 Mallory Turnpike Apt. 760,South Kimberly,MS,13191,001-498-975-8302x91884,william93@terry-stewart.net,
+9,Aaron Nunez,1,9403 Bruce Mall,New Andrew,KY,01875,(582)867-2942x29263,carlhebert@gmail.com,
 StatusDefinition
 Status_ID,Name,Description
 1,Lead,Client has made contact with Company regarding job

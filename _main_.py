@@ -67,7 +67,7 @@ addFakeJobCostToDB(mycursor)  # links to all available jobs
 print('job cost added')
 addFakeContacts(mycursor, num_entries)
 print('contacts should be added')
-addFakeUsers(mycursor)
+addFakeUsers(mycursor, num_entries)
 print ('users Should be added')
 #printJobCostCalculatedTable(mycursor)
 exportDataBaseToCSV(mycursor)

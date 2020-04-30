@@ -190,10 +190,12 @@ def addFakeJobSubDetails():
     return
 
 
-def addFakeUsers(cursor):
+def addFakeUsers(cursor, num_entries):
     fake = Faker()
-    roleID = random.randint(1, 3)
-    args = fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(), \
-           fake.phone_number(), fake.email()
-    cursor.callproc('CreateUser', args)
+    i = 0
+    while i < num_entries:
+        roleID = random.randint(1, 4)
+        args = (fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(), fake.phone_number(), fake.email())
+        cursor.callproc('CreateUser', args)
+        i += 1
     return
