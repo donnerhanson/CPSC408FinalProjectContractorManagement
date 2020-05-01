@@ -8,9 +8,6 @@ table_names_drop_order = ['JobSalesDetails', 'JobStatus', 'JobSubDetails', 'JobC
                           'Job', 'Contacts', 'Client', 'Users', 'StatusDefinition',
                           'CompanyCategoryTableLookup', 'Roles']
 
-
-
-
 connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
                                      user='Donner Hanson',
@@ -157,6 +154,7 @@ def addFakeJobToDB(cursor):
             else:
                 print('something happened')
     clientID = 0
+    # print(lastClientID)
     while clientID < int(lastClientID):
         clientID += 1
         Estimate = generateStringFloat(0.00, 9999.99, 2)
@@ -166,6 +164,7 @@ def addFakeJobToDB(cursor):
         # print(Mats)
         # print(adds)
         args = (clientID, Estimate, Payout, Hours, date)
+        # print('inserted %s', ''.join(str(args)))
         cursor.callproc('AddJob', args)
     return
 
@@ -195,7 +194,8 @@ def addFakeUsers(cursor, num_entries):
     i = 0
     while i < num_entries:
         roleID = random.randint(1, 4)
-        args = (fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(), fake.phone_number(), fake.email())
+        args = (fake.name(), roleID, fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(),
+                fake.phone_number(), fake.email())
         cursor.callproc('CreateUser', args)
         i += 1
     return
