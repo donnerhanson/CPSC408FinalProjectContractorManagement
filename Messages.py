@@ -8,7 +8,7 @@ main_output_message = '1: Access Display Options\n' \
 
 # a) Misc
 addressInMessage = 'Enter Street Address\n'
-cityInMessgae = 'Enter City:\n'
+cityInMessage = 'Enter City:\n'
 stateInMessage = 'Enter State (Ex: \'CA\'): \n'
 zipInMessage = 'Enter Zip (Ex: \'92868\'): \n'
 phoneInMessage = 'Enter phone number (Ex: \'555-555-5555\'): \n'

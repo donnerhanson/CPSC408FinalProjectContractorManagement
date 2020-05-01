@@ -2,69 +2,74 @@ JobSalesDetails
 SalesDetails_ID,Job_ID,User_ID
 JobStatus
 JobStatus_ID,Job_ID,Status_ID,DateCreated
-1,1,1,2020-05-01 00:05:56
-2,2,1,2020-05-01 00:05:56
-3,3,1,2020-05-01 00:05:57
-4,4,1,2020-05-01 00:05:57
-5,5,1,2020-05-01 00:05:57
-6,6,1,2020-05-01 00:05:58
-7,7,1,2020-05-01 00:05:58
-8,8,1,2020-05-01 00:05:59
-9,9,1,2020-05-01 00:05:59
+1,1,1,2020-05-01 01:42:05
+2,2,1,2020-05-01 01:42:06
+3,3,1,2020-05-01 01:42:06
+4,4,1,2020-05-01 01:42:06
+5,5,1,2020-05-01 01:42:07
+6,6,1,2020-05-01 01:42:07
+7,7,1,2020-05-01 01:42:07
+8,8,1,2020-05-01 01:42:08
+9,9,1,2020-05-01 01:42:08
+10,10,1,2020-05-01 01:42:46
 JobSubDetails
 SubDetails_ID,Job_ID,Contact_ID
 JobCost
 JobCost_ID,Job_ID,MaterialsCost,Additions
-1,1,8969.73,9571.03
-2,2,861.9,4202.12
-3,3,5044.56,6047.12
-4,4,6743.49,512.32
-5,5,1840.79,1719.73
-6,6,1035.85,8389.2
-7,7,6728.58,3725.75
-8,8,4207.96,8042.94
-9,9,8513.71,4370.36
+1,1,2289.49,7112.97
+2,2,6008.18,3831.68
+3,3,1224.01,9969.22
+4,4,7069.57,3642.41
+5,5,8136.81,4967.92
+6,6,1148.55,9689.36
+7,7,3515.77,8635.69
+8,8,1016.49,6116.46
+9,9,9771.83,4712.56
+10,10,0.0,0.0
 Job
 JOB_ID,Client_ID,Estimate,Payout,Hours,DATE,JobCost_ID
-1,1,3990.64,2582.37,6,2020-03-07 15:07:16,1
-2,2,1410.15,4986.92,12,2020-04-01 14:33:05,2
-3,3,1435.07,545.38,3,2020-03-20 04:26:13,3
-4,4,7787.03,2763.56,19,2020-03-08 05:22:44,4
-5,5,6488.35,896.43,11,2020-01-16 07:56:10,5
-6,6,5213.31,2652.15,13,2020-03-21 19:49:38,6
-7,7,7837.24,9869.33,21,2020-03-28 06:13:27,7
-8,8,5806.39,9106.5,1,2020-01-10 12:50:39,8
-9,9,9793.32,7334.93,1,2020-03-19 23:09:53,9
+1,1,6454.81,4933.52,2,2020-04-26 06:53:25,1
+2,2,1493.46,7063.68,3,2020-01-21 03:34:53,2
+3,3,1729.52,2635.28,15,2020-04-25 22:47:27,3
+4,4,2340.32,2859.17,6,2020-02-26 09:32:50,4
+5,5,4440.98,5945.76,6,2020-04-20 18:07:36,5
+6,6,8151.3,3355.08,11,2020-04-22 07:42:01,6
+7,7,1313.37,8521.13,9,2020-03-16 21:29:44,7
+8,8,3005.1,7734.81,18,2020-03-26 15:29:22,8
+9,9,6292.31,6347.11,3,2020-01-05 14:59:14,9
+10,10,77.0,7.0,7,2020-04-30 18:42:47,10
 Contacts
 Contact_ID,ContactName,URL,Email,Phone,CompanyCategory_ID,Notes,DeletedAt
-1,Jennifer Myers,https://www.miller.org/,tracyphelps@mendez.info,819-283-7951x76285,2,,
-5,Matthew Robinson,http://gibson.net/,vgallagher@smith.com,790.878.9383,4,,
-6,Penny Sanchez,https://www.dean.com/,ryan80@gmail.com,001-195-633-3461x4701,3,,
-7,Paul Williams,http://www.carter.com/,rebekah79@matthews.info,+1-928-153-5476,4,,
-8,Danielle Tapia,http://www.moore.com/,chad59@king.com,594-315-6613x859,2,,
-9,Dr. Timothy Richardson,http://www.anderson.com/,laurenbyrd@gmail.com,0135771528,1,,
+1,Jay Thomas,http://www.collins.com/,alexisduffy@hotmail.com,+1-577-581-1360x07243,3,,
+2,Brandon Rice,http://www.morgan.net/,jody28@yahoo.com,338.520.4736x495,3,,
+3,Kimberly Burton,http://www.moore.info/,teresa41@murphy.net,(251)130-0634x67906,1,,
+4,John Oconnell,http://www.charles-gaines.com/,vdougherty@gmail.com,(299)583-1935x9192,3,,
+5,Brett Garrett,https://www.lopez.com/,murrayrichard@hotmail.com,(027)438-1759,1,,
+8,Roy Martin,https://baldwin.com/,ryan18@moore-young.com,388-117-0339x4086,4,,
+9,David Sandoval,https://christensen.info/,eddiesalas@hotmail.com,732.619.2831x742,4,,
 Client
 Client_ID,ClientName,Address,City,State,Zip,Email,Phone,NumJobs,deletedAt
-1,David Weiss,6914 Richard Keys,Owensside,WY,23372,esparzamichael@gutierrez-white.com,+1-808-676-5681x73592,0,
-2,Ryan Ferrell,475 Turner Alley Apt. 440,New Michelle,AR,13777,yorkamy@gmail.com,212.097.3148,0,
-3,Joseph Morris,34618 Weber Field Apt. 873,Lake Amanda,MS,95862,leeedward@yahoo.com,8242396213,0,
-4,Joseph Barker,5228 Hunter Street,Lake Hannah,OR,44845,cynthia30@jenkins.com,592.485.7985x62294,0,
-5,Katie Graves,6988 Munoz Village Suite 749,New Crystal,ME,46904,amber95@young-ward.com,+1-242-983-8896x8853,0,
-6,Andrew Mcdaniel,6315 Marissa Green Apt. 135,Vaughnton,VA,33202,jeffery87@hotmail.com,(319)697-8386x9409,0,
-7,Mary Williams,7727 Bradley Oval Apt. 560,South Bryan,OK,66737,jenkinssteven@garcia-stephens.org,001-730-360-3089x2198,0,
-8,Christina Sanchez,3632 Perry Land Suite 421,Genemouth,TX,52481,kingjeffrey@stein.com,106.995.7983x6318,0,
-9,James Navarro,68764 King Valley Suite 332,Kristenside,MT,45131,ydavid@andersen-gallagher.org,+1-880-983-7198x32626,0,
+1,Corey Delgado,493 Adams Spur,East Mitchellchester,WY,40424,javier72@ayala.com,(308)154-7810,1,
+2,Jonathan Anderson,973 Ramos Hill,Brockbury,WI,03826,mariavazquez@massey.info,+1-859-984-9364x312,1,
+3,Lisa Burke,38992 French Walk,East Tiffanyhaven,WV,24475,olsonstuart@welch.com,(386)995-4571,1,
+4,Kyle Park,2553 Joshua Park Apt. 519,Richardsport,NC,98795,diana06@ramirez-meyers.com,001-371-649-8996x7911,1,
+5,Jamie Reyes,3676 Angela Port,North Carlosburgh,AR,74998,zsantiago@thomas.com,606.350.5697x6981,1,
+6,Brian Orr,92268 Soto Rest Suite 843,South Dillon,MO,42717,ruizharry@yahoo.com,001-279-682-2824x02523,1,
+7,Jeffrey Bush,434 Christopher Ridges Suite 833,Christopherbury,MI,79695,patelricardo@mcgee-kent.org,534-607-2756,1,
+8,Jennifer Moreno,559 Rebecca Inlet,South Sarah,DC,39935,mannadam@lee.biz,+1-872-428-4873x456,1,
+9,Amanda Ellison,59545 Bonnie Green Apt. 495,South Theresa,VA,61871,kenneth59@gmail.com,2937968968,1,
+10,dd,khjgkjhgk,kgk,jh,97987,hglkg,7777777,1,
 Users
 User_ID,Name,Role_ID,Address,City,State,Zip,Phone,Email,DeletedAt
-1,Brandon Young,2,64431 Jacobson Plain Apt. 882,Port Caseyfurt,AL,21577,8877645046,foleyjill@wallace.com,
-2,Tom Riley,4,356 Bernard Square Apt. 922,New Ethan,AR,23824,+1-180-176-4428x386,shirley59@smith-young.com,
-3,William Collins,2,592 Diaz Overpass Apt. 775,Vincentberg,IL,87245,261-013-9246x0444,valerie42@johnson.com,
-4,Kathy Davis,3,7611 Yang Meadow,North Seth,MN,48460,001-686-201-2006x745,kmayer@hotmail.com,
-5,Madison Ballard,3,941 Black Lane,East Justinborough,OR,75618,+1-939-146-3651,nicholasgarcia@gmail.com,
-6,Gary Olson MD,2,18097 Todd Passage Suite 081,Christophershire,MA,93667,527-968-5673,xmurray@davis-vargas.biz,
-7,Brian Woods,4,022 Lynch Plain,Lake Seanstad,NC,43765,780-293-1828,lambbonnie@yahoo.com,
-8,Brian Simpson,4,251 Katrina Drives,West Sethshire,NE,09727,5706964820,erinfrey@barnes.com,
-9,Morgan Torres,4,7293 John Port Suite 051,Michellefort,CO,66623,7982373045,robinsonwanda@welch-young.net,
+1,Maurice Kent,1,1005 Griffin Flat,Lake Michaelfurt,IL,31640,001-480-538-0821x4797,josephmiller@hotmail.com,
+2,Howard Bautista,3,068 Kelsey Glen,Joelshire,CO,20623,212.007.1291x347,brooketrevino@hotmail.com,
+3,Vanessa Avery,3,14789 Amanda Stravenue Apt. 784,South Jermaine,FL,89644,(290)762-7285x0481,thomas68@nielsen-morales.com,
+4,Jason Richardson,3,104 Simpson Streets Suite 162,West Sydneyborough,SD,57192,(770)091-0358x219,thomassimpson@walsh-leon.com,
+5,Mathew Clark,1,495 Amanda Springs,Port Adambury,MA,85551,(226)732-6673x96071,davidmcintosh@yahoo.com,
+6,Christopher Smith,4,899 Ward Prairie Suite 938,Trevorburgh,MO,08115,569-763-6295,ntucker@nelson.net,
+7,Oscar Watson,1,508 Justin Mountains Suite 666,Glassland,NE,91065,771-970-6208,kirsten04@hotmail.com,
+8,Lindsay Schmidt,2,57014 Nicole Tunnel Suite 706,New Joy,HI,51165,227-494-8279x15731,stacey44@smith.org,
+9,Ann Owens,3,580 Smith Crescent,Port Jamesfort,RI,32534,456-316-3147,jenniferburnett@riley-adams.biz,
 StatusDefinition
 Status_ID,Name,Description
 1,Lead,Client has made contact with Company regarding job

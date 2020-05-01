@@ -17,10 +17,11 @@ from pandas import DataFrame
 # USER DEFINED FILES
 from Messages import *
 from DisplayFunctions import *
+from client import *
 from csvHandler import *
 from ImportToDatabase import *
 from FakeData import *
-
+from job import *
 import mysql.connector
 import time
 
@@ -33,7 +34,7 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
                                      user='Donner Hanson',
                                      password='DonnerPass1')
-clientIndex = 5
+clientIndex = 4
 
 num_entries = 9
 
@@ -69,9 +70,33 @@ addFakeContacts(mycursor, num_entries)
 print('contacts should be added')
 addFakeUsers(mycursor, num_entries)
 print ('users Should be added')
+CalculateNumJobsForRandClients(connection)
+print ('rand num')
+#printAnyFullTable(mycursor, tableNamesAddOrder[4])
+
+
+# ADD A NEW CLIENT AND JOB
+
+currClientID = addClient(mycursor)
+addNewClientJobToDB(connection, currClientID)
+CalculateNumJobsForClient(connection, currClientID)
+
+
+#printAnyFullTable(mycursor, tableNamesAddOrder[4])
 #printJobCostCalculatedTable(mycursor)
 exportDataBaseToCSV(mycursor)
 print('CSV exported')
+
+# printAnyFullTable(cursor, table_name):
+
+
+#for i in tableNamesAddOrder:
+ #   printAnyFullTable(mycursor, i)
+
+
 connection.close()
 print('Connection closed')
+
+
+
 print(f"--- {time.time() - start_time} seconds ---")

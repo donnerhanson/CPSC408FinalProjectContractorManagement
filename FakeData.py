@@ -199,3 +199,11 @@ def addFakeUsers(cursor, num_entries):
         cursor.callproc('CreateUser', args)
         i += 1
     return
+
+
+def CalculateNumJobsForRandClients(connection: mysql.connector):
+    # updates all rows
+    cursor = connection.cursor()
+    query = "UPDATE Client SET NumJobs = (SELECT COUNT(*) from Job WHERE Job.Client_ID = Client.Client_ID)"
+    cursor.execute(query)
+    connection.commit()
