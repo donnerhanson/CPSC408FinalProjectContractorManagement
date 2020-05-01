@@ -4,8 +4,6 @@ from Messages import *
 
 
 def addClient(cursor):
-    # fake.name(), fake.street_address(), fake.city(), fake.state_abbr(), fake.postcode(), fake.email(), fake.phone_number()
-
     name = input(clientInName)
     address = input(addressInMessage)
     city = input(cityInMessage)
@@ -28,11 +26,12 @@ def addClient(cursor):
                 print('no jobs available')
             else:
                 print('something happened')
+    # return this to add a job for the new client
     return lastClientID
 
 
 def CalculateNumJobsForClient(connection: mysql.connector, Client_ID: int):
-    # updates all rows
+    # updates single client when job added to existing client
     cursor = connection.cursor()
     query = """UPDATE Client SET NumJobs = (SELECT COUNT(*) from Job WHERE Job.Client_ID = %s)"""
     cursor.execute(query,(Client_ID,))
