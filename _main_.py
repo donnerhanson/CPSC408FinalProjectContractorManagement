@@ -66,18 +66,11 @@ else:
             addClientAndJob(connection)
         elif userChoice == 5:  # delete a record
             continue
+        elif userChoice == 6:  # export CSV
+            exportDataBaseToCSV(mycursor)
+            print('CSV exported')
         else:
             continue
-
-exportDataBaseToCSV(mycursor)
-print('CSV exported')
-
-# printAnyFullTable(cursor, table_name):
-
-
-# for i in tableNamesAddOrder:
-#   printAnyFullTable(mycursor, i)
-
 
 connection.close()
 print('Connection closed')
