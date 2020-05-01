@@ -32,7 +32,6 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
                                      user='Donner Hanson',
                                      password='DonnerPass1')
-clientIndex = 4
 
 
 # ADD A NEW CLIENT AND JOB
