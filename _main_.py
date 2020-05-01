@@ -38,6 +38,15 @@ clientIndex = 4
 
 num_entries = 9
 
+
+# ADD A NEW CLIENT AND JOB
+def addClientAndJob(mysql_connection):
+    cursor = mysql_connection.cursor()
+    currClientID = addClient(cursor)
+    addNewClientJobToDB(mysql_connection, currClientID)
+    CalculateNumJobsForClient(mysql_connection, currClientID)
+
+
 mycursor = connection.cursor()
 print('Resetting Database')
 mycursor.callproc('FRESHDATABASE')
@@ -69,34 +78,26 @@ print('job cost added')
 addFakeContacts(mycursor, num_entries)
 print('contacts should be added')
 addFakeUsers(mycursor, num_entries)
-print ('users Should be added')
+print('users Should be added')
 CalculateNumJobsForRandClients(connection)
-print ('rand num')
-#printAnyFullTable(mycursor, tableNamesAddOrder[4])
+print('rand num')
+# printAnyFullTable(mycursor, tableNamesAddOrder[4])
 
+addClientAndJob(connection)
 
-# ADD A NEW CLIENT AND JOB
-
-currClientID = addClient(mycursor)
-addNewClientJobToDB(connection, currClientID)
-CalculateNumJobsForClient(connection, currClientID)
-
-
-#printAnyFullTable(mycursor, tableNamesAddOrder[4])
-#printJobCostCalculatedTable(mycursor)
+# printAnyFullTable(mycursor, tableNamesAddOrder[4])
+# printJobCostCalculatedTable(mycursor)
 exportDataBaseToCSV(mycursor)
 print('CSV exported')
 
 # printAnyFullTable(cursor, table_name):
 
 
-#for i in tableNamesAddOrder:
- #   printAnyFullTable(mycursor, i)
+# for i in tableNamesAddOrder:
+#   printAnyFullTable(mycursor, i)
 
 
 connection.close()
 print('Connection closed')
-
-
 
 print(f"--- {time.time() - start_time} seconds ---")
