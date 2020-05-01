@@ -34,7 +34,6 @@ def addClient(cursor):
 def CalculateNumJobsForClient(connection: mysql.connector, Client_ID: int):
     # updates all rows
     cursor = connection.cursor()
-    print(Client_ID)
     query = """UPDATE Client SET NumJobs = (SELECT COUNT(*) from Job WHERE Job.Client_ID = %s)"""
     cursor.execute(query,(Client_ID,))
     connection.commit()

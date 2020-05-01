@@ -8,11 +8,10 @@
 import sys
 
 import mysql.connector
+import time
 
 from csv import writer
 import csv
-
-from pandas import DataFrame
 
 # USER DEFINED FILES
 from Messages import *
@@ -22,8 +21,7 @@ from csvHandler import *
 from ImportToDatabase import *
 from FakeData import *
 from job import *
-import mysql.connector
-import time
+from testingFuncs import *
 
 # main
 
@@ -36,8 +34,6 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      password='DonnerPass1')
 clientIndex = 4
 
-num_entries = 9
-
 
 # ADD A NEW CLIENT AND JOB
 def addClientAndJob(mysql_connection):
@@ -48,42 +44,21 @@ def addClientAndJob(mysql_connection):
 
 
 mycursor = connection.cursor()
-print('Resetting Database')
-mycursor.callproc('FRESHDATABASE')
-print('DataBase reset')
 
-tableNamesAddOrder = ('Roles', 'CompanyCategoryTableLookup', 'StatusDefinition',
-                      'Users', 'Client', 'Contacts', 'Job', 'JobCost',
-                      'JobSubDetails', 'JobStatus', 'JobSalesDetails')
+mode = 0
+while mode != 1 | mode != 2:
+    mode = int(input('input mode:\n 1: fresh, 2: continual...\n '))
 
-# FAKE DATA GENERATOR NOT TO OR FROM CSV - Used in main project testing
-# printAnyTable(mycursor, tableNamesAddOrder[2])
-print('Running Fake Data Generation')
-addFakeRolesToDB(mycursor)
-print('Roles added')
+if int(mode) == 1:
+    num_tuples = int(input('Enter the amount of clients and jobs: Ex: 9\n'))
+    ResetDBToRandVals(connection, num_tuples)
 
-addFakeClientsToDB(mycursor, num_entries)
-# printClientTable(mycursor)  # Includes Field Header names
-print('Clients added')
-addFakeCompanyCategoryIDToDB(mycursor)  # done
-# printCompanyCategoryTableLookup(mycursor)
-print('Company Category table lookup added')
-addFakeStatusDefinitionToDB(mycursor, num_entries)  # done
-# printAnyTable(mycursor, tableNamesAddOrder[2])
-print('status def added')
-addFakeJobToDB(mycursor)  # Links to all available clients
-print('jobs added')
-addFakeJobCostToDB(mycursor)  # links to all available jobs
-print('job cost added')
-addFakeContacts(mycursor, num_entries)
-print('contacts should be added')
-addFakeUsers(mycursor, num_entries)
-print('users Should be added')
-CalculateNumJobsForRandClients(connection)
-print('rand num')
+
+
+
 # printAnyFullTable(mycursor, tableNamesAddOrder[4])
-
-addClientAndJob(connection)
+else:
+    addClientAndJob(connection)
 
 # printAnyFullTable(mycursor, tableNamesAddOrder[4])
 # printJobCostCalculatedTable(mycursor)
