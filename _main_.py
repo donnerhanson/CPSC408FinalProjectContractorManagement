@@ -45,23 +45,31 @@ def addClientAndJob(mysql_connection):
 
 mycursor = connection.cursor()
 
-mode = 0
-while mode != 1 | mode != 2:
-    mode = int(input('input mode:\n 1: fresh, 2: continual...\n '))
+userChoice = 0
+while userChoice != 1 and userChoice != 2:
+    userChoice = int(input('input mode:\n 1: fresh, 2: continual...\n '))
 
-if int(mode) == 1:
+if userChoice == 1:
     num_tuples = int(input('Enter the amount of clients and jobs: Ex: 9\n'))
     ResetDBToRandVals(connection, num_tuples)
 
-
-
-
 # printAnyFullTable(mycursor, tableNamesAddOrder[4])
 else:
-    addClientAndJob(connection)
+    while userChoice != 0:
+        userChoice = int(input(main_output_message))
+        if userChoice == 1:  # display options - works for now - need to add if deleted dont show
+            userChoice = int(input(DisplayTableMessage(table_names_drop_order)))
+            printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
+        elif userChoice == 3:  # parameterized search
+            continue
+        elif userChoice == 4:  # create a record
+            userChoice = int(input())
+            addClientAndJob(connection)
+        elif userChoice == 5:  # delete a record
+            continue
+        else:
+            continue
 
-# printAnyFullTable(mycursor, tableNamesAddOrder[4])
-# printJobCostCalculatedTable(mycursor)
 exportDataBaseToCSV(mycursor)
 print('CSV exported')
 

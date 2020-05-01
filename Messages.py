@@ -1,9 +1,9 @@
 main_output_message = '1: Access Display Options\n' \
-                      '2: Create new Record\n ' \
+                      '2: Create new Record\n' \
                       '0: To exit...\n'
-                      #'3: Update an individual student\n' \
-                      #'4: Delete a student by Student ID\n' \
-                      #'5: Search and Display students by Major, GPA, and Advisor\n' \
+# '3: Update an individual student\n' \
+# '4: Delete a student by Student ID\n' \
+# '5: Search and Display students by Major, GPA, and Advisor\n' \
 
 
 # a) Misc
@@ -43,6 +43,26 @@ statusIDprompt = 'Enter Status_ID\n:'
 # 11) JobSalesDetails - tbl 6
 ##jobIDPrompt
 userIDPrompt = 'Enter User ID\n'
+
+# USERINPUT CHOICES
+# display
+display_all = 'Display all?'
+
+
+def DisplayTableMessage(table_names):
+    message = 'Press: '
+    i = 1
+    length = len(table_names)
+    # print("length of table names ", len(table_names))
+    for name in table_names:
+        if i < length:
+            message += str(i) + ' to display' + name + ' \n'
+        else:
+            message += str(i) + ' to display' + name
+        i += 1
+    message += '...\n'
+    return message
+
 
 first_name_prompt = 'First name: '
 second_name_prompt = 'Last name: '
