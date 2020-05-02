@@ -217,12 +217,17 @@ def addFakeJobSubDetails(cursor):
     while i != lastJobID: # create a list of all job ids
         listJobIds.append(i)
         i += 1
+        listPairs = []
     while listJobIds: # run until job list empty listJobIds = [] - ensures all jobs are picked up
         randJobID = random.randint(1, lastJobID)
         randContactID = random.randint(1, lastContactID)
-        cursor.callproc('AddJobSubDetails', (randJobID, randContactID))
-        if randJobID in listJobIds:
+        if randJobID in listJobIds and ([randJobID, randContactID] not in listPairs):
+            cursor.callproc('CreateJobSubDetails', (randJobID, randContactID))
+            element = [randJobID, randContactID]
+            listPairs.append(element)
+            print(element) # test values
             listJobIds.remove(randJobID) # remove element equal to the job ID
+    print(listJobIds)
     return
 
 def addFakeJobSalesDetails():
