@@ -1,5 +1,6 @@
 from FakeData import *
 from mysql import *
+from _main_ import *
 
 
 def ResetDBToRandVals(connector, num_entries):
@@ -37,4 +38,6 @@ def ResetDBToRandVals(connector, num_entries):
     print('fake job sub under construction')
     addFakeUsers(cursor, num_entries)
     print('users added')
+    addFakeJobSalesDetails(cursor)
+    print('Job Sales details added')
     CalculateNumJobsForRandClients(connector)

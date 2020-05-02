@@ -30,8 +30,8 @@ start_time = time.time()
 
 connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
-                                     user='Donner Hanson',
-                                     password='DonnerPass1')
+                                     user='Ori Chanael',
+                                     password='OriPass1')
 
 
 # ADD A NEW CLIENT AND JOB

@@ -1,7 +1,6 @@
 import csv
 import random
 import mysql.connector
-
 from faker import Faker
 
 table_names_drop_order = ['JobSalesDetails', 'JobStatus', 'JobSubDetails', 'JobCost',
@@ -230,7 +229,50 @@ def addFakeJobSubDetails(cursor):
     print(listJobIds)
     return
 
-def addFakeJobSalesDetails():
+def addFakeJobSalesDetails(cursor):
+    fake = Faker()
+    # get Job ID
+    cursor.execute("select Job_ID from Job ORDER BY Job_ID DESC LIMIT 1")  # get last Job
+    lastJobIDList = cursor.fetchall()  # returns a list with a tuple inside
+    lastJobID = 0
+    for value in lastJobIDList:  # iterate the list
+        for num in value:  # iterate the tuple
+            if num > 0:
+                lastJobID = num
+                break
+            elif num is None:
+                print('no details available')
+            else:
+                print('something happened')
+    JobID = random.randint(1, lastJobID)
+
+    # get User ID
+    cursor.execute("select User_ID from Users ORDER BY User_ID DESC LIMIT 1")  # get last Job
+    lastUserIDList = cursor.fetchall()  # returns a list with a tuple inside
+    lastUserID = 0
+    for value in lastUserIDList:  # iterate the list
+        for num in value:  # iterate the tuple
+            if num > 0:
+                lastUserID = num
+                break
+            elif num is None:
+                print('no details available')
+            else:
+                print('something happened')
+
+    listJobIDs = []
+    i = 1
+    while i != lastJobID:
+        listJobIDs.append(i)
+        i += 1
+
+    while listJobIDs:
+        randJobID = random.randint(1, lastJobID)
+        randUserID = random.randint(1, lastUserID)
+        args = (randJobID, randUserID)
+        cursor.callproc('CreateJobSalesDetails', args)
+        if randJobID in listJobIDs:
+            listJobIDs.remove(randJobID)
     return
 
 
