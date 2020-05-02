@@ -184,7 +184,38 @@ def getFakeCompanyCategoryID():
     return random.randint(0, 4)
 
 
-def addFakeJobSubDetails():
+def addFakeJobSubDetails(cursor):
+    fake = Faker()
+    # "AddJob(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,IN DateIN datetime)"
+    cursor.execute("select Contact_ID from Contacts ORDER BY Contact_ID DESC LIMIT 1")  # get last Contact_ID
+    lastContactIDList = cursor.fetchall()  # returns a list with a tuple inside
+    lastContactID = 0
+    for value in lastContactIDList:  # iterate the list
+        for num in value:  # iterate the tuple
+            if num > 0:
+                lastContactID = num
+                break
+            elif num is None:
+                print('no contacts available')
+            else:
+                print('something happened')
+    cursor.execute("select Job_ID from Job ORDER BY Job_ID DESC LIMIT 1")  # get last Job_ID
+    lastJobIDList = cursor.fetchall()  # returns a list with a tuple inside
+    lastJobID = 0
+    for value in lastJobIDList:  # iterate the list
+        for num in value:  # iterate the tuple
+            if num > 0:
+                lastJobID = num
+                break
+            elif num is None:
+                print('no jobs available')
+            else:
+                print('something happened')
+    currContactID = 1
+    while currContactID <= lastContactID:
+        randJobID = random.randint(1, lastJobID)
+        cursor.callproc('AddJobSubDetails', (randJobID, currContactID))
+        currContactID += 1
     return
 
 def addFakeJobSalesDetails(cursor):

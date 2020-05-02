@@ -34,6 +34,8 @@ def ResetDBToRandVals(connector, num_entries):
     print('job cost added')
     addFakeContacts(cursor, num_entries)
     print('contacts added')
+    addFakeJobSubDetails(cursor)
+    print('fake job sub under construction')
     addFakeUsers(cursor, num_entries)
     print('users added')
     addFakeJobSalesDetails(cursor)
