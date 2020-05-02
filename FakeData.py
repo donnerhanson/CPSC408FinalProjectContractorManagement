@@ -185,7 +185,6 @@ def getFakeCompanyCategoryID():
 
 
 def addFakeJobSubDetails(cursor):
-    fake = Faker()
     # "AddJob(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,IN DateIN datetime)"
     cursor.execute("select Contact_ID from Contacts ORDER BY Contact_ID DESC LIMIT 1")  # get last Contact_ID
     lastContactIDList = cursor.fetchall()  # returns a list with a tuple inside
@@ -213,31 +212,29 @@ def addFakeJobSubDetails(cursor):
                 print('something happened')
     listJobIds = []
     i = 1
-    while i != lastJobID+1: # create a list of all job ids
+    while i != lastJobID + 1:  # create a list of all job ids
         listJobIds.append(i)
         i += 1
         listJobContactPairs = [[]]
-    while listJobIds: # run until job list empty listJobIds = [] - ensures all jobs are picked up
+    while listJobIds:  # run until job list empty listJobIds = [] - ensures all jobs are picked up
         randJobID = -1
         while randJobID not in listJobIds:
             randJobID = random.randint(1, lastJobID)
-
-        randAmountPeopleOnJobLoop = random.randint(1, round(lastContactID/2)+1)
+        randAmountPeopleOnJobLoop = random.randint(1, 4)  # weird to have more than 4 on a job
         i = 0
-        while i < randAmountPeopleOnJobLoop:
+        while i < randAmountPeopleOnJobLoop:  # rand add contractors to jobs
             randContactID = random.randint(1, lastContactID)
             if (randJobID in listJobIds) and ([randJobID, randContactID] not in listJobContactPairs):
                 cursor.callproc('CreateJobSubDetails', (randJobID, randContactID))
                 element = [randJobID, randContactID]
                 listJobContactPairs.append(element)
-                print(element)
-                i += 1
+                # print(element)
+            i += 1
         listJobIds.remove(randJobID)  # remove element equal to the job ID
-    print(listJobIds)
     return
 
+
 def addFakeJobSalesDetails(cursor):
-    fake = Faker()
     # get Job ID
     cursor.execute("select Job_ID from Job ORDER BY Job_ID DESC LIMIT 1")  # get last Job
     lastJobIDList = cursor.fetchall()  # returns a list with a tuple inside

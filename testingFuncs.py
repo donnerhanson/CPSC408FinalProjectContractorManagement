@@ -23,20 +23,20 @@ def ResetDBToRandVals(connector, num_entries):
     print('Clients added')
     addFakeCompanyCategoryIDToDB(cursor)  # done
     # printCompanyCategoryTableLookup(cursor)
-    print('Company Category table lookup added')
+    print('Company Category Table Lookup added')
     addFakeStatusDefinitionToDB(cursor, num_entries)  # done
     # printAnyTable(cursor, tableNamesAddOrder[2])
-    print('status def added')
+    print('Status Definitions added')
     addFakeJobToDB(cursor)  # Links to all available clients
-    print('jobs added')
+    print('Jobs Added')
     addFakeJobCostToDB(cursor)  # links to all available jobs
-    print('job cost added')
+    print('Job Cost added')
     addFakeContacts(cursor, num_entries)
-    print('contacts added')
+    print('Contacts added')
     addFakeJobSubDetails(cursor)
-    print('fake job sub under construction')
+    print('Job Sub Details added')
     addFakeUsers(cursor, num_entries)
-    print('users added')
+    print('Users added')
     addFakeJobSalesDetails(cursor)
     print('Job Sales details added')
     CalculateNumJobsForRandClients(connector)
