@@ -188,6 +188,9 @@ def getFakeCompanyCategoryID():
 def addFakeJobSubDetails():
     return
 
+def addFakeJobSalesDetails():
+    return
+
 
 def addFakeUsers(cursor, num_entries):
     fake = Faker()
