@@ -1,6 +1,5 @@
 from FakeData import *
 from mysql import *
-from _main_ import *
 
 
 def ResetDBToRandVals(connector, num_entries):
