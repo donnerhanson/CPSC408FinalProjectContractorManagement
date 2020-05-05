@@ -1,10 +1,15 @@
+#display
+#parameterized search
+#update
+#create
+#delete
+#export
 main_output_message = '1: Access Display Options\n' \
-                      '2: Create new Record\n' \
+                      '2: Parameterized Search\n' \
                       '3: Update an existing record\n' \
+                      '4: Create a new record\n' \
+                      '5: Delete a record\n' \
                       '0: To exit...\n'
-# '3: Update an individual student\n' \
-# '4: Delete a student by Student ID\n' \
-# '5: Search and Display students by Major, GPA, and Advisor\n' \
 
 # a) Misc
 addressInMessage = 'Enter Street Address\n'

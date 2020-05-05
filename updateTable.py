@@ -28,8 +28,8 @@ update_client_search_options = 'If searched client does not exist this current\n
                                '3: Find Client by email\n' \
                                '0: Exit Update Process...'
 
-update_client_options = '1: Update Name:\n' \
-                        '2: Update Street Address:\n' \
+update_client_options = '1: Update Name\n' \
+                        '2: Update Street Address\n' \
                         '3: Update City\n' \
                         '4: Update State\n' \
                         '5: Update Zip Code\n' \

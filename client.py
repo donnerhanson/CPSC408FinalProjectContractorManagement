@@ -1,4 +1,5 @@
 import mysql
+import re
 
 from Messages import *
 
@@ -8,7 +9,13 @@ def addClient(cursor):
     address = input(addressInMessage)
     city = input(cityInMessage)
     state = input(stateInMessage)
+    # doesnt check for !@#$%^&*() yet
+    while len(state) > 2 or len(state) < 2 or re.search('[0-9]', state):
+        state = input(stateInMessage)
+    # zip length error check
     zipCode = input(zipInMessage)
+    while len(zipCode) > 5 or len(zipCode) < 5 or re.search('[a-zA-Z]', zipCode):
+        zipCode = input(zipInMessage)
     email = input(emailInMessage)
     phone = input(phoneInMessage)
     args = [name, address, city, state, zipCode,
