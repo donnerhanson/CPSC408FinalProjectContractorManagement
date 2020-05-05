@@ -5,7 +5,6 @@ main_output_message = '1: Access Display Options\n' \
 # '4: Delete a student by Student ID\n' \
 # '5: Search and Display students by Major, GPA, and Advisor\n' \
 
-
 # a) Misc
 addressInMessage = 'Enter Street Address\n'
 cityInMessage = 'Enter City:\n'
