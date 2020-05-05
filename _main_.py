@@ -62,14 +62,14 @@ else:
             printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
         elif userChoice == 2:  # parameterized search
             continue
-        elif userChoice == 3:  # update Record
+        elif userChoice == 3:  # update Record TODO: in progress working on clients in UpdateTable.py
             userChoice = int(input(update_table_prompt))
             UpdateTable(connection, userChoice)
             continue
-        elif userChoice == 4:  # create a record
+        elif userChoice == 4:  # create a record TODO: add users/employees
             userChoice = int(input())
             addClientAndJob(connection)
-        elif userChoice == 5:  # delete a record
+        elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
             continue
         elif userChoice == 6:  # export CSV
             exportDataBaseToCSV(mycursor)
