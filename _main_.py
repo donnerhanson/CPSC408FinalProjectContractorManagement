@@ -22,6 +22,7 @@ from ImportToDatabase import *
 from FakeData import *
 from job import *
 from testingFuncs import *
+from updateTable import *
 
 # main
 
@@ -30,8 +31,8 @@ start_time = time.time()
 
 connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
-                                     user='Ori Chanael',
-                                     password='OriPass1')
+                                     user='Donner Hanson',
+                                     password='DonnerPass1')
 
 
 # ADD A NEW CLIENT AND JOB
@@ -59,7 +60,11 @@ else:
         if userChoice == 1:  # display options - works for now - need to add if deleted dont show
             userChoice = int(input(DisplayTableMessage(table_names_drop_order)))
             printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
-        elif userChoice == 3:  # parameterized search
+        elif userChoice == 2:  # parameterized search
+            continue
+        elif userChoice == 3:  # update Record
+            userChoice = int(input(update_table_prompt))
+            UpdateTable(connection, userChoice)
             continue
         elif userChoice == 4:  # create a record
             userChoice = int(input())

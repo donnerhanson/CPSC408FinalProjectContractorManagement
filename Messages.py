@@ -71,8 +71,10 @@ GPA_prompt = 'GPA: '
 faculty_advisor_prompt = 'Faculty Advisor: '
 stud_id_prompt = 'Enter student ID: '
 
-update_attribute_prompt = '1: To update major\n' \
-                          '2: To update Faculty Advisor...\n'
+update_table_prompt = '1: To update Client Information\n' \
+                            '2: To update Job/Job Cost...\n' \
+                            '3: To update Contact Information...\n' \
+                            '4: To update User (Employee Information)'
 
 search_attribute_prompt = '1: Search by major \n' \
                           '2: Search by GPA\n' \
