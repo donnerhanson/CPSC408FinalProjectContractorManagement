@@ -1,5 +1,6 @@
 main_output_message = '1: Access Display Options\n' \
                       '2: Create new Record\n' \
+                      '3: Update an existing record\n' \
                       '0: To exit...\n'
 # '3: Update an individual student\n' \
 # '4: Delete a student by Student ID\n' \
@@ -49,7 +50,7 @@ display_all = 'Display all?'
 
 
 def DisplayTableMessage(table_names):
-    message = 'Press: '
+    message = 'Input: \n'
     i = 1
     length = len(table_names)
     # print("length of table names ", len(table_names))
@@ -72,8 +73,8 @@ stud_id_prompt = 'Enter student ID: '
 
 update_table_prompt = '1: To update Client Information\n' \
                             '2: To update Job/Job Cost...\n' \
-                            '3: To update Contact Information...\n' \
-                            '4: To update User (Employee Information)'
+                            '3: To update Contact Information\n' \
+                            '4: To update User (Employee Information)...\n'
 
 search_attribute_prompt = '1: Search by major \n' \
                           '2: Search by GPA\n' \
