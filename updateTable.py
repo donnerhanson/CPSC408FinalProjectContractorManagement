@@ -9,7 +9,7 @@ from Messages import *
 
 def UpdateTable(connector, table_choice):
     if table_choice == 1:
-        something = 0
+        UpdateClient(connector)
     elif table_choice == 2:
         something = 0
     elif table_choice == 3:
@@ -25,7 +25,8 @@ update_client_search_options = 'If searched client does not exist this current\n
                                'process will exit without changes to the system...\n' \
                                '1: Find Client by ID\n' \
                                '2: Find Client by Name\n' \
-                               '3: Find Client by email...\n'
+                               '3: Find Client by email\n' \
+                               '0: Exit Update Process...'
 
 update_client_options = '1: Update Name:\n' \
                         '2: Update Street Address:\n' \
@@ -48,54 +49,78 @@ update_client_options = '1: Update Name:\n' \
 def UpdateClientAttributes(connector, table, conditionCategory, condition):
     userChoice = int(input(update_client_options))
     c = connector.cursor()
+
     while userChoice != 0:
+        update_value = ''
+        column = ''
         if userChoice == 1:  # name
-            name = input(clientInName)
+            update_value = input(clientInName)
+            column = 'ClientName'
             continue
         elif userChoice == 2:  # address
-            address = input(addressInMessage)
+            update_value = input(addressInMessage)
+            column = 'Address'
             continue
         elif userChoice == 3:  # city
-            city = input(cityInMessage)
+            update_value = input(cityInMessage)
+            column = 'City'
             continue
         elif userChoice == 4:  # state
-            state = input(stateInMessage)
+            update_value = input(stateInMessage)
+            column = 'State'
             continue
         elif userChoice == 5:  # zip
-            zip_code = input(zipInMessage)
+            update_value = input(zipInMessage)
+            if len(update_value) != 5:
+                print("Error zip code is 5 integers ex: 55555...\n")
+            else:
+                column = 'Zip'
             continue
         elif userChoice == 6:  # email
-            email = input(emailInMessage)
+            update_value = input(emailInMessage)
+            column = 'Email'
             continue
         elif userChoice == 7:  # phone
-            phone = input(phoneInMessage)
+            update_value = input(phoneInMessage)
+            column = 'Phone'
             continue
         else:
             continue
+        str_column = str(column)
+        if column != '':
+            c.execute(
+                "UPDATE %s SET %s = %s WHERE %s = %s",
+                (table, str_column, update_value, conditionCategory, condition,)
+            )
+            connector.commit()
         userChoice = int(input(update_client_options))
-    return
+    return 0
 
 
 def UpdateClient(connector):
-    c = connector.cursor()
     userChoice = int(input(update_client_search_options))
     curr_table_name = 'Client'
-    categoryCondition = ''
-    if userChoice == 1:  # ID
-        userChoice = int(input(clientIDprompt))
-        categoryCondition = 'Client_ID'
-        if RecordExists(c, curr_table_name, categoryCondition, userChoice):
-            UpdateClientAttributes()
-    elif userChoice == 2:  # name
-        something = 0
-    elif userChoice == 3:  # email
-        something = 0
+    while int(userChoice) != 0:
+        categoryCondition = ''
+        if userChoice == 1:  # ID
+            userChoice = int(input(clientIDprompt))
+            categoryCondition = 'Client_ID'
+        elif userChoice == 2:  # name
+            userChoice = input("enter client name...\n")
+            categoryCondition = 'ClientName'
+        elif userChoice == 3:  # email
+            userChoice = input("enter client email...\n")
+            categoryCondition = 'Email'
+
+        if RecordExists(connector, curr_table_name, str(categoryCondition), str(userChoice)):
+            userChoice = UpdateClientAttributes(connector, curr_table_name, categoryCondition)
     else:
-        return
+        print('record does not exist')
     return
 
 
-def RecordExists(cursor, table, conditionCategory, condition):
+def RecordExists(connector, table, conditionCategory, condition):
+    cursor = connector.cursor()
     cursor.execute(
         "SELECT COUNT(*) FROM %s WHERE %s = %s",
         (table, conditionCategory, condition,)
