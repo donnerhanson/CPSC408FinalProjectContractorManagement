@@ -67,8 +67,11 @@ else:
             UpdateTable(connection, userChoice)
             continue
         elif userChoice == 4:  # create a record TODO: add users/employees
-            userChoice = int(input())
-            addClientAndJob(connection)
+            userChoice = int(input('input 1 for add client:\n'))
+            if userChoice == 1:
+                addClientAndJob(connection)
+
+
         elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
             continue
         elif userChoice == 6:  # export CSV

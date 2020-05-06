@@ -1,12 +1,15 @@
+#display
+#parameterized search
+#update
+#create
+#delete
+#export
 main_output_message = '1: Access Display Options\n' \
                       '2: Parameterized Search\n' \
-                      '3: Update a Record\n' \
-                      '4: Add a Record\n' \
-                      '5: Delete a Record\n' \
+                      '3: Update an existing record\n' \
+                      '4: Create a new record\n' \
+                      '5: Delete a record\n' \
                       '0: To exit...\n'
-# '3: Update an individual student\n' \
-# '4: Delete a student by Student ID\n' \
-# '5: Search and Display students by Major, GPA, and Advisor\n' \
 
 # a) Misc
 addressInMessage = 'Enter Street Address\n'
@@ -52,7 +55,7 @@ display_all = 'Display all?'
 
 
 def DisplayTableMessage(table_names):
-    message = 'Press: '
+    message = 'Input: \n'
     i = 1
     length = len(table_names)
     # print("length of table names ", len(table_names))
@@ -75,8 +78,8 @@ stud_id_prompt = 'Enter student ID: '
 
 update_table_prompt = '1: To update Client Information\n' \
                             '2: To update Job/Job Cost...\n' \
-                            '3: To update Contact Information...\n' \
-                            '4: To update User (Employee Information)'
+                            '3: To update Contact Information\n' \
+                            '4: To update User (Employee Information)...\n'
 
 search_attribute_prompt = '1: Search by major \n' \
                           '2: Search by GPA\n' \
