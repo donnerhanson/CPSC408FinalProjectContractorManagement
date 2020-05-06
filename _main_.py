@@ -23,6 +23,7 @@ from FakeData import *
 from job import *
 from testingFuncs import *
 from updateTable import *
+from userInput import *
 
 # main
 
@@ -67,9 +68,12 @@ else:
             UpdateTable(connection, userChoice)
             continue
         elif userChoice == 4:  # create a record TODO: add users/employees
-            userChoice = int(input('input 1 for add client:\n'))
+            userChoice = int(input('input\n 1 for add client:\n 2 for add user:\n'))
             if userChoice == 1:
                 addClientAndJob(connection)
+            elif userChoice == 2:
+                addUser(mycursor)
+
 
 
         elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
