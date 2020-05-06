@@ -14,7 +14,7 @@ def addClient(cursor):
         state = input(stateInMessage)
     # zip length error check
     zipCode = input(zipInMessage)
-    while len(zipCode) > 5 or len(zipCode) < 5 or re.search('[a-zA-Z]', zipCode):
+    while len(zipCode) != 5 or re.search('[a-zA-Z]', zipCode):
         zipCode = input(zipInMessage)
     email = input(emailInMessage)
     phone = input(phoneInMessage)
@@ -41,5 +41,5 @@ def CalculateNumJobsForClient(connection: mysql.connector, Client_ID: int):
     # updates single client when job added to existing client
     cursor = connection.cursor()
     query = """UPDATE Client SET NumJobs = (SELECT COUNT(*) from Job WHERE Job.Client_ID = %s)"""
-    cursor.execute(query,(Client_ID,))
+    cursor.execute(query, (Client_ID,))
     connection.commit()
