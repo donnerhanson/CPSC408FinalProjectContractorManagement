@@ -1,5 +1,8 @@
 main_output_message = '1: Access Display Options\n' \
-                      '2: Create new Record\n' \
+                      '2: Parameterized Search\n' \
+                      '3: Update a Record\n' \
+                      '4: Add a Record\n' \
+                      '5: Delete a Record\n' \
                       '0: To exit...\n'
 # '3: Update an individual student\n' \
 # '4: Delete a student by Student ID\n' \
@@ -55,9 +58,9 @@ def DisplayTableMessage(table_names):
     # print("length of table names ", len(table_names))
     for name in table_names:
         if i < length:
-            message += str(i) + ' to display' + name + ' \n'
+            message += str(i) + ' to display ' + name + ' \n'
         else:
-            message += str(i) + ' to display' + name
+            message += str(i) + ' to display ' + name
         i += 1
     message += '...\n'
     return message

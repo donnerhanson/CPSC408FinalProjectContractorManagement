@@ -2,10 +2,10 @@ import mysql.connector
 from Messages import *
 
 
-# update_table_prompt = '1: To update Client Information\n' \
-#                            '2: To update Job/Job Cost...\n' \
-#                            '3: To update Contact Information...\n' \
-#                            '4: To update User (Employee Information)'
+update_table_prompt = '1: To update Client Information\n' \
+                           '2: To update Job/Job Cost...\n' \
+                         '3: To update Contact Information...\n' \
+                         '4: To update User (Employee Information)\n'
 
 def UpdateTable(connector, table_choice):
     if table_choice == 1:
