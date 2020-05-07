@@ -3,11 +3,11 @@ from DisplayFunctions import printResultTable
 from Messages import *
 import re
 
-
 update_table_prompt = '1: To update Client Information\n' \
-                           '2: To update Job/Job Cost...\n' \
-                         '3: To update Contact Information...\n' \
-                         '4: To update User (Employee Information)\n'
+                      '2: To update Job/Job Cost...\n' \
+                      '3: To update Contact Information...\n' \
+                      '4: To update User (Employee Information)\n'
+
 
 def UpdateTable(connector, table_choice):
     if table_choice == 1:
@@ -51,7 +51,18 @@ update_client_options = '1: Update Name\n' \
 def UpdateClientAttributes(connector, table, conditionCategory, condition):
     c = connector.cursor()
     data = (table, conditionCategory, condition)
-    select_query = """SELECT * FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + str(data[2]) + "%")
+    if conditionCategory in ('ClientName', 'Email'): # force ID lookup
+        select_query = """SELECT Client_ID FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + str(data[2]) + "%")
+        c.execute(select_query, )
+        result = c.fetchall()
+        for i in result:
+            for j in i:
+                if j >= 1:
+                    condition = j
+        conditionCategory = 'Client_ID'
+        data = (table, conditionCategory, condition)
+
+    select_query = """SELECT * FROM %s WHERE %s = %s""" % (data[0], data[1], str(data[2]))
     c.execute(select_query, )
     printResultTable(c)
     userChoice = int(input(update_client_options))
@@ -88,7 +99,7 @@ def UpdateClientAttributes(connector, table, conditionCategory, condition):
         str_column = str(column)
         if column != '':
             query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (table, str_column, update_value, conditionCategory, condition)
-            c.execute(query,)
+            c.execute(query, )
             connector.commit()
         c.execute(select_query, )
         printResultTable(c)
@@ -112,13 +123,13 @@ def UpdateClient(connector):
             searched_value = input("enter client email...\n")
             categoryCondition = 'Email'
 
-        if categoryCondition in ('Client_ID', ' ') and RecordExists(connector, curr_table_name, str(categoryCondition), searched_value):
-            #connector, table, conditionCategory, condition
+        if categoryCondition in 'Client_ID' and RecordExists(connector, curr_table_name, str(categoryCondition), searched_value):
+            # connector, table, conditionCategory, condition
             userChoice = UpdateClientAttributes(connector, curr_table_name, categoryCondition, searched_value)
-        elif categoryCondition in ('ClientName', 'Email') and RecordExistsLike(connector, curr_table_name, str(categoryCondition), searched_value):
+        elif categoryCondition in ('ClientName', 'Email') and RecordExistsLike(connector, curr_table_name,  str(categoryCondition), searched_value):
             userChoice = UpdateClientAttributes(connector, curr_table_name, categoryCondition, searched_value)
-    else:
-        print('record does not exist')
+        else:
+            print('record does not exist')
     return
 
 
@@ -137,6 +148,7 @@ def RecordExists(connector, table, conditionCategory, condition):
         print("multiple matching records please use another method to update...\n")
         return False
     return True
+
 
 def RecordExistsLike(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
