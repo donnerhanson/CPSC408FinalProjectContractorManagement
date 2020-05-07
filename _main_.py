@@ -35,7 +35,7 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      user='Donner Hanson',
                                      password='DonnerPass1')
 
-
+# TODO: "add in a logging system"
 # ADD A NEW CLIENT AND JOB
 def addClientAndJob(mysql_connection):
     cursor = mysql_connection.cursor()
@@ -62,8 +62,12 @@ else:
             userChoice = int(input(DisplayTableMessage(table_names_drop_order)))
             printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
         elif userChoice == 2:  # parameterized search
+            # could do things like:
+            # find all jobs associated with personnel/clients
+            # find all people associated with a job and job cost/total
             continue
-        elif userChoice == 3:  # update Record TODO: in progress working on clients in UpdateTable.py
+        elif userChoice == 3:  # update Record TODO: Contact information NEXT in UpdateTable.py
+            # client table update functioning as intended
             userChoice = int(input(update_table_prompt))
             UpdateTable(connection, userChoice)
             continue
@@ -73,14 +77,12 @@ else:
                 addClientAndJob(connection)
             elif userChoice == 2:
                 addUser(mycursor)
-
-
-
         elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
             continue
-        elif userChoice == 6:  # export CSV
+        elif userChoice == 6:  # export structured CSV file
             exportDataBaseToCSV(mycursor)
             print('CSV exported')
+            # could add separate parameterized CSVs to export using parameter functions
         else:
             continue
 
