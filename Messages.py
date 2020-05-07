@@ -32,7 +32,10 @@ userInName = 'Enter User\'s name: \n'
 # 5) Client - tbl 1
 clientInName = 'Enter Client\'s name: \n'
 # 6) Contacts - tbl 3
-contactInName = 'Enter contact\'s name:\n '
+contactIDprompt = 'Enter Contact\'s ID:\n'
+contactInName = 'Enter Contact\'s Name:\n '
+contactInEmail = 'Enter Contact\'s Email:\n '
+contactInURL = 'Enter Contact\'s URL:\n '
 # 7) Job - tbl 4
 clientIDprompt = 'Enter Client\'s ID:\n'
 estimatePrompt = 'Enter Estimate (Ex: 10000.00)\n:'
@@ -71,11 +74,8 @@ def DisplayTableMessage(table_names):
 
 
 first_name_prompt = 'First name: '
-second_name_prompt = 'Last name: '
-major_prompt = 'Major: '
-GPA_prompt = 'GPA: '
-faculty_advisor_prompt = 'Faculty Advisor: '
-stud_id_prompt = 'Enter student ID: '
+
+
 
 update_table_prompt = '1: To update Client Information\n' \
                             '2: To update Job/Job Cost...\n' \
