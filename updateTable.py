@@ -1,5 +1,6 @@
 import mysql.connector
 from Messages import *
+from userInput import *
 
 
 update_table_prompt = '1: To update Client Information\n' \
@@ -15,7 +16,7 @@ def UpdateTable(connector, table_choice):
     elif table_choice == 3:
         something = 0
     elif table_choice == 4:
-        something = 0
+        updateUser(connector)
     else:
         return
     return
