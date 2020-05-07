@@ -28,7 +28,7 @@ update_client_search_options = 'If searched client does not exist this current\n
                                '1: Find Client by ID\n' \
                                '2: Find Client by Name\n' \
                                '3: Find Client by email\n' \
-                               '0: Exit Update Process...'
+                               '0: Exit Update Process...\n'
 
 update_client_options = '1: Update Name\n' \
                         '2: Update Street Address\n' \
@@ -129,20 +129,21 @@ def UpdateClient(connector):
         elif categoryCondition in ('ClientName', 'Email') and RecordExistsLike(connector, curr_table_name,  str(categoryCondition), searched_value):
             userChoice = UpdateClientAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
-            print('record does not exist')
+            userChoice = int(input(update_client_search_options))
     return
 
 
 def RecordExists(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
     data = (table, conditionCategory, condition)
-    query = """SELECT COUNT(*) FROM %s WHERE %s = '%s'""" % (data[0], data[1], data[2])
+    query = """SELECT * FROM %s WHERE %s = '%s'""" % (data[0], data[1], data[2])
     cursor.execute(query, )
-    results = cursor.fetchall()
+    results = cursor.fetchall() # clears cursor results to allow for next query if needed
     # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
-    print("Number of similar rows: {}...\n".format(row_count))
-    if row_count == 0:
+    print("Number of similar rows, {}:\n".format(row_count))
+    if row_count <= 0:
+        print('record does not exist\n')
         return False
     if row_count > 1:
         print("multiple matching records please use another method to update...\n")
@@ -153,13 +154,14 @@ def RecordExists(connector, table, conditionCategory, condition):
 def RecordExistsLike(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
     data = (table, conditionCategory, condition)
-    query = """SELECT Client_ID FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + data[2] + "%")
+    query = """SELECT * FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + data[2] + "%")
     cursor.execute(query, )
     results = cursor.fetchall()
     # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
-    print("Number of similar rows: {}...\n".format(row_count))
-    if row_count == 0:
+    print("Number of similar rows, {}:\n".format(row_count))
+    if row_count <= 0:
+        print('record does not exist\n')
         return False
     if row_count > 1:
         print("multiple matching records please use another method to update...\n")
