@@ -1,23 +1,20 @@
 import mysql.connector
+from datetime import datetime
 from DisplayFunctions import printResultTable
 from Messages import *
 from userInput import *
 import re
 
-
-update_table_prompt = '1: To update Client Information\n' \
-                      '2: To update Job/Job Cost...\n' \
-                      '3: To update Contact Information...\n' \
-                      '4: To update User (Employee Information)\n'
+from dateFuncs import getDate, timedelta
 
 
 def UpdateTable(connector, table_choice):
     if table_choice == 1:
-        UpdateClient(connector)
+        GetClientRecord(connector)
     elif table_choice == 2:
-        something = 0
+        GetJobRecord(connector)
     elif table_choice == 3:
-        UpdateContact(connector)
+        GetContactRecord(connector)
     elif table_choice == 4:
         UpdateUser(connector)
     else:
@@ -83,6 +80,9 @@ update_user_options = '1: Update Name\n' \
 # phoneInMessage
 # emailInMessage
 # TODO: UPDATE BY ID FUNCTIONING
+
+
+# ATTRIBUTE UPDATES
 def UpdateClientAttributes(connector, table, conditionCategory, condition):
     c = connector.cursor()
     data = (table, conditionCategory, condition)
@@ -134,7 +134,7 @@ def UpdateClientAttributes(connector, table, conditionCategory, condition):
         str_column = str(column)
         if column != '':
             query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (
-            table, str_column, update_value, conditionCategory, condition)
+                table, str_column, update_value, conditionCategory, condition)
             c.execute(query, )
             connector.commit()
         c.execute(select_query, )
@@ -178,7 +178,8 @@ def UpdateContactAttributes(connector, table, conditionCategory, condition):
             column = 'Phone'
         str_column = str(column)
         if column != '':
-            query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (table, str_column, update_value, conditionCategory, condition)
+            query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (
+                table, str_column, update_value, conditionCategory, condition)
             c.execute(query, )
             connector.commit()
         c.execute(select_query, )
@@ -249,7 +250,8 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
     return 0
 
 
-def UpdateClient(connector):
+# GET SINGLE RECORD
+def GetClientRecord(connector):
     userChoice = int(input(update_client_search_options))
     curr_table_name = 'Client'
     while int(userChoice) != 0:
@@ -276,8 +278,39 @@ def UpdateClient(connector):
             userChoice = int(input(update_client_search_options))
     return
 
-def UpdateContact(connector):
-    userChoice = int(input(update_contact_search_options ))
+
+def GetJobRecord(connector):
+    userChoice = int(input(update_job_search_options))
+    curr_table_name = 'Job'
+    while int(userChoice) != 0:
+        categoryCondition = ''
+        searched_value = ''
+        if userChoice == 1:  # ID
+            searched_value = int(input(jobIDPrompt))
+            categoryCondition = 'Job_ID'
+        elif userChoice == 2:  # name
+            searched_value = input(clientIDprompt)
+            categoryCondition = 'Client_ID'
+        elif userChoice == 3:  # Date
+            searched_value = getDate()
+            # searched_value = searched_value
+            categoryCondition = 'Last_active'
+
+        if categoryCondition in ('Job_ID', 'Client_ID') and RecordExists(connector, curr_table_name,
+                                                                         str(categoryCondition),
+                                                                         searched_value):
+            # connector, table, conditionCategory, condition
+            userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
+        elif categoryCondition in 'Last_active' and RecordExistsDate(connector, curr_table_name,
+                                                              str(categoryCondition), searched_value):
+            userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
+        else:
+            userChoice = int(input(update_job_search_options))
+    return
+
+
+def GetContactRecord(connector):
+    userChoice = int(input(update_contact_search_options))
     curr_table_name = 'Contacts'
     while int(userChoice) != 0:
         categoryCondition = ''
@@ -300,7 +333,7 @@ def UpdateContact(connector):
                                                                                 str(categoryCondition), searched_value):
             userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
-            userChoice = int(input(update_contact_search_options ))
+            userChoice = int(input(update_contact_search_options))
     return
 
 def UpdateUser(connector):
@@ -353,6 +386,26 @@ def RecordExistsLike(connector, table, conditionCategory, condition):
     data = (table, conditionCategory, condition)
     query = """SELECT * FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + data[2] + "%")
     cursor.execute(query, )
+    results = cursor.fetchall()
+    # gets the number of rows affected by the command executed
+    row_count = cursor.rowcount
+    print("Number of similar rows, {}:\n".format(row_count))
+    if row_count <= 0:
+        print('record does not exist\n')
+        return False
+    if row_count > 1:
+        print("multiple matching records please use another method to update...\n")
+        return False
+    return True
+
+
+def RecordExistsDate(connector, table, conditionCategory, condition): #TODO: DATE NOT being accepted by query
+    cursor = connector.cursor()
+    data = (table, conditionCategory, condition)
+    start_date = data[2].strftime('%Y-%m-%d')
+    end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d')
+    query = """SELECT * FROM %s WHERE %s BETWEEN ( %s AND %s )""" % (data[0], data[1], start_date, end_date)
+    cursor.execute(query,)
     results = cursor.fetchall()
     # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
