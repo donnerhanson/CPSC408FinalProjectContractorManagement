@@ -14,6 +14,7 @@ from csv import writer
 import csv
 
 # USER DEFINED FILES
+import updateTable
 from Messages import *
 from DisplayFunctions import *
 from client import *
@@ -35,6 +36,7 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      user='Donner Hanson',
                                      password='DonnerPass1')
 
+
 # TODO: "add in a logging system"
 # ADD A NEW CLIENT AND JOB
 def addClientAndJob(mysql_connection):
@@ -42,7 +44,6 @@ def addClientAndJob(mysql_connection):
     currClientID = addClient(cursor)
     addNewClientJobToDB(mysql_connection, currClientID)
     CalculateNumJobsForClient(mysql_connection, currClientID)
-
 
 mycursor = connection.cursor()
 

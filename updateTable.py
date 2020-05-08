@@ -18,8 +18,8 @@ def UpdateTable(connector, table_choice):
     elif table_choice == 4:
         UpdateUser(connector)
     else:
-        return
-    return
+        return -1
+    return -1
 
 
 # client options
@@ -300,10 +300,10 @@ def GetJobRecord(connector):
                                                                          str(categoryCondition),
                                                                          searched_value):
             # connector, table, conditionCategory, condition
-            userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
+            userChoice = UpdateJobAttributes(connector, curr_table_name, categoryCondition, searched_value)
         elif categoryCondition in 'Last_active' and RecordExistsDate(connector, curr_table_name,
-                                                              str(categoryCondition), searched_value):
-            userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
+                                                                     str(categoryCondition), searched_value):
+            userChoice = UpdateJobAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
             userChoice = int(input(update_job_search_options))
     return
@@ -399,13 +399,15 @@ def RecordExistsLike(connector, table, conditionCategory, condition):
     return True
 
 
-def RecordExistsDate(connector, table, conditionCategory, condition): #TODO: DATE NOT being accepted by query
+def RecordExistsDate(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
     data = (table, conditionCategory, condition)
-    start_date = data[2].strftime('%Y-%m-%d')
-    end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d')
-    query = """SELECT * FROM %s WHERE %s BETWEEN ( %s AND %s )""" % (data[0], data[1], start_date, end_date)
-    cursor.execute(query,)
+    start_date = data[2].strftime('%Y-%m-%d %H:%M:%S')
+    end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
+    # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
+    query = """SELECT * FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
+    data[0], data[1], start_date, data[1], end_date)
+    cursor.execute(query, )
     results = cursor.fetchall()
     # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
@@ -417,3 +419,111 @@ def RecordExistsDate(connector, table, conditionCategory, condition): #TODO: DAT
         print("multiple matching records please use another method to update...\n")
         return False
     return True
+
+
+# TODO: Make sure all update attributes set and functional
+def UpdateJobAttributes(connector, table, conditionCategory, condition):
+    c = connector.cursor()
+    select_query = ''
+    data = (table, conditionCategory, condition)
+    if conditionCategory in ('Last_active'):  # force ID lookup
+        start_date = data[2].strftime('%Y-%m-%d %H:%M:%S')
+        end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
+        # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
+        select_query = """SELECT Job_ID FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
+        data[0], data[1], start_date, data[1], end_date)
+        c.execute(select_query, )
+        result = c.fetchall()
+        for i in result:
+            for j in i:
+                if j >= 1:
+                    condition = j
+        conditionCategory = 'Job_ID'
+        data = (table, conditionCategory, condition)
+
+    if conditionCategory in ('Client_ID'):  # force ID lookup
+        select_query = """SELECT Job_ID FROM %s WHERE %s = %s""" % (
+        data[0], data[1], data[2])
+        c.execute(select_query, )
+        result = c.fetchall()
+        for i in result:
+            for j in i:
+                if j >= 1:
+                    condition = j
+        conditionCategory = 'Job_ID'
+        data = (table, conditionCategory, condition)
+
+    select_query = """SELECT * FROM %s WHERE %s = %s""" % (data[0], data[1], str(data[2]))
+    c.execute(select_query, )
+    printResultTable(c)
+    userChoice = int(input(update_job_attributes))
+    while userChoice != 0:
+        join_tables = False
+        update_value = ''
+        column = ''
+        if userChoice == 1:  # Estimate
+            update_value = input(estimatePrompt)
+            column = 'Estimate'
+        elif userChoice == 2:  # Payout
+            update_value = input(payoutPrompt)
+            column = 'Payout'
+        elif userChoice == 3:  # hours
+            update_value = input(hoursPrompt)
+            column = 'Hours'
+        elif userChoice == 4:  # Status
+            update_value = input(statusIDprompt)
+            table_two = 'JobStatus'  # change the status ID
+            print ("Change the job status: \n")
+            column_two = getStatusID()
+            join_tables = True
+        elif userChoice == 5:  # additional costs
+            update_value = int(input(additionsInPrompt))
+            table_two = 'JobCost'
+            join_tables = True
+            continue
+        elif userChoice == 6:  # additional Mats
+            update_value = int(input(materialsInPrompt))
+            table_two = 'JobCost'
+        str_column = str(column)
+        if column != '':
+            select_query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (
+                table, str_column, update_value, conditionCategory, condition)
+            c.execute(select_query, )
+            connector.commit()
+        c.execute(select_query, )
+        printResultTable(c)
+        userChoice = int(input(update_contact_options))
+    return 0
+
+
+def getStatusID():
+    statuses = ['Lead', 'Client has made contact with Company regarding job',
+                'Accepted', 'Terms have been negotiated and contract signed',
+                'Declined', 'Negotiations did not succeed - job not accepted',
+                'Cancelled', 'Job has been permanently cancelled',
+                'Postponed', 'Job has been postponed due to some type of emergency',
+                'Finished', 'Job has been completed']
+    i = 0
+    phrase = ''
+    full_phrase = ''
+    count = 0
+    for status in statuses:
+        if i >= 2 and (i % 2) == 0:
+            if count == 0:
+                full_phrase = "Enter..\n"
+            count += 1
+            full_phrase += str(count) + ": " + phrase + "\n"
+            phrase = ''
+
+        phrase += status + ' '
+        if (i % 2) == 0:
+            phrase += '| '
+        i += 1
+
+    userChoice = 0
+    full_phrase = full_phrase[:-2]
+    full_phrase += '...\n'
+
+    while not 1 <= userChoice <= 5:
+        userChoice = int(input(full_phrase))
+    return userChoice
