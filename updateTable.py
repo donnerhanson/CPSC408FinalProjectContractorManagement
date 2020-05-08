@@ -191,7 +191,7 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
     c = connector.cursor()
     data = (table, conditionCategory, condition)
     if conditionCategory in ('Name', 'Email'):  # force ID lookup
-        select_query = """SELECT Client_ID FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + str(data[2]) + "%")
+        select_query = """SELECT User_ID FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + str(data[2]) + "%")
         c.execute(select_query, )
         result = c.fetchall()
         for i in result:
