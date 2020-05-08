@@ -66,7 +66,7 @@ else:
             # find all jobs associated with personnel/clients
             # find all people associated with a job and job cost/total
             continue
-        elif userChoice == 3:  # update Record TODO: Contact information NEXT in UpdateTable.py
+        elif userChoice == 3:  # update Record TODO: Job/Job Cost in UpdateTable.py
             # client table update functioning as intended
             userChoice = int(input(update_table_prompt))
             UpdateTable(connection, userChoice)
