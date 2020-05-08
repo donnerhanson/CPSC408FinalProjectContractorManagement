@@ -18,8 +18,8 @@ def UpdateTable(connector, table_choice):
     elif table_choice == 4:
         UpdateUser(connector)
     else:
-        return
-    return
+        return -1
+    return -1
 
 
 # client options
