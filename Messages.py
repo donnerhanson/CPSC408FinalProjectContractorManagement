@@ -60,6 +60,15 @@ update_job_search_options = 'If searched contact does not exist this current\n' 
                                 '3: Find Job by Date\n' \
                                 '0: Exit Update Process...\n'
 
+update_job_attributes = '1: Update Estimate\n' \
+                                '2: Update Payout\n' \
+                                '3: Update Hours\n' \
+                                '4: Update Status\n' \
+                                '5: Update Additional Misc. Costs\n' \
+                                '6: Update Material Costs\n' \
+                                '0: Exit Update...\n'
+
+
 # a) Misc
 addressInMessage = 'Enter Street Address\n'
 cityInMessage = 'Enter City:\n'
@@ -92,6 +101,8 @@ payoutPrompt = 'Enter Payout amount (Ex: 10000.00)\n:'
 hoursPrompt = 'Enter amount of hours: \n'
 jobCostIDPrompt = 'Enter jobCostID:\n'
 # 8) Job Cost - tbl 5
+additionsInPrompt = 'Enter the total of miscellaneous Additions: '
+materialsInPrompt = 'Enter the amount of additional Materials'
 # 9) JobSubDetails - tbl 8
 jobSubJobIDIn = 'Enter job ID: \n'
 jobSubContactIDIn = 'Enter Contact ID: \n'

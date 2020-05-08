@@ -37,4 +37,7 @@ def getDate():
     year = getYear()
     month = getMonth()
     day = getDay(year, month)
-    return datetime(year, month, day)
+    hours = 0
+    minutes = 0
+    seconds = 0
+    return datetime(year, month, day, hours, minutes, seconds)
