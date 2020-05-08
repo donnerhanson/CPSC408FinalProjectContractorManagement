@@ -62,6 +62,17 @@ else:
             userChoice = int(input(DisplayTableMessage(table_names_drop_order)))
             printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
         elif userChoice == 2:  # parameterized search
+            userChoice = int(input(parameterLookupMenu))
+            if userChoice == 1:
+                something = 0
+            elif userChoice == 2:
+                something = 0
+            elif userChoice == 3:
+                something = 0
+            elif userChoice == 4:
+                something = 0
+            else:
+                continue
             # could do things like:
             # find all jobs associated with personnel/clients
             # find all people associated with a job and job cost/total

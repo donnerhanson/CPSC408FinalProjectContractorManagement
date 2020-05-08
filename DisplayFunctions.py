@@ -49,3 +49,6 @@ def printJobCostCalculatedTable(cursor):
                    columns=any_column_names)
     print(df.to_string(index=False))  # remove row indexing on pandas DataFrame
     # print(query)
+
+def paraSearch(cursor):
+    something = 0

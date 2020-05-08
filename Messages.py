@@ -122,7 +122,8 @@ def DisplayTableMessage(table_names):
     message += '...\n'
     return message
 
-
+parameterLookupMenu = ('Search for:\n 1. Jobs\n 2. Clients \n 3. Contacts\n 4. Users')
+parameterJobLookup = ('Search for Job details by:\n 1. Job')
 
 
 
