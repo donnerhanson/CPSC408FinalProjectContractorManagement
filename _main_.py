@@ -69,8 +69,7 @@ else:
         elif userChoice == 3:  # update Record TODO: Job/Job Cost in UpdateTable.py
             # client table update functioning as intended
             userChoice = int(input(update_table_prompt))
-            UpdateTable(connection, userChoice)
-            continue
+            userChoice = UpdateTable(connection, userChoice)
         elif userChoice == 4:  # create a record TODO: add users/employees
             userChoice = int(input('input\n 1 for add client:\n 2 for add user:\n'))
             if userChoice == 1:

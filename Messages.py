@@ -4,12 +4,61 @@
 #create
 #delete
 #export
+# MAIN
 main_output_message = '1: Access Display Options\n' \
                       '2: Parameterized Search\n' \
                       '3: Update an existing record\n' \
                       '4: Create a new record\n' \
                       '5: Delete a record\n' \
                       '0: To exit...\n'
+
+# UPDATE TABLE
+update_table_prompt = '1: To update Client Information\n' \
+                            '2: To update Job/Job Cost...\n' \
+                            '3: To update Contact Information\n' \
+                            '4: To update User (Employee Information)...\n'
+
+update_table_prompt = '1: To update Client Information\n' \
+                      '2: To update Job/Job Cost...\n' \
+                      '3: To update Contact Information...\n' \
+                      '4: To update User (Employee Information)\n'
+
+
+update_client_search_options = 'If searched client does not exist this current\n' \
+                               'process will exit without changes to the system...\n' \
+                               '1: Find Client by ID\n' \
+                               '2: Find Client by Name\n' \
+                               '3: Find Client by email\n' \
+                               '0: Exit Update Process...\n'
+
+update_client_options = '1: Update Name\n' \
+                        '2: Update Street Address\n' \
+                        '3: Update City\n' \
+                        '4: Update State\n' \
+                        '5: Update Zip Code\n' \
+                        '6: Update Email\n' \
+                        '7: Update Phone Number\n' \
+                        '0: Exit Update...\n'
+
+update_contact_search_options = 'If searched contact does not exist this current\n' \
+                                'process will exit without changes to the system...\n' \
+                                '1: Find Contact by ID\n' \
+                                '2: Find Contact by Name\n' \
+                                '3: Find Contact by email\n' \
+                                '0: Exit Update Process...\n'
+
+update_contact_options = '1: Update Name\n' \
+                         '2: Update URL\n' \
+                         '3: Update Email\n' \
+                         '4: Update Phone Number\n' \
+                         '0: Exit Update...\n'
+
+update_job_search_options = 'If searched contact does not exist this current\n' \
+                                'process will exit without changes to the system...\n' \
+                                '1: Find Job by ID\n' \
+                                '2: Find Job by Client ID\n' \
+                                '3: Find Job by Date\n' \
+                                '0: Exit Update Process...\n'
 
 # a) Misc
 addressInMessage = 'Enter Street Address\n'
@@ -57,6 +106,7 @@ userIDPrompt = 'Enter User ID\n'
 # display
 display_all = 'Display all?'
 
+dateInPrompt = 'Input date ex: 10/30/2009'
 
 def DisplayTableMessage(table_names):
     message = 'Input: \n'
@@ -73,14 +123,15 @@ def DisplayTableMessage(table_names):
     return message
 
 
+
+
+
+
+
 first_name_prompt = 'First name: '
 
 
 
-update_table_prompt = '1: To update Client Information\n' \
-                            '2: To update Job/Job Cost...\n' \
-                            '3: To update Contact Information\n' \
-                            '4: To update User (Employee Information)...\n'
 
 search_attribute_prompt = '1: Search by major \n' \
                           '2: Search by GPA\n' \
