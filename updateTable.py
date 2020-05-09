@@ -55,21 +55,21 @@ update_contact_options = '1: Update Name\n' \
 
 # user options
 update_user_search_options = 'If searched contact does not exist this current\n' \
-                                'process will exit without changes to the system...\n' \
-                                '1: Find User by ID\n' \
-                                '2: Find User by Name\n' \
-                                '3: Find User by email\n' \
-                                '0: Exit Update Process...\n'
+                             'process will exit without changes to the system...\n' \
+                             '1: Find User by ID\n' \
+                             '2: Find User by Name\n' \
+                             '3: Find User by email\n' \
+                             '0: Exit Update Process...\n'
 
 update_user_options = '1: Update Name\n' \
-                        '2: Update Role\n' \
-                        '3: Update Street Address\n' \
-                        '4: Update City\n' \
-                        '5: Update State\n' \
-                        '6: Update Zip Code\n' \
-                        '7: Update Phone Number\n' \
-                        '8: Update Email\n' \
-                        '0: Exit Update...\n'
+                      '2: Update Role\n' \
+                      '3: Update Street Address\n' \
+                      '4: Update City\n' \
+                      '5: Update State\n' \
+                      '6: Update Zip Code\n' \
+                      '7: Update Phone Number\n' \
+                      '8: Update Email\n' \
+                      '0: Exit Update...\n'
 
 
 # clientIDprompt
@@ -187,6 +187,7 @@ def UpdateContactAttributes(connector, table, conditionCategory, condition):
         userChoice = int(input(update_contact_options))
     return 0
 
+
 def UpdateUserAttributes(connector, table, conditionCategory, condition):
     c = connector.cursor()
     data = (table, conditionCategory, condition)
@@ -211,7 +212,7 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
         if userChoice == 1:  # name
             update_value = input(userInName)
             column = 'Name'
-        elif userChoice == 2: #role ID
+        elif userChoice == 2:  # role ID
             update_value = input(userRoleIDIn)
             column = 'Role_ID'
         elif userChoice == 3:  # address
@@ -241,7 +242,7 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
         str_column = str(column)
         if column != '':
             query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (
-            table, str_column, update_value, conditionCategory, condition)
+                table, str_column, update_value, conditionCategory, condition)
             c.execute(query, )
             connector.commit()
         c.execute(select_query, )
@@ -336,6 +337,7 @@ def GetContactRecord(connector):
             userChoice = int(input(update_contact_search_options))
     return
 
+
 def UpdateUser(connector):
     userChoice = int(input(update_user_search_options))
     curr_table_name = 'Users'
@@ -353,15 +355,16 @@ def UpdateUser(connector):
             categoryCondition = 'Email'
 
         if categoryCondition in 'User_ID' and RecordExists(connector, curr_table_name, str(categoryCondition),
-                                                             searched_value):
+                                                           searched_value):
             # connector, table, conditionCategory, condition
             userChoice = UpdateUserAttributes(connector, curr_table_name, categoryCondition, searched_value)
         elif categoryCondition in ('Name', 'Email') and RecordExistsLike(connector, curr_table_name,
-                                                                               str(categoryCondition), searched_value):
+                                                                         str(categoryCondition), searched_value):
             userChoice = UpdateUserAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
             userChoice = int(input(update_user_search_options))
     return
+
 
 def RecordExists(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
@@ -406,7 +409,7 @@ def RecordExistsDate(connector, table, conditionCategory, condition):
     end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
     # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
     query = """SELECT * FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
-    data[0], data[1], start_date, data[1], end_date)
+        data[0], data[1], start_date, data[1], end_date)
     cursor.execute(query, )
     results = cursor.fetchall()
     # gets the number of rows affected by the command executed
@@ -431,7 +434,7 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
         end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
         # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
         select_query = """SELECT Job_ID FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
-        data[0], data[1], start_date, data[1], end_date)
+            data[0], data[1], start_date, data[1], end_date)
         c.execute(select_query, )
         result = c.fetchall()
         for i in result:
@@ -439,11 +442,10 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
                 if j >= 1:
                     condition = j
         conditionCategory = 'Job_ID'
-        data = (table, conditionCategory, condition)
 
     if conditionCategory in ('Client_ID'):  # force ID lookup
         select_query = """SELECT Job_ID FROM %s WHERE %s = %s""" % (
-        data[0], data[1], data[2])
+            data[0], data[1], data[2])
         c.execute(select_query, )
         result = c.fetchall()
         for i in result:
@@ -451,48 +453,80 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
                 if j >= 1:
                     condition = j
         conditionCategory = 'Job_ID'
-        data = (table, conditionCategory, condition)
 
-    select_query = """SELECT * FROM %s WHERE %s = %s""" % (data[0], data[1], str(data[2]))
+    table_two = 'JobCost'
+    table_three = 'JobStatus'
+    conditionCategory_two = 'Job.Job_ID'
+    conditionCategory_three = 'JobCost.Job_ID'
+    conditionCategory_four = 'JobStatus.Job_ID'
+
+    displayItems = (conditionCategory_three, 'Last_active', 'Status_ID','Job.Estimate',
+                    'Payout', 'Hours', 'MaterialsCost', 'Additions')
+    # select * from Job, JobCost WHERE Job.Job_ID = 42 AND JobCost.Job_ID = 42;
+    data = (table, table_two, table_three,
+            conditionCategory_two, condition,
+            conditionCategory_three,
+            conditionCategory_four)
+    select_query = """SELECT %s, %s,%s, %s,%s, %s, %s, %s 
+    FROM %s, %s, %s
+    WHERE %s = %s AND %s = %s AND %s = %s AND DateCreated = Last_active
+    ORDER BY %s ASC LIMIT 1""" % (displayItems[0], displayItems[1], displayItems[2], displayItems[3],
+                                                displayItems[4], displayItems[5], displayItems[6], displayItems[7],
+                                                data[0], data[1], data[2], data[3], data[4], data[5], data[4],data[6], data[4], displayItems[1])
     c.execute(select_query, )
     printResultTable(c)
     userChoice = int(input(update_job_attributes))
     while userChoice != 0:
-        join_tables = False
+        is_cost_table = False
+        is_status_table = False
         update_value = ''
         column = ''
         if userChoice == 1:  # Estimate
-            update_value = input(estimatePrompt)
+            update_value = float(input(estimatePrompt))
             column = 'Estimate'
         elif userChoice == 2:  # Payout
-            update_value = input(payoutPrompt)
+            update_value = float(input(payoutPrompt))
             column = 'Payout'
         elif userChoice == 3:  # hours
-            update_value = input(hoursPrompt)
+            update_value = int(input(hoursPrompt))
             column = 'Hours'
         elif userChoice == 4:  # Status
-            update_value = input(statusIDprompt)
-            table_two = 'JobStatus'  # change the status ID
-            print ("Change the job status: \n")
-            column_two = getStatusID()
-            join_tables = True
+            update_value = getStatusID()
+            table_two = 'JobStatus'
+            column = 'Status_ID'
+            is_status_table = True
         elif userChoice == 5:  # additional costs
-            update_value = int(input(additionsInPrompt))
+            update_value = float(input(additionsInPrompt))
             table_two = 'JobCost'
-            join_tables = True
-            continue
+            column = 'Additions'
+            is_cost_table = True
         elif userChoice == 6:  # additional Mats
-            update_value = int(input(materialsInPrompt))
+            update_value = float(input(materialsInPrompt))
             table_two = 'JobCost'
+            column = 'MaterialsCost'
+            is_cost_table = True
         str_column = str(column)
         if column != '':
-            select_query = """UPDATE %s SET %s = '%s' WHERE (%s = '%s')""" % (
-                table, str_column, update_value, conditionCategory, condition)
-            c.execute(select_query, )
-            connector.commit()
+            if is_cost_table:  # do jobcost
+                update_query = """UPDATE %s SET %s = '%s' WHERE (%s = %s)""" % (
+                    table_two, str_column, update_value, conditionCategory, condition)
+                c.execute(update_query, )
+                connector.commit()
+                is_cost_table = False
+            elif is_status_table: #change status
+                curr_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                args = [condition, update_value, curr_date]
+                c.callproc('UpdateJobStatus', args)
+                is_status_table = False
+            else:
+                # update estimate #update hours #update status
+                update_query = """UPDATE %s SET %s = '%s' WHERE (%s = %s)""" % (
+                    table, str_column, update_value, conditionCategory, condition)
+                c.execute(update_query, )
+                connector.commit()
         c.execute(select_query, )
         printResultTable(c)
-        userChoice = int(input(update_contact_options))
+        userChoice = int(input(update_job_attributes))
     return 0
 
 

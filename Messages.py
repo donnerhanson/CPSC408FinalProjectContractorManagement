@@ -101,8 +101,8 @@ payoutPrompt = 'Enter Payout amount (Ex: 10000.00)\n:'
 hoursPrompt = 'Enter amount of hours: \n'
 jobCostIDPrompt = 'Enter jobCostID:\n'
 # 8) Job Cost - tbl 5
-additionsInPrompt = 'Enter the total of miscellaneous Additions: '
-materialsInPrompt = 'Enter the amount of additional Materials'
+additionsInPrompt = 'Enter the total of miscellaneous Additions: \n'
+materialsInPrompt = 'Enter the amount of additional Materials: \n'
 # 9) JobSubDetails - tbl 8
 jobSubJobIDIn = 'Enter job ID: \n'
 jobSubContactIDIn = 'Enter Contact ID: \n'
