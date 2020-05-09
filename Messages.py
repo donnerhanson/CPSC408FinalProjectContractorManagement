@@ -134,12 +134,11 @@ def DisplayTableMessage(table_names):
     return message
 
 
-parameterLookupMenu = 'Search for:\n 1. Jobs\n 2. Clients \n 3. Contacts\n 4. Users\n'
-parameterJobLookup = ('Search for:\n 1. Employees attached to Job\n 2. Subcontractors attached to Job\n' /
-                      '3. Costs attached to Job\n')
-parameterClientLookup = 'Search for:\n 1. Jobs attached to Client\n 2. Costs from Client\n'
-parameterContactLookup = 'Search for:\n 1. Jobs attached to Contact\n'
-parameterUserLookup = 'Search for:\n 1. Jobs attached to User\n'
+parameterLookupMenu = 'Search for:\n1. Jobs\n2. Clients \n3. Contacts\n4. Users\n'
+parameterJobLookup = 'Search for:\n 1. Employees attached to Job\n2. Subcontractors attached to Job\n3. Costs attached to Job\n'
+parameterClientLookup = 'Search for:\n1. Jobs attached to Client\n2. Costs from Client\n'
+parameterContactLookup = 'Search for:\n1. Jobs attached to Contact\n'
+parameterUserLookup = 'Search for:\n1. Jobs attached to User\n'
 
 
 
