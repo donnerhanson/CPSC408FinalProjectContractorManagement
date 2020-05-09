@@ -79,7 +79,6 @@ update_user_options = '1: Update Name\n' \
 # zipInMessage
 # phoneInMessage
 # emailInMessage
-# TODO: UPDATE BY ID FUNCTIONING
 
 
 # ATTRIBUTE UPDATES
@@ -190,7 +189,7 @@ def UpdateContactAttributes(connector, table, conditionCategory, condition):
 
 def UpdateUserAttributes(connector, table, conditionCategory, condition):
     c = connector.cursor()
-    data = (table, conditionCategory, condition)
+
     if conditionCategory in ('Name', 'Email'):  # force ID lookup
         select_query = """SELECT User_ID FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + str(data[2]) + "%")
         c.execute(select_query, )
@@ -200,9 +199,15 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
                 if j >= 1:
                     condition = j
         conditionCategory = 'User_ID'
-        data = (table, conditionCategory, condition)
 
-    select_query = """SELECT * FROM %s WHERE %s = %s""" % (data[0], data[1], str(data[2]))
+    data = (table, conditionCategory, condition)
+    #0-9
+    user_cols = ('User_ID','Name','Role_ID', 'Address', 'City', 'State','Zip', 'Phone','Email', 'DeletedAt')
+    select_query = """SELECT %s,%s,%s,%s,%s,%s,%s,%s,%s FROM %s WHERE %s = %s """ % (
+        user_cols[0], user_cols[1], user_cols[2],
+        user_cols[3], user_cols[4], user_cols[5],
+        user_cols[6], user_cols[7], user_cols[8],
+        data[0], data[1], str(data[2]))
     c.execute(select_query, )
     printResultTable(c)
     userChoice = int(input(update_user_options))
@@ -423,13 +428,11 @@ def RecordExistsDate(connector, table, conditionCategory, condition):
         return False
     return True
 
-
-# TODO: Make sure all update attributes set and functional
 def UpdateJobAttributes(connector, table, conditionCategory, condition):
     c = connector.cursor()
     select_query = ''
     data = (table, conditionCategory, condition)
-    if conditionCategory in ('Last_active'):  # force ID lookup
+    if conditionCategory in 'Last_active':  # force ID lookup
         start_date = data[2].strftime('%Y-%m-%d %H:%M:%S')
         end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
         # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
@@ -470,9 +473,7 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
     select_query = """SELECT %s, %s,%s, %s,%s, %s, %s, %s 
     FROM %s, %s, %s
     WHERE %s = %s AND %s = %s AND %s = %s AND DateCreated = Last_active
-    ORDER BY %s ASC LIMIT 1""" % (displayItems[0], displayItems[1], displayItems[2], displayItems[3],
-                                                displayItems[4], displayItems[5], displayItems[6], displayItems[7],
-                                                data[0], data[1], data[2], data[3], data[4], data[5], data[4],data[6], data[4], displayItems[1])
+    ORDER BY %s ASC LIMIT 1""" % (displayItems[0], displayItems[1], displayItems[2], displayItems[3], displayItems[4], displayItems[5], displayItems[6], displayItems[7], data[0], data[1], data[2], data[3], data[4], data[5], data[4],data[6], data[4], displayItems[1])
     c.execute(select_query, )
     printResultTable(c)
     userChoice = int(input(update_job_attributes))
