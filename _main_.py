@@ -22,6 +22,7 @@ from csvHandler import *
 from ImportToDatabase import *
 from FakeData import *
 from job import *
+from parameterSearches import getInvoiceByJobID
 from testingFuncs import *
 from updateTable import *
 from userInput import *
@@ -47,7 +48,6 @@ def addClientAndJob(mysql_connection):
     CalculateNumJobsForClient(mysql_connection, currClientID)
 
 mycursor = connection.cursor()
-
 userChoice = 0
 while userChoice != 1 and userChoice != 2:
     userChoice = int(input('input mode:\n 1: fresh, 2: continual...\n '))

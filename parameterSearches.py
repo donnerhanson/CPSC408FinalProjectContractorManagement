@@ -1,5 +1,6 @@
 import mysql.connector
 from Messages import *
+from DisplayFunctions import *
 
 
 def UsersOnJob(cursor):
@@ -29,3 +30,11 @@ def UsersOnJob(cursor):
                        'WHERE J.JOB_ID = %s ORDER BY J.JOB_ID') % numChoice
         # """Select %s FROM table WHERE JOB_ID =  %s """ % (numChoice)
     return lastJobID
+
+
+# may need some sort of checking to make sure record exists
+def getInvoiceByJobID(cursor, job_id):
+    select_query = """SELECT DISTINCT JC.Job_ID, J.Client_ID, (MaterialsCost+Additions) AS Total_Invoice,  Additions, MaterialsCost FROM Job J INNER JOIN JobCost JC ON J.JOB_ID = JC.Job_ID INNER JOIN Job ON JC.Job_ID WHERE J.JOB_ID = %s;""" % job_id
+    cursor.execute(select_query, )
+    printResultTable(cursor)
+
