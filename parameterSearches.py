@@ -16,8 +16,16 @@ def UsersOnJob(cursor):
                 print('Job does not exist')
             else:
                 print('something happened')
-    if numChoice > lastJobID:
+    if numChoice > str(lastJobID):
         print('Error, Job does not exist.')
     else:
-        cursor.execute('select')
+
+        cursor.execute('SELECT DISTINCT J.JOB_ID, C.ClientName as Client_Name, '
+                       'J.Client_ID, U.Name as Salesperson_Name, JSD.User_ID '
+                       'FROM Job, Client, Users, JobSalesDetails JSD '
+                       'INNER JOIN Job J on JSD.Job_ID = J.JOB_ID '
+                       'INNER JOIN Users U on JSD.User_ID = U.User_ID '
+                       'INNER JOIN Client C on J.Client_ID = C.Client_ID '
+                       'WHERE J.JOB_ID = %s ORDER BY J.JOB_ID') % numChoice
+        # """Select %s FROM table WHERE JOB_ID =  %s """ % (numChoice)
     return lastJobID

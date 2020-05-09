@@ -14,7 +14,7 @@ from csv import writer
 import csv
 
 # USER DEFINED FILES
-import updateTable
+from updateTable import *
 from Messages import *
 from DisplayFunctions import *
 from client import *
@@ -25,6 +25,7 @@ from job import *
 from testingFuncs import *
 from updateTable import *
 from userInput import *
+from parameterSearches import *
 
 # main
 
@@ -66,6 +67,7 @@ else:
             userChoice = int(input(parameterLookupMenu))
             if userChoice == 1:
                 int(input(parameterJobLookup))
+                UsersOnJob(mycursor)
             elif userChoice == 2:
                 int(input(parameterClientLookup))
             elif userChoice == 3:
