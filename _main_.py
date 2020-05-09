@@ -65,13 +65,13 @@ else:
         elif userChoice == 2:  # parameterized search
             userChoice = int(input(parameterLookupMenu))
             if userChoice == 1:
-                something = 0
+                int(input(parameterJobLookup))
             elif userChoice == 2:
-                something = 0
+                int(input(parameterClientLookup))
             elif userChoice == 3:
-                something = 0
+                int(input(parameterContactLookup))
             elif userChoice == 4:
-                something = 0
+                int(input(parameterUserLookup))
             else:
                 continue
             # could do things like:
