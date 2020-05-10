@@ -66,14 +66,46 @@ else:
         elif userChoice == 2:  # parameterized search
             userChoice = int(input(parameterLookupMenu))
             if userChoice == 1:
-                int(input(parameterJobLookup))
-                UsersOnJob(mycursor)
+                userChoice = int(input(parameterJobLookup))
+                if userChoice == 1:
+                    salesChoice = input('Please enter the Job ID you wish to view:\n')
+                    UsersOnJob(mycursor, salesChoice)
+                elif userChoice == 2:
+                    subChoice = input('Please enter the Job ID you wish to view:\n')
+                    SubsOnJob(mycursor, subChoice)
+                elif userChoice == 3:
+                    invoiceChoice = input('Please enter the Job ID you wish to view:\n')
+                    getInvoiceByJobID(mycursor, invoiceChoice)
+                else:
+                    print('Error, please enter a valid choice.')
+                    continue
             elif userChoice == 2:
-                int(input(parameterClientLookup))
+                userChoice = int(input(parameterClientLookup))
+                if userChoice == 1:
+                    jobChoice = input('Please enter the Client ID you wish to view:\n')
+                    JobsOnClient(mycursor, jobChoice)
+                elif userChoice == 2:
+                    costChoice = input('Please enter the Client ID you wish to view:\n')
+                    CostsOnClient(mycursor, costChoice)
+                else:
+                    print('Error, please enter a valid choice.')
+                    continue
             elif userChoice == 3:
-                int(input(parameterContactLookup))
+                userChoice = int(input(parameterContactLookup))
+                if userChoice == 1:
+                    jobChoice = input('Please enter the Contact ID you wish to view:\n')
+                    JobsOnContact(mycursor, jobChoice)
+                else:
+                    print('Error, please enter a valid choice.')
+                    continue
             elif userChoice == 4:
-                int(input(parameterUserLookup))
+                userChoice = int(input(parameterUserLookup))
+                if userChoice == 1:
+                    jobChoice = input('Please enter the User ID you wish to view:\n')
+                    JobsOnUsers(mycursor, jobChoice)
+                else:
+                    print('Error, please enter a valid choice.')
+                    continue
             else:
                 continue
             # could do things like:
