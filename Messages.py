@@ -9,7 +9,7 @@ main_output_message = '1: Access Display Options\n' \
                       '2: Parameterized Search\n' \
                       '3: Update an existing record\n' \
                       '4: Create a new record\n' \
-                      '5: Delete a record\n' \
+                      '5: Delete a record/Activate Deleted Record\n' \
                       '0: To exit...\n'
 
 # UPDATE TABLE
@@ -139,19 +139,6 @@ parameterJobLookup = 'Search for:\n 1. Employees attached to Job\n2. Subcontract
 parameterClientLookup = 'Search for:\n1. Jobs attached to Client\n2. Costs from Client\n'
 parameterContactLookup = 'Search for:\n1. Jobs attached to Contact\n'
 parameterUserLookup = 'Search for:\n1. Jobs attached to User\n'
-
-
-
-
-
-first_name_prompt = 'First name: '
-
-
-
-
-search_attribute_prompt = '1: Search by major \n' \
-                          '2: Search by GPA\n' \
-                          '3: Search by Faculty Advisor...\n'
 
 delete_confirmation = 'Are you sure you would like to delete:'
 

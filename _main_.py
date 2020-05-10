@@ -14,6 +14,7 @@ from csv import writer
 import csv
 
 # USER DEFINED FILES
+from SoftDelete import SoftDelete
 from updateTable import *
 from Messages import *
 from DisplayFunctions import *
@@ -123,7 +124,7 @@ else:
             elif userChoice == 2:
                 addUser(mycursor)
         elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
-            continue
+            SoftDelete(connection)
         elif userChoice == 6:  # export structured CSV file
             exportDataBaseToCSV(mycursor)
             print('CSV exported')

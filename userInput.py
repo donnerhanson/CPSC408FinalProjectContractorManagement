@@ -30,7 +30,7 @@ def addUser(cursor):
                 lastUserID = num
                 break
             elif num is None:
-                print('user does note exist')
+                print('User does not exist')
             else:
                 print('something happened')
     return lastUserID
