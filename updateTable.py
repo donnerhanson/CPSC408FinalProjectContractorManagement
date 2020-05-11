@@ -2,6 +2,7 @@ import mysql.connector
 from datetime import datetime
 from DisplayFunctions import printResultTable
 from Messages import *
+from inputParseFuncs import getNumberChoice
 from userInput import *
 import re
 
@@ -563,8 +564,5 @@ def getStatusID():
     full_phrase += '...\n'
 
     while not 1 <= userChoice <= 5:
-        userChoice = input(full_phrase)
-        if re.search('[a-zA-Z]', userChoice):
-            userChoice = NumberInputError(userChoice)
-        userChoice = int(userChoice)
+        userChoice = getNumberChoice(full_phrase)
     return userChoice

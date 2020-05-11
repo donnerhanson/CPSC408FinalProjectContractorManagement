@@ -88,28 +88,28 @@ else:
                     print('Error, please enter a valid choice.')
                     continue
             elif userChoice == 2:
-                userChoice = int(input(parameterClientLookup))
+                userChoice = getNumberChoice(parameterClientLookup)
                 if userChoice == 1:
-                    jobChoice = input('Please enter the Client ID you wish to view:\n')
+                    jobChoice = getNumberChoice('Please enter the Client ID you wish to view:\n')
                     JobsOnClient(mycursor, jobChoice)
                 elif userChoice == 2:
-                    costChoice = input('Please enter the Client ID you wish to view:\n')
+                    costChoice = getNumberChoice('Please enter the Client ID you wish to view:\n')
                     CostsOnClient(mycursor, costChoice)
                 else:
                     print('Error, please enter a valid choice.')
                     continue
             elif userChoice == 3:
-                userChoice = int(input(parameterContactLookup))
+                userChoice = getNumberChoice(parameterContactLookup)
                 if userChoice == 1:
-                    jobChoice = input('Please enter the Contact ID you wish to view:\n')
+                    jobChoice = getNumberChoice('Please enter the Contact ID you wish to view:\n')
                     JobsOnContact(mycursor, jobChoice)
                 else:
                     print('Error, please enter a valid choice.')
                     continue
             elif userChoice == 4:
-                userChoice = int(input(parameterUserLookup))
+                userChoice = getNumberChoice(parameterUserLookup)
                 if userChoice == 1:
-                    jobChoice = input('Please enter the User ID you wish to view:\n')
+                    jobChoice = getNumberChoice('Please enter the User ID you wish to view:\n')
                     JobsOnUsers(mycursor, jobChoice)
                 else:
                     print('Error, please enter a valid choice.')
@@ -122,10 +122,10 @@ else:
             continue
         elif userChoice == 3:  # update Record TODO: Job/Job Cost in UpdateTable.py
             # client table update functioning as intended
-            userChoice = int(input(update_table_prompt))
+            userChoice = getNumberChoice(update_table_prompt)
             userChoice = UpdateTable(connection, userChoice)
         elif userChoice == 4:  # create a record TODO: add users/employees
-            userChoice = int(input(add_person_prompt))
+            userChoice = getNumberChoice(add_person_prompt)
             if userChoice == 1:
                 addClientAndJob(connection)
             elif userChoice == 2:
