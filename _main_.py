@@ -130,6 +130,7 @@ else:
             print('CSV exported')
             # could add separate parameterized CSVs to export using parameter functions
         else:
+            print('Please enter a valid choice.\n')
             continue
 
 connection.close()

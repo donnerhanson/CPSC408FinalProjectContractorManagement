@@ -19,8 +19,8 @@ def UsersOnJob(cursor, job_id):
                 print('Job does not exist')
             else:
                 print('something happened')
-    if numChoice > str(lastJobID):
-        print('Error, Job does not exist.')
+    if int(numChoice) > lastJobID or int(numChoice) <= 0:
+        print('Error, Job does not exist. Please enter a valid ID.')
     else:
         select_query = 'SELECT DISTINCT J.JOB_ID, C.ClientName as Client_Name, '\
                        'J.Client_ID, U.Name as Salesperson_Name, JSD.User_ID '\
@@ -47,8 +47,8 @@ def SubsOnJob(cursor, job_id):
                 print('Job does not exist')
             else:
                 print('something happened')
-    if numChoice > str(lastJobID):
-        print('Error, Job does not exist.')
+    if int(numChoice) > lastJobID or int(numChoice) <= 0:
+        print('Error, Job does not exist. Please enter a valid ID.')
     else:
         select_query = 'SELECT DISTINCT J.JOB_ID, C.ClientName as Client_Name, '\
                        'J.Client_ID, CO.ContactName as Subcontractor_Name, JSD.Contact_ID '\
@@ -75,8 +75,8 @@ def JobsOnClient(cursor, client_id):
                 print('Client does not exist')
             else:
                 print('something happened')
-    if numChoice > str(lastClientID):
-        print('Error, Client does not exist.')
+    if int(numChoice) > lastClientID or int(numChoice) <= 0:
+        print('Error, Client does not exist. Please enter a valid ID.')
     else:
         select_query = 'SELECT DISTINCT C.Client_ID, C.ClientName, JOB_ID ' \
                        'FROM Client, Job ' \
@@ -101,8 +101,8 @@ def CostsOnClient(cursor, client_id):
                 print('Client does not exist')
             else:
                 print('something happened')
-    if numChoice > str(lastClientID):
-        print('Error, Client does not exist.')
+    if int(numChoice) > lastClientID or int(numChoice) <= 0:
+        print('Error, Client does not exist. Please enter a valid ID.')
     else:
         select_query = 'SELECT DISTINCT JC.Job_ID, J.Client_ID, (MaterialsCost+Additions) AS Total_Invoice,  Additions, MaterialsCost ' \
                        'FROM Job J ' \
@@ -124,11 +124,11 @@ def JobsOnContact(cursor, contact_id):
                 lastContactID = num
                 break
             elif num is None:
-                print('Client does not exist')
+                print('Contact does not exist')
             else:
                 print('something happened')
-    if numChoice > str(lastContactID):
-        print('Error, Contact does not exist.')
+    if int(numChoice) > lastContactID or int(numChoice) <= 0:
+        print('Error, Contact does not exist. Please enter a valid ID.')
     else:
         select_query = 'SELECT DISTINCT C.ContactName, C.Contact_ID, Job_ID ' \
                        'FROM Contacts, JobSubDetails ' \
@@ -150,11 +150,11 @@ def JobsOnUsers(cursor, user_id):
                 lastUserID = num
                 break
             elif num is None:
-                print('Client does not exist')
+                print('User does not exist')
             else:
                 print('something happened')
-    if numChoice > str(lastUserID):
-        print('Error, Contact does not exist.')
+    if int(numChoice) > lastUserID or int(numChoice) <= 0:
+        print('Error, User does not exist. Please enter a valid ID.')
     else:
         select_query = 'SELECT DISTINCT U.Name, U.User_ID, Job_ID ' \
                        'FROM Users, JobSalesDetails ' \
