@@ -14,16 +14,16 @@ main_output_message = '1: Access Display Options\n' \
 
 # UPDATE TABLE
 update_table_prompt = '1: To update Client Information\n' \
-                      '2: To update Job/Job Cost...\n' \
+                      '2: To update Job/Job Cost\n' \
                       '3: To update Contact Information\n' \
                       '4: To update User (Employee Information)...\n'
 
 update_table_prompt = '1: To update Client Information\n' \
-                      '2: To update Job/Job Cost...\n' \
-                      '3: To update Contact Information...\n' \
+                      '2: To update Job/Job Cost\n' \
+                      '3: To update Contact Information\n' \
                       '4: To update User (Employee Information)\n'
 
-update_client_search_options = 'If searched client does not exist this current\n' \
+update_client_search_options = 'If searched client does not exist, this current\n' \
                                'process will exit without changes to the system...\n' \
                                '1: Find Client by ID\n' \
                                '2: Find Client by Name\n' \
@@ -39,7 +39,7 @@ update_client_options = '1: Update Name\n' \
                         '7: Update Phone Number\n' \
                         '0: Exit Update...\n'
 
-update_contact_search_options = 'If searched contact does not exist this current\n' \
+update_contact_search_options = 'If searched contact does not exist, this current\n' \
                                 'process will exit without changes to the system...\n' \
                                 '1: Find Contact by ID\n' \
                                 '2: Find Contact by Name\n' \
@@ -68,10 +68,12 @@ update_job_attributes = '1: Update Estimate\n' \
                         '0: Exit Update...\n'
 
 # ADD RECORDS
-add_person_prompt = 'Enter\n1: Add client\n2: Add user\n 3: Add job\n'
+add_person_prompt = '1: Add client and new job\n' \
+                    '2: Add user\n' \
+                    '3: Add job to existing client...\n'
 
 # Delete or restore
-restore_or_delete_prompt = 'Enter\n1: Delete Client\n2: Restore Client\n' \
+restore_or_delete_prompt = '1: Delete Client\n2: Restore Client\n' \
                            '3: Delete Contact\n4: Restore Contact\n' \
                            '5: Delete User\n6: Restore User...\n'
 remove_person_prompt = add_person_prompt.replace("Add", "Delete")
@@ -83,17 +85,17 @@ def NumberInputError(value):
 
 
 # a) Misc
-addressInMessage = 'Enter Street Address\n'
+addressInMessage = 'Enter Street Address:\n'
 cityInMessage = 'Enter City:\n'
-stateInMessage = 'Enter State (Ex: \'CA\'): \n'
-zipInMessage = 'Enter Zip (Ex: \'92868\'): \n'
-phoneInMessage = 'Enter phone number (Ex: \'555-555-5555\'): \n'
-emailInMessage = 'Enter email: \n'
+stateInMessage = 'Enter State (Ex: \'CA\'):\n'
+zipInMessage = 'Enter Zip (Ex: \'92868\'):\n'
+phoneInMessage = 'Enter phone number (Ex: \'555-555-5555\'):\n'
+emailInMessage = 'Enter email:\n'
 
 # 1) Roles - tbl 9
 roleInMessage = 'Enter a Role Description:\n'
 # 2) CompanyCategoryTableLookup - tbl 2
-companyCategoryTableLookupIn = 'Enter a company category type: (Ex: Plumbing, Multiple Purpose, Etc)\n'
+companyCategoryTableLookupIn = 'Enter a company category type (Ex: Plumbing, Multiple Purpose, Etc):\n'
 # 3) StatusDefinition - tbl 10
 statusDefinitionInNameMessage = 'Enter a new status name:\n'
 statusDefinitionInDescriptionMessage = 'Enter a new status name:\n'
@@ -111,22 +113,22 @@ contactInEmail = 'Enter Contact\'s Email:\n '
 contactInURL = 'Enter Contact\'s URL:\n '
 # 7) Job - tbl 4
 clientIDprompt = 'Enter Client\'s ID:\n'
-estimatePrompt = 'Enter Estimate (Ex: 10000.00)\n:'
-payoutPrompt = 'Enter Payout amount (Ex: 10000.00)\n:'
-hoursPrompt = 'Enter amount of hours: \n'
+estimatePrompt = 'Enter Estimate (Ex: 10000.00):\n'
+payoutPrompt = 'Enter Payout amount (Ex: 10000.00):\n'
+hoursPrompt = 'Enter amount of hours:\n'
 jobCostIDPrompt = 'Enter jobCostID:\n'
 # 8) Job Cost - tbl 5
-additionsInPrompt = 'Enter the total of miscellaneous Additions: \n'
-materialsInPrompt = 'Enter the amount of additional Materials: \n'
+additionsInPrompt = 'Enter the total of miscellaneous Additions:\n'
+materialsInPrompt = 'Enter the amount of additional Materials:\n'
 # 9) JobSubDetails - tbl 8
-jobSubJobIDIn = 'Enter job ID: \n'
-jobSubContactIDIn = 'Enter Contact ID: \n'
+jobSubJobIDIn = 'Enter job ID:\n'
+jobSubContactIDIn = 'Enter Contact ID:\n'
 # 10) JobStatus - tbl 7
-jobIDPrompt = 'Enter Job_ID\n:'
+jobIDPrompt = 'Enter Job_ID:\n'
 statusIDprompt = 'Enter Status_ID\n:'
 # 11) JobSalesDetails - tbl 6
 ##jobIDPrompt
-userIDPrompt = 'Enter User ID\n'
+userIDPrompt = 'Enter User ID:\n'
 
 # USERINPUT CHOICES
 # display
