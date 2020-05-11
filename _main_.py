@@ -123,6 +123,8 @@ else:
                 addClientAndJob(connection)
             elif userChoice == 2:
                 addUser(mycursor)
+            elif userChoice == 3:
+                addExistingClientJobToDB(connection)
         elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
             SoftDelete(connection)
         elif userChoice == 6:  # export structured CSV file
