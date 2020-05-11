@@ -104,6 +104,7 @@ def DeleteOrRestoreContact(connector, delOrRestore):
             return 0
     return 0
 
+
 def DeleteOrRestoreUser(connector, delOrRestore):
     confirm = ''
     options = ('y', 'n')
@@ -139,6 +140,7 @@ def DeleteOrRestoreUser(connector, delOrRestore):
             return 0
     return 0
 
+
 def GetClientIDbyID(connector):
     ID = getNumberChoice(clientIDprompt)
     table = 'Client'
@@ -158,6 +160,7 @@ def GetContactIDbyID(connector):
     else:
         return 0
 
+
 def GetUserIDbyID(connector):
     ID = getNumberChoice(userIDPrompt)
     table = 'Users'
@@ -166,6 +169,7 @@ def GetUserIDbyID(connector):
         return ID
     else:
         return 0
+
 
 def UpdateRowByOneCondition(connector, table, col_name, update_to_value, col_name_condition, condition_in):
     c = connector.cursor()

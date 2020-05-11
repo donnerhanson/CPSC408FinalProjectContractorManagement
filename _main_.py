@@ -115,11 +115,11 @@ else:
                     print('Error, please enter a valid choice.')
                     continue
             else:
+                userChoice = -1
                 continue
             # could do things like:
             # find all jobs associated with personnel/clients
             # find all people associated with a job and job cost/total
-            continue
         elif userChoice == 3:  # update Record TODO: Job/Job Cost in UpdateTable.py
             # client table update functioning as intended
             userChoice = getNumberChoice(update_table_prompt)
