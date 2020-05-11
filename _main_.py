@@ -144,8 +144,9 @@ else:
             exportDataBaseToCSV(mycursor)
             print('CSV exported')
             # could add separate parameterized CSVs to export using parameter functions
-        else:
+        elif 0 < userChoice >= 7:
             print('Please enter a valid choice.\n')
+        else:
             continue
 
 connection.close()
