@@ -68,12 +68,12 @@ def GetClientIDbyID(connector):
 
 def UpdateRowByOneCondition(connector, table, col_name, update_to_value, col_name_condition, condition_in):
     c = connector.cursor()
-    if update_to_value is None: # most likely for setting date to null
+    if update_to_value is None:  # most likely for setting date to null
         query = """UPDATE %s SET %s = NULL WHERE %s = '%s'""" % (
             table, col_name, col_name_condition, condition_in)
     else:
         query = """UPDATE %s SET %s = '%s' WHERE %s = '%s'""" % (
-        table, col_name, update_to_value, col_name_condition, condition_in)
+            table, col_name, update_to_value, col_name_condition, condition_in)
     c.execute(query, )
     connector.commit()
     return

@@ -94,6 +94,8 @@ statusDefinitionInNameMessage = 'Enter a new status name:\n'
 statusDefinitionInDescriptionMessage = 'Enter a new status name:\n'
 # 4) Users - tbl 11
 userRoleIDIn = 'Enter user\'s role ID:\n'
+
+available_roles = "1: Sales\n2: Finance\n3: Marketing\n4: Owner...\n"
 userInName = 'Enter User\'s name: \n'
 # 5) Client - tbl 1
 clientInName = 'Enter Client\'s name: \n'

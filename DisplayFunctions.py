@@ -9,11 +9,13 @@ def printAnyFullTable(cursor, table_name):
         select_query += " WHERE DeletedAt IS NULL"
     cursor.execute(select_query)
     result = cursor.fetchall()
+    row_count = cursor.rowcount
     any_column_names = [i[0] for i in cursor.description]
     df = DataFrame(result,
                    columns=any_column_names)
     print(df.to_string(index=False))  # remove row indexing on pandas DataFrame
     # print(query)
+    return row_count
 
 
 def printClientTable(cursor):

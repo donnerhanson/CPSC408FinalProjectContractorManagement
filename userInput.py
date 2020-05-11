@@ -1,10 +1,15 @@
 import mysql.connector
 import re
 from Messages import *
+from DisplayFunctions import printAnyFullTable
+
 
 def addUser(cursor):
     name = input(userInName)
-    role = input(userRoleIDIn)
+    num_roles = getRoles(cursor)
+    role = 0
+    while (role <= 0) or (role > num_roles):
+        role = int(input(userRoleIDIn))
     address = input(addressInMessage)
     city = input(cityInMessage)
     state = input(stateInMessage)
@@ -34,3 +39,7 @@ def addUser(cursor):
             else:
                 print('something happened')
     return lastUserID
+
+
+def getRoles(cursor):
+    return printAnyFullTable(cursor, 'Roles');
