@@ -57,3 +57,13 @@ def avgJobCost(cursor):
                    'FROM JobCost'
     cursor.execute(select_query)
     printResultTable(cursor)
+
+def avgJobCostGreater(cursor):
+    select_query = 'SELECT Job_ID, ROUND(MaterialsCost + Additions, 2) AS TotalCost FROM JobCost WHERE ( (MaterialsCost + Additions) > (SELECT SUM(MaterialsCost + Additions) DIV (SELECT Job_ID FROM JobCost ORDER BY Job_ID DESC LIMIT 1 ) AS Average_Total FROM JobCost));'
+    cursor.execute(select_query)
+    printResultTable(cursor)
+
+def avgJobCostLesser(cursor):
+    select_query = 'SELECT Job_ID, ROUND(MaterialsCost + Additions, 2) AS TotalCost FROM JobCost WHERE ( (MaterialsCost + Additions) < (SELECT SUM(MaterialsCost + Additions) DIV (SELECT Job_ID FROM JobCost ORDER BY Job_ID DESC LIMIT 1 ) AS Average_Total FROM JobCost));'
+    cursor.execute(select_query)
+    printResultTable(cursor)

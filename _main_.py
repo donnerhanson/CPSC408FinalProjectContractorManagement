@@ -86,6 +86,10 @@ else:
                 elif userChoice == 3:
                     invoiceChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
                     getInvoiceByJobID(mycursor, invoiceChoice)
+                elif userChoice == 4:
+                    avgJobCostGreater(mycursor)
+                elif userChoice == 5:
+                    avgJobCostLesser(mycursor)
                 else:
                     print('Error, please enter a valid choice.')
                     continue

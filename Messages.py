@@ -159,7 +159,10 @@ parameterLookupMenu = psearch + '1: Jobs\n' \
                                 '4: Users...\n'
 parameterJobLookup = psearch + '1: Employees attached to Job\n' \
                                '2: Subcontractors attached to Job\n' \
-                               '3: Costs attached to Job...\n'
+                               '3: Costs attached to Job\n' \
+                               '4: Jobs with costs higher than average\n' \
+                               '5: Jobs with costs lower than average...\n'
+
 parameterClientLookup = psearch + '1: Jobs attached to Client\n' \
                                   '2: Costs from Client...\n'
 parameterContactLookup = psearch + '1: Jobs attached to Contact\n'
