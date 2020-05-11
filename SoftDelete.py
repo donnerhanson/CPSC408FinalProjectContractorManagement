@@ -26,12 +26,12 @@ def DeleteOrRestoreClient(connector, delOrRestore):
     table = 'Client'
     condition = 'Client_ID'
     col_name = 'DeletedAt'
-    if delOrRestore == 1:
+    ID = GetClientIDbyID(connector)
+    if delOrRestore == 1 and ID != 0:
         while confirm not in options:
             confirm = str(input(delete_confirmation))
             confirm = confirm.lower()
         if confirm == 'y':
-            ID = GetClientIDbyID(connector)
             if ID == 0:
                 return 0
             delete_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
@@ -41,15 +41,14 @@ def DeleteOrRestoreClient(connector, delOrRestore):
             return 0
         else:
             return 0
-    elif delOrRestore == 2:
+    elif delOrRestore == 2 and ID != 0:
         while confirm.lower() not in options:
-            confirm = str(input(delete_confirmation))
+            confirm = str(input(restore_confirmation))
             confirm = confirm.lower()
         if confirm == 'y':
-            ID = GetClientIDbyID(connector)
-            delete_date = None
+            restore_date = None
             # connector, table, col_name, update_to_value, col_name_condition, condition_in
-            UpdateRowByOneCondition(connector, table, col_name, delete_date, condition, ID)
+            UpdateRowByOneCondition(connector, table, col_name, restore_date, condition, ID)
         elif confirm == 'n':
             return 0
         else:
@@ -69,11 +68,16 @@ def GetClientIDbyID(connector):
 
 def UpdateRowByOneCondition(connector, table, col_name, update_to_value, col_name_condition, condition_in):
     c = connector.cursor()
-    query = """UPDATE %s SET %s = '%s' WHERE %s = '%s'""" % (table, col_name, update_to_value, col_name_condition, condition_in)
-    somevar = 0
+    if update_to_value is None: # most likely for setting date to null
+        query = """UPDATE %s SET %s = NULL WHERE %s = '%s'""" % (
+            table, col_name, col_name_condition, condition_in)
+    else:
+        query = """UPDATE %s SET %s = '%s' WHERE %s = '%s'""" % (
+        table, col_name, update_to_value, col_name_condition, condition_in)
     c.execute(query, )
     connector.commit()
     return
+
 
 def RestorePersonByID(connector, table, str_column, date_time, conditionCategory, ID):
     c = connector.cursor()
