@@ -55,7 +55,7 @@ userChoice = -1
 while userChoice != 1 and userChoice != 2:
     userChoice = getNumberChoice('input mode:\n 1: fresh, 2: continual...\n ')
 
-if userChoice == 1: # fresh DB must have at least one record
+if userChoice == 1:  # fresh DB must have at least one record
     num_tuples = -1
     while num_tuples <= 1:
         num_tuples = getNumberChoice('Enter the amount of clients and jobs: Ex: 9\n')
@@ -114,7 +114,7 @@ else:
                 else:
                     print('Error, please enter a valid choice.')
                     continue
-            else:
+            else:  # TODO: Ori check out why your function exits the program put this here as a quick fix
                 userChoice = -1
                 continue
             # could do things like:
