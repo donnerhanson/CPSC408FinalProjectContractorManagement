@@ -73,7 +73,9 @@ update_job_attributes = '1: Update Estimate\n' \
 add_person_prompt = 'Enter\n1: Add client\n2: Add user\n 3: Add job\n'
 
 # Delete or restore
-restore_or_delete_prompt = 'Enter\n1: Delete\n2: Restore...\n'
+restore_or_delete_prompt = 'Enter\n1: Delete Client\n2: Restore Client\n' \
+                           '3: Delete Contact\n4: Restore Contact\n' \
+                           '5: Delete User\n6: Restore User...\n'
 remove_person_prompt = add_person_prompt.replace("Add", "Delete")
 
 
