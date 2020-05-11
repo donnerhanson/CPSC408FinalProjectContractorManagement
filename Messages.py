@@ -7,9 +7,9 @@
 # MAIN
 main_output_message = '1: Access Display Options\n' \
                       '2: Parameterized Search\n' \
-                      '3: Update an existing record\n' \
-                      '4: Create a new record\n' \
-                      '5: Delete a record/Activate Deleted Record\n' \
+                      '3: Update existing record\n' \
+                      '4: Create new record\n' \
+                      '5: Delete record/Restore deleted record\n' \
                       '0: To exit...\n'
 
 # UPDATE TABLE
@@ -67,6 +67,14 @@ update_job_attributes = '1: Update Estimate\n' \
                                 '5: Update Additional Misc. Costs\n' \
                                 '6: Update Material Costs\n' \
                                 '0: Exit Update...\n'
+
+
+#ADD RECORDS
+add_person_prompt = 'Enter\n1: Add client\n2: Add user...\n'
+
+# Delete or restore
+restore_or_delete_prompt = 'Enter\n1: Delete\n2: Restore...\n'
+remove_person_prompt = add_person_prompt.replace("Add", "Delete")
 
 
 # a) Misc
@@ -140,6 +148,7 @@ parameterClientLookup = 'Search for:\n1. Jobs attached to Client\n2. Costs from 
 parameterContactLookup = 'Search for:\n1. Jobs attached to Contact\n'
 parameterUserLookup = 'Search for:\n1. Jobs attached to User\n'
 
-delete_confirmation = 'Are you sure you would like to delete:'
+y_n = 'y/n'
+delete_confirmation = 'Are you sure you would like to delete {}?...\n'.format(y_n)
 
-y_n = 'y/n: '
+restore_confirmation = delete_confirmation.replace('delete', 'restore')

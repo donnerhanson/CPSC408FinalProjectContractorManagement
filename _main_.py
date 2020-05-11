@@ -118,7 +118,7 @@ else:
             userChoice = int(input(update_table_prompt))
             userChoice = UpdateTable(connection, userChoice)
         elif userChoice == 4:  # create a record TODO: add users/employees
-            userChoice = int(input('input\n 1 for add client:\n 2 for add user:\n'))
+            userChoice = int(input(add_person_prompt))
             if userChoice == 1:
                 addClientAndJob(connection)
             elif userChoice == 2:

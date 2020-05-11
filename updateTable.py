@@ -201,8 +201,8 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
         conditionCategory = 'User_ID'
 
     data = (table, conditionCategory, condition)
-    #0-9
-    user_cols = ('User_ID','Name','Role_ID', 'Address', 'City', 'State','Zip', 'Phone','Email', 'DeletedAt')
+    # 0-9
+    user_cols = ('User_ID', 'Name', 'Role_ID', 'Address', 'City', 'State', 'Zip', 'Phone', 'Email', 'DeletedAt')
     select_query = """SELECT %s,%s,%s,%s,%s,%s,%s,%s,%s FROM %s WHERE %s = %s """ % (
         user_cols[0], user_cols[1], user_cols[2],
         user_cols[3], user_cols[4], user_cols[5],
@@ -253,6 +253,112 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
         c.execute(select_query, )
         printResultTable(c)
         userChoice = int(input(update_user_options))
+    return 0
+
+
+def UpdateJobAttributes(connector, table, conditionCategory, condition):
+    c = connector.cursor()
+    select_query = ''
+    data = (table, conditionCategory, condition)
+    if conditionCategory in 'Last_active':  # force ID lookup
+        start_date = data[2].strftime('%Y-%m-%d %H:%M:%S')
+        end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
+        # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
+        select_query = """SELECT Job_ID FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
+            data[0], data[1], start_date, data[1], end_date)
+        c.execute(select_query, )
+        result = c.fetchall()
+        for i in result:
+            for j in i:
+                if j >= 1:
+                    condition = j
+        conditionCategory = 'Job_ID'
+
+    if conditionCategory in ('Client_ID'):  # force ID lookup
+        select_query = """SELECT Job_ID FROM %s WHERE %s = %s""" % (
+            data[0], data[1], data[2])
+        c.execute(select_query, )
+        result = c.fetchall()
+        for i in result:
+            for j in i:
+                if j >= 1:
+                    condition = j
+        conditionCategory = 'Job_ID'
+
+    table_two = 'JobCost'
+    table_three = 'JobStatus'
+    conditionCategory_two = 'Job.Job_ID'
+    conditionCategory_three = 'JobCost.Job_ID'
+    conditionCategory_four = 'JobStatus.Job_ID'
+
+    displayItems = (conditionCategory_three, 'Last_active', 'Status_ID', 'Job.Estimate',
+                    'Payout', 'Hours', 'MaterialsCost', 'Additions')
+    # select * from Job, JobCost WHERE Job.Job_ID = 42 AND JobCost.Job_ID = 42;
+    data = (table, table_two, table_three,
+            conditionCategory_two, condition,
+            conditionCategory_three,
+            conditionCategory_four)
+    select_query = """SELECT %s, %s,%s, %s,%s, %s, %s, %s 
+    FROM %s, %s, %s
+    WHERE %s = %s AND %s = %s AND %s = %s AND DateCreated = Last_active
+    ORDER BY %s ASC LIMIT 1""" % (
+    displayItems[0], displayItems[1], displayItems[2], displayItems[3], displayItems[4], displayItems[5],
+    displayItems[6], displayItems[7], data[0], data[1], data[2], data[3], data[4], data[5], data[4], data[6], data[4],
+    displayItems[1])
+    c.execute(select_query, )
+    printResultTable(c)
+    userChoice = int(input(update_job_attributes))
+    while userChoice != 0:
+        is_cost_table = False
+        is_status_table = False
+        update_value = ''
+        column = ''
+        if userChoice == 1:  # Estimate
+            update_value = float(input(estimatePrompt))
+            column = 'Estimate'
+        elif userChoice == 2:  # Payout
+            update_value = float(input(payoutPrompt))
+            column = 'Payout'
+        elif userChoice == 3:  # hours
+            update_value = int(input(hoursPrompt))
+            column = 'Hours'
+        elif userChoice == 4:  # Status
+            update_value = getStatusID()
+            table_two = 'JobStatus'
+            column = 'Status_ID'
+            is_status_table = True
+        elif userChoice == 5:  # additional costs
+            update_value = float(input(additionsInPrompt))
+            table_two = 'JobCost'
+            column = 'Additions'
+            is_cost_table = True
+        elif userChoice == 6:  # additional Mats
+            update_value = float(input(materialsInPrompt))
+            table_two = 'JobCost'
+            column = 'MaterialsCost'
+            is_cost_table = True
+        str_column = str(column)
+        if column != '':
+            if is_cost_table:  # do jobcost
+                update_query = """UPDATE %s SET %s = '%s' WHERE (%s = %s)""" % (
+                    table_two, str_column, update_value, conditionCategory, condition)
+                c.execute(update_query, )
+                connector.commit()
+                is_cost_table = False
+            elif is_status_table:  # change status
+                curr_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                args = [condition, update_value, curr_date]
+                c.callproc('UpdateJobStatus', args)
+                is_status_table = False
+            else:
+                # update estimate #update hours #update status
+                update_query = """UPDATE %s SET %s = '%s' WHERE (%s = %s)""" % (
+                    table, str_column, update_value, conditionCategory, condition)
+                c.execute(update_query, )
+                connector.commit()
+        c.execute(select_query, )
+        printResultTable(c)
+        userChoice = int(input(update_job_attributes))
     return 0
 
 
@@ -379,12 +485,12 @@ def RecordExists(connector, table, conditionCategory, condition):
     results = cursor.fetchall()  # clears cursor results to allow for next query if needed
     # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
-    print("Number of similar rows, {}:\n".format(row_count))
-    if row_count <= 0:
+    if not results:
         print('record does not exist\n')
         return False
-    if row_count > 1:
-        print("multiple matching records please use another method to update...\n")
+    elif row_count > 1:
+        print("{} similar rows...".format(row_count))
+        print("Multiple matching records please use another method to update...\n")
         return False
     return True
 
@@ -395,14 +501,14 @@ def RecordExistsLike(connector, table, conditionCategory, condition):
     query = """SELECT * FROM %s WHERE %s LIKE '%s'""" % (data[0], data[1], "%" + data[2] + "%")
     cursor.execute(query, )
     results = cursor.fetchall()
-    # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
-    print("Number of similar rows, {}:\n".format(row_count))
-    if row_count <= 0:
+    # gets the number of rows affected by the command executed
+    if not results:
         print('record does not exist\n')
         return False
-    if row_count > 1:
-        print("multiple matching records please use another method to update...\n")
+    elif row_count > 1:
+        print("{} similar rows...".format(row_count))
+        print("Multiple matching records please use another method to update...\n")
         return False
     return True
 
@@ -416,119 +522,16 @@ def RecordExistsDate(connector, table, conditionCategory, condition):
     query = """SELECT * FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
         data[0], data[1], start_date, data[1], end_date)
     cursor.execute(query, )
-    results = cursor.fetchall()
-    # gets the number of rows affected by the command executed
     row_count = cursor.rowcount
-    print("Number of similar rows, {}:\n".format(row_count))
-    if row_count <= 0:
-        print('record does not exist\n')
+    results = cursor.fetchall() # gets the number of rows affected by the command executed
+    if not results: # checks "truth-iness" of the returned list - false if empty
+        print('Record does not exist\n')
         return False
-    if row_count > 1:
-        print("multiple matching records please use another method to update...\n")
+    elif row_count > 1:
+        print("{} similar rows...\n".format(row_count))
+        print("Multiple matching records please use another method to update...\n")
         return False
     return True
-
-def UpdateJobAttributes(connector, table, conditionCategory, condition):
-    c = connector.cursor()
-    select_query = ''
-    data = (table, conditionCategory, condition)
-    if conditionCategory in 'Last_active':  # force ID lookup
-        start_date = data[2].strftime('%Y-%m-%d %H:%M:%S')
-        end_date = (data[2] + timedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')
-        # SELECT * FROM Job WHERE (Last_active >= '2020-03-23 00:00:00') AND (Last_active <= '2020-03-24 00:00:00');
-        select_query = """SELECT Job_ID FROM %s WHERE (%s >= '%s') AND (%s <= '%s')""" % (
-            data[0], data[1], start_date, data[1], end_date)
-        c.execute(select_query, )
-        result = c.fetchall()
-        for i in result:
-            for j in i:
-                if j >= 1:
-                    condition = j
-        conditionCategory = 'Job_ID'
-
-    if conditionCategory in ('Client_ID'):  # force ID lookup
-        select_query = """SELECT Job_ID FROM %s WHERE %s = %s""" % (
-            data[0], data[1], data[2])
-        c.execute(select_query, )
-        result = c.fetchall()
-        for i in result:
-            for j in i:
-                if j >= 1:
-                    condition = j
-        conditionCategory = 'Job_ID'
-
-    table_two = 'JobCost'
-    table_three = 'JobStatus'
-    conditionCategory_two = 'Job.Job_ID'
-    conditionCategory_three = 'JobCost.Job_ID'
-    conditionCategory_four = 'JobStatus.Job_ID'
-
-    displayItems = (conditionCategory_three, 'Last_active', 'Status_ID','Job.Estimate',
-                    'Payout', 'Hours', 'MaterialsCost', 'Additions')
-    # select * from Job, JobCost WHERE Job.Job_ID = 42 AND JobCost.Job_ID = 42;
-    data = (table, table_two, table_three,
-            conditionCategory_two, condition,
-            conditionCategory_three,
-            conditionCategory_four)
-    select_query = """SELECT %s, %s,%s, %s,%s, %s, %s, %s 
-    FROM %s, %s, %s
-    WHERE %s = %s AND %s = %s AND %s = %s AND DateCreated = Last_active
-    ORDER BY %s ASC LIMIT 1""" % (displayItems[0], displayItems[1], displayItems[2], displayItems[3], displayItems[4], displayItems[5], displayItems[6], displayItems[7], data[0], data[1], data[2], data[3], data[4], data[5], data[4],data[6], data[4], displayItems[1])
-    c.execute(select_query, )
-    printResultTable(c)
-    userChoice = int(input(update_job_attributes))
-    while userChoice != 0:
-        is_cost_table = False
-        is_status_table = False
-        update_value = ''
-        column = ''
-        if userChoice == 1:  # Estimate
-            update_value = float(input(estimatePrompt))
-            column = 'Estimate'
-        elif userChoice == 2:  # Payout
-            update_value = float(input(payoutPrompt))
-            column = 'Payout'
-        elif userChoice == 3:  # hours
-            update_value = int(input(hoursPrompt))
-            column = 'Hours'
-        elif userChoice == 4:  # Status
-            update_value = getStatusID()
-            table_two = 'JobStatus'
-            column = 'Status_ID'
-            is_status_table = True
-        elif userChoice == 5:  # additional costs
-            update_value = float(input(additionsInPrompt))
-            table_two = 'JobCost'
-            column = 'Additions'
-            is_cost_table = True
-        elif userChoice == 6:  # additional Mats
-            update_value = float(input(materialsInPrompt))
-            table_two = 'JobCost'
-            column = 'MaterialsCost'
-            is_cost_table = True
-        str_column = str(column)
-        if column != '':
-            if is_cost_table:  # do jobcost
-                update_query = """UPDATE %s SET %s = '%s' WHERE (%s = %s)""" % (
-                    table_two, str_column, update_value, conditionCategory, condition)
-                c.execute(update_query, )
-                connector.commit()
-                is_cost_table = False
-            elif is_status_table: #change status
-                curr_date = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-                args = [condition, update_value, curr_date]
-                c.callproc('UpdateJobStatus', args)
-                is_status_table = False
-            else:
-                # update estimate #update hours #update status
-                update_query = """UPDATE %s SET %s = '%s' WHERE (%s = %s)""" % (
-                    table, str_column, update_value, conditionCategory, condition)
-                c.execute(update_query, )
-                connector.commit()
-        c.execute(select_query, )
-        printResultTable(c)
-        userChoice = int(input(update_job_attributes))
-    return 0
 
 
 def getStatusID():
