@@ -33,6 +33,10 @@ from parameterSearches import *
 # main
 
 
+# TODO: INDEXING, DATABASE VIEWS, FORMATTING CHECK,
+#
+#  TODO: (OPTIONAL FEATURES): Login Input Information, LOGGING SYSTEM
+
 start_time = time.time()
 
 connection = mysql.connector.connect(host='35.247.37.38',
