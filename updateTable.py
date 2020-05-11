@@ -563,5 +563,8 @@ def getStatusID():
     full_phrase += '...\n'
 
     while not 1 <= userChoice <= 5:
-        userChoice = int(input(full_phrase))
+        userChoice = input(full_phrase)
+        if re.search('[a-zA-Z]', userChoice):
+            userChoice = NumberInputError(userChoice)
+        userChoice = int(userChoice)
     return userChoice

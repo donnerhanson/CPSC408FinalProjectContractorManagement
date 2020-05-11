@@ -15,6 +15,7 @@ import csv
 
 # USER DEFINED FILES
 from SoftDelete import SoftDelete
+from inputParseFuncs import is_only_nums, getNumberChoice
 from updateTable import *
 from Messages import *
 from DisplayFunctions import *
@@ -48,34 +49,40 @@ def addClientAndJob(mysql_connection):
     addNewClientJobToDB(mysql_connection, currClientID)
     CalculateNumJobsForClient(mysql_connection, currClientID)
 
-mycursor = connection.cursor()
-userChoice = 0
-while userChoice != 1 and userChoice != 2:
-    userChoice = int(input('input mode:\n 1: fresh, 2: continual...\n '))
 
-if userChoice == 1:
-    num_tuples = int(input('Enter the amount of clients and jobs: Ex: 9\n'))
+mycursor = connection.cursor()
+userChoice = -1
+while userChoice != 1 and userChoice != 2:
+    userChoice = getNumberChoice('input mode:\n 1: fresh, 2: continual...\n ')
+
+if userChoice == 1: # fresh DB must have at least one record
+    num_tuples = -1
+    while num_tuples <= 1:
+        num_tuples = getNumberChoice('Enter the amount of clients and jobs: Ex: 9\n')
     ResetDBToRandVals(connection, num_tuples)
 
 # printAnyFullTable(mycursor, tableNamesAddOrder[4])
 else:
     while userChoice != 0:
-        userChoice = int(input(main_output_message))
+        userChoice = getNumberChoice(main_output_message)
         if userChoice == 1:  # display options - works for now - need to add if deleted dont show
-            userChoice = int(input(DisplayTableMessage(table_names_drop_order)))
-            printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
+            userChoice = getNumberChoice((DisplayTableMessage(table_names_drop_order)))
+            if not userChoice > len(table_names_drop_order):
+                printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
+            else:
+                print("invalid entry")
         elif userChoice == 2:  # parameterized search
-            userChoice = int(input(parameterLookupMenu))
+            userChoice = getNumberChoice(parameterLookupMenu)
             if userChoice == 1:
-                userChoice = int(input(parameterJobLookup))
+                userChoice = getNumberChoice(parameterJobLookup)
                 if userChoice == 1:
-                    salesChoice = input('Please enter the Job ID you wish to view:\n')
+                    salesChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
                     UsersOnJob(mycursor, salesChoice)
                 elif userChoice == 2:
-                    subChoice = input('Please enter the Job ID you wish to view:\n')
+                    subChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
                     SubsOnJob(mycursor, subChoice)
                 elif userChoice == 3:
-                    invoiceChoice = input('Please enter the Job ID you wish to view:\n')
+                    invoiceChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
                     getInvoiceByJobID(mycursor, invoiceChoice)
                 else:
                     print('Error, please enter a valid choice.')

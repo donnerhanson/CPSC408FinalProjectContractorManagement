@@ -1,9 +1,9 @@
-#display
-#parameterized search
-#update
-#create
-#delete
-#export
+# display
+# parameterized search
+# update
+# create
+# delete
+# export
 # MAIN
 main_output_message = '1: Access Display Options\n' \
                       '2: Parameterized Search\n' \
@@ -14,15 +14,14 @@ main_output_message = '1: Access Display Options\n' \
 
 # UPDATE TABLE
 update_table_prompt = '1: To update Client Information\n' \
-                            '2: To update Job/Job Cost...\n' \
-                            '3: To update Contact Information\n' \
-                            '4: To update User (Employee Information)...\n'
+                      '2: To update Job/Job Cost...\n' \
+                      '3: To update Contact Information\n' \
+                      '4: To update User (Employee Information)...\n'
 
 update_table_prompt = '1: To update Client Information\n' \
                       '2: To update Job/Job Cost...\n' \
                       '3: To update Contact Information...\n' \
                       '4: To update User (Employee Information)\n'
-
 
 update_client_search_options = 'If searched client does not exist this current\n' \
                                'process will exit without changes to the system...\n' \
@@ -54,22 +53,21 @@ update_contact_options = '1: Update Name\n' \
                          '0: Exit Update...\n'
 
 update_job_search_options = 'If searched contact does not exist this current\n' \
-                                'process will exit without changes to the system...\n' \
-                                '1: Find Job by ID\n' \
-                                '2: Find Job by Client ID\n' \
-                                '3: Find Job by Date\n' \
-                                '0: Exit Update Process...\n'
+                            'process will exit without changes to the system...\n' \
+                            '1: Find Job by ID\n' \
+                            '2: Find Job by Client ID\n' \
+                            '3: Find Job by Date\n' \
+                            '0: Exit Update Process...\n'
 
 update_job_attributes = '1: Update Estimate\n' \
-                                '2: Update Payout\n' \
-                                '3: Update Hours\n' \
-                                '4: Update Status\n' \
-                                '5: Update Additional Misc. Costs\n' \
-                                '6: Update Material Costs\n' \
-                                '0: Exit Update...\n'
+                        '2: Update Payout\n' \
+                        '3: Update Hours\n' \
+                        '4: Update Status\n' \
+                        '5: Update Additional Misc. Costs\n' \
+                        '6: Update Material Costs\n' \
+                        '0: Exit Update...\n'
 
-
-#ADD RECORDS
+# ADD RECORDS
 add_person_prompt = 'Enter\n1: Add client\n2: Add user\n 3: Add job\n'
 
 # Delete or restore
@@ -77,6 +75,11 @@ restore_or_delete_prompt = 'Enter\n1: Delete Client\n2: Restore Client\n' \
                            '3: Delete Contact\n4: Restore Contact\n' \
                            '5: Delete User\n6: Restore User...\n'
 remove_person_prompt = add_person_prompt.replace("Add", "Delete")
+
+
+def NumberInputError(value):
+    print('Entered value {} was not a number only entry\n'.format(value))
+    return -1
 
 
 # a) Misc
@@ -130,6 +133,7 @@ userIDPrompt = 'Enter User ID\n'
 display_all = 'Display all?'
 
 dateInPrompt = 'Input date ex: 10/30/2009'
+
 
 def DisplayTableMessage(table_names):
     message = 'Input: \n'

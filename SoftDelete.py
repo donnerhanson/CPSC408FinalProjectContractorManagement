@@ -4,6 +4,9 @@ from Messages import *
 import mysql.connector.connection
 import mysql.connector.cursor
 
+import re
+
+from inputParseFuncs import is_only_nums
 from updateTable import RecordExists
 
 
@@ -13,7 +16,10 @@ def SoftDelete(connector):
     # therefore
     multiply_this_by_option_row = 2
     while not (0 <= userChoice <= 6):
-        userChoice = int(input(restore_or_delete_prompt))
+        userChoice = input(restore_or_delete_prompt)
+        if not is_only_nums(userChoice):
+            userChoice = -1
+        userChoice = int(userChoice)
         if userChoice == 1 or userChoice == 2:
             DeleteOrRestoreClient(connector, userChoice)
         elif userChoice == 3 or userChoice == 4:
