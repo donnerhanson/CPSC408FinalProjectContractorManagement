@@ -4,7 +4,8 @@ from Messages import *
 from DisplayFunctions import printAnyFullTable
 
 
-def addUser(cursor):
+def addUser(cursor): #TODO: ORI - you need to check your inputs and validate user input data. I set num_roles up to make sure that \
+    #                   roles are accurate in case more roles are added. The method below shows the workflow
     name = input(userInName)
     num_roles = getRoles(cursor)
     role = 0
