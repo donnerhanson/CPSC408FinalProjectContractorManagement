@@ -6,7 +6,7 @@ import mysql.connector.cursor
 
 import re
 
-from inputParseFuncs import is_only_nums
+from inputParseFuncs import is_only_nums, getNumberChoice
 from updateTable import RecordExists
 
 
@@ -104,6 +104,7 @@ def DeleteOrRestoreContact(connector, delOrRestore):
             return 0
     return 0
 
+
 def DeleteOrRestoreUser(connector, delOrRestore):
     confirm = ''
     options = ('y', 'n')
@@ -139,8 +140,9 @@ def DeleteOrRestoreUser(connector, delOrRestore):
             return 0
     return 0
 
+
 def GetClientIDbyID(connector):
-    ID = int(input(clientIDprompt))
+    ID = getNumberChoice(clientIDprompt)
     table = 'Client'
     conditionCategory = 'Client_ID'
     if RecordExists(connector, table, conditionCategory, ID):
@@ -150,7 +152,7 @@ def GetClientIDbyID(connector):
 
 
 def GetContactIDbyID(connector):
-    ID = int(input(contactIDprompt))
+    ID = getNumberChoice(contactIDprompt)
     table = 'Contacts'
     conditionCategory = 'Contact_ID'
     if RecordExists(connector, table, conditionCategory, ID):
@@ -158,14 +160,16 @@ def GetContactIDbyID(connector):
     else:
         return 0
 
+
 def GetUserIDbyID(connector):
-    ID = int(input(userIDPrompt))
+    ID = getNumberChoice(userIDPrompt)
     table = 'Users'
     conditionCategory = 'User_ID'
     if RecordExists(connector, table, conditionCategory, ID):
         return ID
     else:
         return 0
+
 
 def UpdateRowByOneCondition(connector, table, col_name, update_to_value, col_name_condition, condition_in):
     c = connector.cursor()
