@@ -1,0 +1,2 @@
+def SoftDelete(connector):
+    return
