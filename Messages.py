@@ -21,7 +21,7 @@ update_table_prompt = '1: To update Client Information\n' \
 update_table_prompt = '1: To update Client Information\n' \
                       '2: To update Job/Job Cost\n' \
                       '3: To update Contact Information\n' \
-                      '4: To update User (Employee Information)\n'
+                      '4: To update User (Employee Information)...\n'
 
 update_client_search_options = 'If searched client does not exist, this current\n' \
                                'process will exit without changes to the system...\n' \
@@ -132,7 +132,7 @@ userIDPrompt = 'Enter User ID:\n'
 
 # USERINPUT CHOICES
 # display
-display_all = 'Display all?'
+display_all = 'Display all?: \n'
 
 dateInPrompt = 'Input date ex: 10/30/2009'
 
