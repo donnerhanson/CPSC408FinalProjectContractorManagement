@@ -6,7 +6,12 @@ def printAnyFullTable(cursor, table_name):
     list_tables_with_DeletedAt = ['Client', 'Contacts', 'Users']
     select_query = "SELECT * FROM " + table_name
     if table_name in list_tables_with_DeletedAt:
-        select_query += " WHERE DeletedAt IS NULL"
+        if table_name == 'Client':
+            select_query = 'SELECT * FROM ClientView'
+        elif table_name == 'Contacts':
+            select_query = 'SELECT * FROM ContactView'
+        elif table_name == 'Users':
+            select_query = 'SELECT * FROM UserView'
     cursor.execute(select_query)
     result = cursor.fetchall()
     row_count = cursor.rowcount
