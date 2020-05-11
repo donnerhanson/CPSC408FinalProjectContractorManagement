@@ -146,7 +146,7 @@ def DisplayTableMessage(table_names):
         else:
             message += str(i) + ' to display ' + name
         i += 1
-    message += '...\n'
+    message += '\n12 to display average job cost\n'
     return message
 
 

@@ -69,6 +69,8 @@ else:
             userChoice = getNumberChoice((DisplayTableMessage(table_names_drop_order)))
             if not userChoice > len(table_names_drop_order):
                 printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
+            elif userChoice == 12:
+                avgJobCost(mycursor)
             else:
                 print("invalid entry")
         elif userChoice == 2:  # parameterized search

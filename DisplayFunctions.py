@@ -52,5 +52,8 @@ def printJobCostCalculatedTable(cursor):
     print(df.to_string(index=False))  # remove row indexing on pandas DataFrame
     # print(query)
 
-def paraSearch(cursor):
-    something = 0
+def avgJobCost(cursor):
+    select_query = 'SELECT AVG(ROUND(MaterialsCost + Additions, 2)) AS TotalCostAvg ' \
+                   'FROM JobCost'
+    cursor.execute(select_query)
+    printResultTable(cursor)
