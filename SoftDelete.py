@@ -23,6 +23,9 @@ def SoftDelete(connector):
 def DeleteOrRestoreClient(connector, delOrRestore):
     confirm = ''
     options = ('y', 'n')
+    table = 'Client'
+    condition = 'Client_ID'
+    col_name = 'DeletedAt'
     if delOrRestore == 1:
         while confirm not in options:
             confirm = str(input(delete_confirmation))
@@ -33,7 +36,7 @@ def DeleteOrRestoreClient(connector, delOrRestore):
                 return 0
             delete_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             # connector, table, col_name, update_to_value, col_name_condition, condition_in
-            UpdateRowByOneCondition(connector, 'Client', 'DeletedAt', delete_date, 'Client_ID', ID)
+            UpdateRowByOneCondition(connector, table, col_name, delete_date, condition, ID)
         elif confirm == 'n':
             return 0
         else:
@@ -46,7 +49,7 @@ def DeleteOrRestoreClient(connector, delOrRestore):
             ID = GetClientIDbyID(connector)
             delete_date = None
             # connector, table, col_name, update_to_value, col_name_condition, condition_in
-            UpdateRowByOneCondition(connector, 'Client', 'DeletedAt', delete_date, 'ID', ID)
+            UpdateRowByOneCondition(connector, table, col_name, delete_date, condition, ID)
         elif confirm == 'n':
             return 0
         else:
