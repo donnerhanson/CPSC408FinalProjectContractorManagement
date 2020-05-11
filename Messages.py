@@ -70,7 +70,7 @@ update_job_attributes = '1: Update Estimate\n' \
 
 
 #ADD RECORDS
-add_person_prompt = 'Enter\n1: Add client\n2: Add user...\n'
+add_person_prompt = 'Enter\n1: Add client\n2: Add user\n 3: Add job\n'
 
 # Delete or restore
 restore_or_delete_prompt = 'Enter\n1: Delete\n2: Restore...\n'
