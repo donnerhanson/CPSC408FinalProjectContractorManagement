@@ -46,12 +46,7 @@ connection = mysql.connector.connect(host='35.247.37.38',
 
 
 # TODO: "add in a logging system" if we have time
-# ADD A NEW CLIENT AND JOB
-def addClientAndJob(mysql_connection):
-    cursor = mysql_connection.cursor()
-    currClientID = addClient(cursor)
-    addNewClientJobToDB(mysql_connection, currClientID)
-    CalculateNumJobsForClient(mysql_connection, currClientID)
+
 
 
 mycursor = connection.cursor()

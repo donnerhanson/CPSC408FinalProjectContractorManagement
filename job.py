@@ -2,6 +2,8 @@ from Messages import *
 import mysql.connector
 from DisplayFunctions import printAnyFullTable
 from datetime import datetime
+
+from client import addClient, CalculateNumJobsForClient
 from updateTable import RecordExistsOneCondition, RecordExistsTwoCondition
 from inputParseFuncs import getWholeNumberChoice
 
@@ -41,7 +43,17 @@ def addExistingClientJobToDB(connection):
     c.callproc('CreateJobSubDetails', args_sub)
 
     c.callproc('CreateJobSalesDetails', args_sales)
+    CalculateNumJobsForClient(connection, clientID)
     return clientID
+
+
+# ADD A NEW CLIENT AND JOB
+def addClientAndJob(mysql_connection):
+    cursor = mysql_connection.cursor()
+    currClientID = addClient(cursor)
+    addNewClientJobToDB(mysql_connection, currClientID)
+    CalculateNumJobsForClient(mysql_connection, currClientID)
+
 
 def addNewClientJobToDB(connection, clientID):
     c = connection.cursor()
