@@ -15,7 +15,7 @@ import csv
 
 # USER DEFINED FILES
 from SoftDelete import SoftDelete
-from inputParseFuncs import is_only_nums, getNumberChoice
+from inputParseFuncs import is_only_nums, getWholeNumberChoice
 from updateTable import *
 from Messages import *
 from DisplayFunctions import *
@@ -57,20 +57,20 @@ def addClientAndJob(mysql_connection):
 mycursor = connection.cursor()
 userChoice = -1
 while userChoice != 1 and userChoice != 2:
-    userChoice = getNumberChoice('input mode:\n 1: fresh, 2: continual...\n ')
+    userChoice = getWholeNumberChoice('input mode:\n 1: fresh, 2: continual...\n ')
 
 if userChoice == 1:  # fresh DB must have at least one record
     num_tuples = -1
     while num_tuples <= 1:
-        num_tuples = getNumberChoice('Enter the amount of clients and jobs: Ex: 9\n')
+        num_tuples = getWholeNumberChoice('Enter the amount of clients and jobs: Ex: 9\n')
     ResetDBToRandVals(connection, num_tuples)
 
 # printAnyFullTable(mycursor, tableNamesAddOrder[4])
 else:
     while userChoice != 0:
-        userChoice = getNumberChoice(main_output_message)
+        userChoice = getWholeNumberChoice(main_output_message)
         if userChoice == 1:  # display options - works for now - need to add if deleted dont show
-            userChoice = getNumberChoice((DisplayTableMessage(table_names_drop_order)))
+            userChoice = getWholeNumberChoice((DisplayTableMessage(table_names_drop_order)))
             if not userChoice > len(table_names_drop_order):
                 printAnyFullTable(mycursor, table_names_drop_order[userChoice - 1])
             elif userChoice == 12:
@@ -78,17 +78,17 @@ else:
             else:
                 print("invalid entry")
         elif userChoice == 2:  # parameterized search
-            userChoice = getNumberChoice(parameterLookupMenu)
+            userChoice = getWholeNumberChoice(parameterLookupMenu)
             if userChoice == 1:
-                userChoice = getNumberChoice(parameterJobLookup)
+                userChoice = getWholeNumberChoice(parameterJobLookup)
                 if userChoice == 1:
-                    salesChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
+                    salesChoice = getWholeNumberChoice('Please enter the Job ID you wish to view:\n')
                     UsersOnJob(mycursor, salesChoice)
                 elif userChoice == 2:
-                    subChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
+                    subChoice = getWholeNumberChoice('Please enter the Job ID you wish to view:\n')
                     SubsOnJob(mycursor, subChoice)
                 elif userChoice == 3:
-                    invoiceChoice = getNumberChoice('Please enter the Job ID you wish to view:\n')
+                    invoiceChoice = getWholeNumberChoice('Please enter the Job ID you wish to view:\n')
                     getInvoiceByJobID(mycursor, invoiceChoice)
                 elif userChoice == 4:
                     avgJobCostGreater(mycursor)
@@ -98,28 +98,28 @@ else:
                     print('Error, please enter a valid choice.')
                     continue
             elif userChoice == 2:
-                userChoice = getNumberChoice(parameterClientLookup)
+                userChoice = getWholeNumberChoice(parameterClientLookup)
                 if userChoice == 1:
-                    jobChoice = getNumberChoice('Please enter the Client ID you wish to view:\n')
+                    jobChoice = getWholeNumberChoice('Please enter the Client ID you wish to view:\n')
                     JobsOnClient(mycursor, jobChoice)
                 elif userChoice == 2:
-                    costChoice = getNumberChoice('Please enter the Client ID you wish to view:\n')
+                    costChoice = getWholeNumberChoice('Please enter the Client ID you wish to view:\n')
                     CostsOnClient(mycursor, costChoice)
                 else:
                     print('Error, please enter a valid choice.')
                     continue
             elif userChoice == 3:
-                userChoice = getNumberChoice(parameterContactLookup)
+                userChoice = getWholeNumberChoice(parameterContactLookup)
                 if userChoice == 1:
-                    jobChoice = getNumberChoice('Please enter the Contact ID you wish to view:\n')
+                    jobChoice = getWholeNumberChoice('Please enter the Contact ID you wish to view:\n')
                     JobsOnContact(mycursor, jobChoice)
                 else:
                     print('Error, please enter a valid choice.')
                     continue
             elif userChoice == 4:
-                userChoice = getNumberChoice(parameterUserLookup)
+                userChoice = getWholeNumberChoice(parameterUserLookup)
                 if userChoice == 1:
-                    jobChoice = getNumberChoice('Please enter the User ID you wish to view:\n')
+                    jobChoice = getWholeNumberChoice('Please enter the User ID you wish to view:\n')
                     JobsOnUsers(mycursor, jobChoice)
                 else:
                     print('Error, please enter a valid choice.')
@@ -132,10 +132,10 @@ else:
             # find all people associated with a job and job cost/total
         elif userChoice == 3:  # update Record TODO: Job/Job Cost in UpdateTable.py
             # client table update functioning as intended
-            userChoice = getNumberChoice(update_table_prompt)
+            userChoice = getWholeNumberChoice(update_table_prompt)
             userChoice = UpdateTable(connection, userChoice)
         elif userChoice == 4:  # create a record TODO: add users/employees
-            userChoice = getNumberChoice(add_person_prompt)
+            userChoice = getWholeNumberChoice(add_person_prompt)
             if userChoice == 1:
                 addClientAndJob(connection)
             elif userChoice == 2:

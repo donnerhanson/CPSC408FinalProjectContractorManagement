@@ -60,16 +60,9 @@ def addFakeClientsToDB(cursor, num_entries):
 
 
 def addFakeRolesToDB(cursor):
-    for x in range(0, 4):
-        if x == 0:
-            arg = ['Sales']
-        elif x == 1:
-            arg = ['Finance']
-        elif x == 2:
-            arg = ['Marketing']
-        else:
-            arg = ['Owner']
-        cursor.callproc('CreateRole', arg)
+    # Job create with existing client currently requires sales role ID to be hard coded 1
+    arg = ('Sales', 'Finance','Marketing','Owner')
+    cursor.callproc('CreateRole', arg)
 
 
 def addFakeCompanyCategoryIDToDB(cursor):

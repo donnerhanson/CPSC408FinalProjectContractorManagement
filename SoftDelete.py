@@ -6,8 +6,8 @@ import mysql.connector.cursor
 
 import re
 
-from inputParseFuncs import is_only_nums, getNumberChoice
-from updateTable import RecordExists
+from inputParseFuncs import is_only_nums, getWholeNumberChoice
+from updateTable import RecordExistsOneCondition
 
 
 def SoftDelete(connector):
@@ -142,30 +142,30 @@ def DeleteOrRestoreUser(connector, delOrRestore):
 
 
 def GetClientIDbyID(connector):
-    ID = getNumberChoice(clientIDprompt)
+    ID = getWholeNumberChoice(clientIDprompt)
     table = 'Client'
     conditionCategory = 'Client_ID'
-    if RecordExists(connector, table, conditionCategory, ID):
+    if RecordExistsOneCondition(connector, table, conditionCategory, ID):
         return ID
     else:
         return 0
 
 
 def GetContactIDbyID(connector):
-    ID = getNumberChoice(contactIDprompt)
+    ID = getWholeNumberChoice(contactIDprompt)
     table = 'Contacts'
     conditionCategory = 'Contact_ID'
-    if RecordExists(connector, table, conditionCategory, ID):
+    if RecordExistsOneCondition(connector, table, conditionCategory, ID):
         return ID
     else:
         return 0
 
 
 def GetUserIDbyID(connector):
-    ID = getNumberChoice(userIDPrompt)
+    ID = getWholeNumberChoice(userIDPrompt)
     table = 'Users'
     conditionCategory = 'User_ID'
-    if RecordExists(connector, table, conditionCategory, ID):
+    if RecordExistsOneCondition(connector, table, conditionCategory, ID):
         return ID
     else:
         return 0
