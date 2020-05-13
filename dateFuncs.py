@@ -1,7 +1,7 @@
 import calendar
 from datetime import *
 
-from inputParseFuncs import getNumberChoice
+from inputParseFuncs import getWholeNumberChoice
 
 monthMessage = 'Enter the month (Ex: 11): \n'
 dayMessage = 'Enter the day: \n'
@@ -11,28 +11,28 @@ yearError = 'Please enter a year in range (%s, %s):\n', (MINYEAR, MAXYEAR)
 
 
 def getYear():
-    year = getNumberChoice(yearMessage)
+    year = getWholeNumberChoice(yearMessage)
     while year <= MINYEAR or year >= MAXYEAR:
         print(yearError)
-        year = getNumberChoice(monthMessage)
+        year = getWholeNumberChoice(monthMessage)
     return year
 
 
 def getMonth():
-    month = getNumberChoice(monthMessage)
+    month = getWholeNumberChoice(monthMessage)
     while month <= 0 or month > 12:
         print(monthError)
-        month = getNumberChoice(monthMessage)
+        month = getWholeNumberChoice(monthMessage)
     return month
 
 
 def getDay(year, month):
     last_day = int(calendar.monthrange(year, month)[1])
     dayError = 'Please enter in range 1-%s', last_day
-    day = getNumberChoice(dayMessage)
+    day = getWholeNumberChoice(dayMessage)
     while day <= 0 or day > last_day:
         print(dayError)
-        day = getNumberChoice(dayMessage)
+        day = getWholeNumberChoice(dayMessage)
     return day
 
 

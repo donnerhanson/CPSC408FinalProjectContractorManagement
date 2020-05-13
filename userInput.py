@@ -2,7 +2,7 @@ import mysql.connector
 import re
 from Messages import *
 from DisplayFunctions import printAnyFullTable
-from inputParseFuncs import getNumberChoice
+from inputParseFuncs import getWholeNumberChoice
 
 
 def addUser(cursor): #TODO: ORI - you need to check your inputs and validate user input data. I set num_roles up to make sure that \
@@ -11,7 +11,7 @@ def addUser(cursor): #TODO: ORI - you need to check your inputs and validate use
     num_roles = getRoles(cursor)
     role = 0
     while (role <= 0) or (role > num_roles):
-        role = getNumberChoice(userRoleIDIn)
+        role = getWholeNumberChoice(userRoleIDIn)
     address = input(addressInMessage)
     city = input(cityInMessage)
     state = input(stateInMessage)

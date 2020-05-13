@@ -37,8 +37,12 @@ def is_only_nums(userChoice):  # returns false if NaN, True Otherwise
     return True
 
 
-def getNumberChoice(message):
+def getWholeNumberChoice(message):
     userInput = -1
     while userInput == -1 or not is_only_nums(userInput):
         userInput = input(message)
-    return int(userInput)
+    try:
+        return int(userInput)
+    except ValueError: # if floating point is put in
+        print('Invalid entry: must be a whole number')
+        return getWholeNumberChoice(message)

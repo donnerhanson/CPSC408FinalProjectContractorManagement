@@ -2,7 +2,7 @@ import mysql.connector
 from datetime import datetime
 from DisplayFunctions import printResultTable
 from Messages import *
-from inputParseFuncs import getNumberChoice
+from inputParseFuncs import getWholeNumberChoice
 from userInput import *
 import re
 
@@ -100,7 +100,7 @@ def UpdateClientAttributes(connector, table, conditionCategory, condition):
     select_query = """SELECT * FROM %s WHERE %s = %s""" % (data[0], data[1], str(data[2]))
     c.execute(select_query, )
     printResultTable(c)
-    userChoice = getNumberChoice(update_client_options)
+    userChoice = getWholeNumberChoice(update_client_options)
     while userChoice != 0:
         update_value = ''
         column = ''
@@ -139,7 +139,7 @@ def UpdateClientAttributes(connector, table, conditionCategory, condition):
             connector.commit()
         c.execute(select_query, )
         printResultTable(c)
-        userChoice = getNumberChoice(update_client_options)
+        userChoice = getWholeNumberChoice(update_client_options)
     return 0
 
 
@@ -160,7 +160,7 @@ def UpdateContactAttributes(connector, table, conditionCategory, condition):
     select_query = """SELECT * FROM %s WHERE %s = %s""" % (data[0], data[1], str(data[2]))
     c.execute(select_query, )
     printResultTable(c)
-    userChoice = getNumberChoice(update_contact_options)
+    userChoice = getWholeNumberChoice(update_contact_options)
     while userChoice != 0:
         update_value = ''
         column = ''
@@ -184,7 +184,7 @@ def UpdateContactAttributes(connector, table, conditionCategory, condition):
             connector.commit()
         c.execute(select_query, )
         printResultTable(c)
-        userChoice = getNumberChoice(update_contact_options)
+        userChoice = getWholeNumberChoice(update_contact_options)
     return 0
 
 
@@ -211,7 +211,7 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
         data[0], data[1], str(data[2]))
     c.execute(select_query, )
     printResultTable(c)
-    userChoice = getNumberChoice(update_user_options)
+    userChoice = getWholeNumberChoice(update_user_options)
     while userChoice != 0:
         update_value = ''
         column = ''
@@ -253,7 +253,7 @@ def UpdateUserAttributes(connector, table, conditionCategory, condition):
             connector.commit()
         c.execute(select_query, )
         printResultTable(c)
-        userChoice = getNumberChoice(update_user_options)
+        userChoice = getWholeNumberChoice(update_user_options)
     return 0
 
 
@@ -308,7 +308,7 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
     displayItems[1])
     c.execute(select_query, )
     printResultTable(c)
-    userChoice = getNumberChoice(update_job_attributes)
+    userChoice = getWholeNumberChoice(update_job_attributes)
     while userChoice != 0:
         is_cost_table = False
         is_status_table = False
@@ -321,7 +321,7 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
             update_value = float(input(payoutPrompt))
             column = 'Payout'
         elif userChoice == 3:  # hours
-            update_value = getNumberChoice(hoursPrompt)
+            update_value = getWholeNumberChoice(hoursPrompt)
             column = 'Hours'
         elif userChoice == 4:  # Status
             update_value = getStatusID()
@@ -359,19 +359,19 @@ def UpdateJobAttributes(connector, table, conditionCategory, condition):
                 connector.commit()
         c.execute(select_query, )
         printResultTable(c)
-        userChoice = getNumberChoice(update_job_attributes)
+        userChoice = getWholeNumberChoice(update_job_attributes)
     return 0
 
 
 # GET SINGLE RECORD
 def GetClientRecord(connector):
-    userChoice = getNumberChoice(update_client_search_options)
+    userChoice = getWholeNumberChoice(update_client_search_options)
     curr_table_name = 'Client'
     while int(userChoice) != 0:
         categoryCondition = ''
         searched_value = ''
         if userChoice == 1:  # ID
-            searched_value = getNumberChoice(clientIDprompt)
+            searched_value = getWholeNumberChoice(clientIDprompt)
             categoryCondition = 'Client_ID'
         elif userChoice == 2:  # name
             searched_value = input("enter client name...\n")
@@ -380,26 +380,26 @@ def GetClientRecord(connector):
             searched_value = input("enter client email...\n")
             categoryCondition = 'Email'
 
-        if categoryCondition in 'Client_ID' and RecordExists(connector, curr_table_name, str(categoryCondition),
-                                                             searched_value):
+        if categoryCondition in 'Client_ID' and RecordExistsOneCondition(connector, curr_table_name, str(categoryCondition),
+                                                                         searched_value):
             # connector, table, conditionCategory, condition
             userChoice = UpdateClientAttributes(connector, curr_table_name, categoryCondition, searched_value)
         elif categoryCondition in ('ClientName', 'Email') and RecordExistsLike(connector, curr_table_name,
                                                                                str(categoryCondition), searched_value):
             userChoice = UpdateClientAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
-            userChoice = getNumberChoice(update_client_search_options)
+            userChoice = getWholeNumberChoice(update_client_search_options)
     return
 
 
 def GetJobRecord(connector):
-    userChoice = getNumberChoice(update_job_search_options)
+    userChoice = getWholeNumberChoice(update_job_search_options)
     curr_table_name = 'Job'
     while int(userChoice) != 0:
         categoryCondition = ''
         searched_value = ''
         if userChoice == 1:  # ID
-            searched_value = getNumberChoice(jobIDPrompt)
+            searched_value = getWholeNumberChoice(jobIDPrompt)
             categoryCondition = 'Job_ID'
         elif userChoice == 2:  # name
             searched_value = input(clientIDprompt)
@@ -409,27 +409,27 @@ def GetJobRecord(connector):
             # searched_value = searched_value
             categoryCondition = 'Last_active'
 
-        if categoryCondition in ('Job_ID', 'Client_ID') and RecordExists(connector, curr_table_name,
-                                                                         str(categoryCondition),
-                                                                         searched_value):
+        if categoryCondition in ('Job_ID', 'Client_ID') and RecordExistsOneCondition(connector, curr_table_name,
+                                                                                     str(categoryCondition),
+                                                                                     searched_value):
             # connector, table, conditionCategory, condition
             userChoice = UpdateJobAttributes(connector, curr_table_name, categoryCondition, searched_value)
         elif categoryCondition in 'Last_active' and RecordExistsDate(connector, curr_table_name,
                                                                      str(categoryCondition), searched_value):
             userChoice = UpdateJobAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
-            userChoice = getNumberChoice(update_job_search_options)
+            userChoice = getWholeNumberChoice(update_job_search_options)
     return
 
 
 def GetContactRecord(connector):
-    userChoice = getNumberChoice(update_contact_search_options)
+    userChoice = getWholeNumberChoice(update_contact_search_options)
     curr_table_name = 'Contacts'
     while int(userChoice) != 0:
         categoryCondition = ''
         searched_value = ''
         if userChoice == 1:  # ID
-            searched_value = getNumberChoice(contactIDprompt)
+            searched_value = getWholeNumberChoice(contactIDprompt)
             categoryCondition = 'Contact_ID'
         elif userChoice == 2:  # name
             searched_value = input(contactInName)
@@ -438,26 +438,26 @@ def GetContactRecord(connector):
             searched_value = input(contactInEmail)
             categoryCondition = 'Email'
 
-        if categoryCondition in 'Contact_ID' and RecordExists(connector, curr_table_name, str(categoryCondition),
-                                                              searched_value):
+        if categoryCondition in 'Contact_ID' and RecordExistsOneCondition(connector, curr_table_name, str(categoryCondition),
+                                                                          searched_value):
             # connector, table, conditionCategory, condition
             userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
         elif categoryCondition in ('ContactName', 'Email') and RecordExistsLike(connector, curr_table_name,
                                                                                 str(categoryCondition), searched_value):
             userChoice = UpdateContactAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
-            userChoice = getNumberChoice(update_contact_search_options)
+            userChoice = getWholeNumberChoice(update_contact_search_options)
     return
 
 
 def UpdateUser(connector):
-    userChoice = getNumberChoice(update_user_search_options)
+    userChoice = getWholeNumberChoice(update_user_search_options)
     curr_table_name = 'Users'
     while int(userChoice) != 0:
         categoryCondition = ''
         searched_value = ''
         if userChoice == 1:  # ID
-            searched_value = getNumberChoice(userIDPrompt)
+            searched_value = getWholeNumberChoice(userIDPrompt)
             categoryCondition = 'User_ID'
         elif userChoice == 2:  # name
             searched_value = input("enter user name...\n")
@@ -466,19 +466,19 @@ def UpdateUser(connector):
             searched_value = input("enter user email...\n")
             categoryCondition = 'Email'
 
-        if categoryCondition in 'User_ID' and RecordExists(connector, curr_table_name, str(categoryCondition),
-                                                           searched_value):
+        if categoryCondition in 'User_ID' and RecordExistsOneCondition(connector, curr_table_name, str(categoryCondition),
+                                                                       searched_value):
             # connector, table, conditionCategory, condition
             userChoice = UpdateUserAttributes(connector, curr_table_name, categoryCondition, searched_value)
         elif categoryCondition in ('Name', 'Email') and RecordExistsLike(connector, curr_table_name,
                                                                          str(categoryCondition), searched_value):
             userChoice = UpdateUserAttributes(connector, curr_table_name, categoryCondition, searched_value)
         else:
-            userChoice = getNumberChoice(update_user_search_options)
+            userChoice = getWholeNumberChoice(update_user_search_options)
     return
 
 
-def RecordExists(connector, table, conditionCategory, condition):
+def RecordExistsOneCondition(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
     data = (table, conditionCategory, condition)
     query = """SELECT * FROM %s WHERE %s = '%s'""" % (data[0], data[1], data[2])
@@ -495,6 +495,22 @@ def RecordExists(connector, table, conditionCategory, condition):
         return False
     return True
 
+def RecordExistsTwoCondition(connector, table, conditionCategory, condition, conditionCategory_Two, condition_Two):
+    cursor = connector.cursor()
+    data = (table, conditionCategory, condition, conditionCategory_Two, condition_Two)
+    query = """SELECT * FROM %s WHERE %s = '%s' AND %s = '%s'""" % (data[0], data[1], data[2], data[3], data[4])
+    cursor.execute(query, )
+    results = cursor.fetchall()  # clears cursor results to allow for next query if needed
+    # gets the number of rows affected by the command executed
+    row_count = cursor.rowcount
+    if not results:
+        print('record does not exist\n')
+        return False
+    elif row_count > 1:
+        print("{} similar rows...".format(row_count))
+        print("Multiple matching records please use another method to update...\n")
+        return False
+    return True
 
 def RecordExistsLike(connector, table, conditionCategory, condition):
     cursor = connector.cursor()
@@ -564,5 +580,5 @@ def getStatusID():
     full_phrase += '...\n'
 
     while not 1 <= userChoice <= 5:
-        userChoice = getNumberChoice(full_phrase)
+        userChoice = getWholeNumberChoice(full_phrase)
     return userChoice
