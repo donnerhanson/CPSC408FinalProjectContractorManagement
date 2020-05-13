@@ -167,9 +167,9 @@ parameterJobLookup = psearch + '1: Employees attached to Job\n' \
 parameterClientLookup = psearch + '1: Jobs attached to Client\n' \
                                   '2: Costs from Client...\n'
 parameterContactLookup = psearch + '1: Jobs attached to Contact\n' \
-                                   '2: Contacts by Category...'
+                                   '2: Contacts by Category...\n'
 parameterUserLookup = psearch + '1: Jobs attached to User\n' \
-                                '2: Users by Role...'
+                                '2: Users by Role...\n'
 
 y_n = 'y/n'
 delete_confirmation = 'Are you sure you would like to delete {}?...\n'.format(y_n)

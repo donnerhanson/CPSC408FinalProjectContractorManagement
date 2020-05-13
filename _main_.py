@@ -108,6 +108,9 @@ else:
                 if userChoice == 1:
                     jobChoice = getWholeNumberChoice('Please enter the Contact ID you wish to view:\n')
                     JobsOnContact(mycursor, jobChoice)
+                elif userChoice == 2:
+                    catChoice = getWholeNumberChoice('Please enter the Category ID you wish to view:\n')
+                    getContactsByCategory(mycursor, catChoice)
                 else:
                     print('Error, please enter a valid choice.')
                     continue
@@ -116,6 +119,9 @@ else:
                 if userChoice == 1:
                     jobChoice = getWholeNumberChoice('Please enter the User ID you wish to view:\n')
                     JobsOnUsers(mycursor, jobChoice)
+                elif userChoice == 2:
+                    roleChoice = getWholeNumberChoice('Please enter the Role ID you wish to view:\n')
+                    getUsersByRole(mycursor, roleChoice)
                 else:
                     print('Error, please enter a valid choice.')
                     continue

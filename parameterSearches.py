@@ -178,7 +178,7 @@ def getUsersByRole(cursor, role_id):
     cursor.execute(select_query, )
     printResultTable(cursor)
 
-def getContactsByRole(cursor, cat_id):
+def getContactsByCategory(cursor, cat_id):
     numChoice = cat_id
     select_query = 'SELECT * FROM ContactView WHERE CompanyCategory_ID = %s' %numChoice
     cursor.execute(select_query, )
