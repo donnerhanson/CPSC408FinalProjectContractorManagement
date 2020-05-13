@@ -11,6 +11,9 @@ from inputParseFuncs import getWholeNumberChoice
 def addExistingClientJobToDB(connection):
     c = connection.cursor()
     clientID = getWholeNumberChoice(clientIDprompt)
+    while not RecordExistsOneCondition(connection, 'Client', 'Client_ID', clientID):
+        print(dne_error_enter)
+        clientID = getWholeNumberChoice(clientIDprompt)
     Estimate = input(estimatePrompt)
     Payout = input(payoutPrompt)
     Hours = getWholeNumberChoice(hoursPrompt)

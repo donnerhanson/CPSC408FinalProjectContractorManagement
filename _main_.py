@@ -33,7 +33,7 @@ from parameterSearches import *
 # main
 
 
-# TODO: INDEXING, DATABASE VIEWS, FORMATTING CHECK,
+# TODO: INDEXING
 #
 #  TODO: (OPTIONAL FEATURES): Login Input Information, LOGGING SYSTEM
 
@@ -137,7 +137,7 @@ else:
                 addUser(mycursor)
             elif userChoice == 3:
                 addExistingClientJobToDB(connection)
-        elif userChoice == 5:  # delete a record TODO: Implement SoftDeletes
+        elif userChoice == 5:  # delete a record
             SoftDelete(connection)
         elif userChoice == 6:  # export structured CSV file
             exportDataBaseToCSV(mycursor)

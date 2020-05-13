@@ -136,6 +136,7 @@ display_all = 'Display all?: \n'
 
 dateInPrompt = 'Input date ex: 10/30/2009'
 
+dne_error_enter = "Record Does Not Exist - Enter another value...\n"
 
 def DisplayTableMessage(table_names):
     message = 'Input: \n'
