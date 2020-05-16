@@ -32,10 +32,7 @@ from parameterSearches import *
 
 # main
 
-
-# TODO: INDEXING
-#
-#  TODO: (OPTIONAL FEATURES): Login Input Information, LOGGING SYSTEM
+#  TODO: (OPTIONAL FEATURES before class due date): More Verbose UI, Login Input Information, LOGGING SYSTEM
 
 start_time = time.time()
 
@@ -43,11 +40,6 @@ connection = mysql.connector.connect(host='35.247.37.38',
                                      database='ContractorManagementDB',
                                      user='Donner Hanson',
                                      password='DonnerPass1')
-
-
-# TODO: "add in a logging system" if we have time
-
-
 
 mycursor = connection.cursor()
 userChoice = -1
