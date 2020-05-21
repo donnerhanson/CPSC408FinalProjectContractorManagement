@@ -18,11 +18,10 @@ def getUserNumFloat(string):
     while True:
         try:
             userIn = float(input(string))
+            return userIn
         except ValueError:
             print('Not a valid entry')
-            continue
-        else:
-            return userIn
+            return getUserNumFloat(string)
 
 
 def getStringIn(string):

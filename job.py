@@ -5,7 +5,7 @@ from datetime import datetime
 
 from client import addClient, CalculateNumJobsForClient
 from updateTable import RecordExistsOneCondition, RecordExistsTwoCondition
-from inputParseFuncs import getWholeNumberChoice
+from inputParseFuncs import getWholeNumberChoice, getUserNumFloat
 
 
 def addExistingClientJobToDB(connection):
@@ -14,8 +14,8 @@ def addExistingClientJobToDB(connection):
     while not RecordExistsOneCondition(connection, 'Client', 'Client_ID', clientID):
         print(dne_error_enter)
         clientID = getWholeNumberChoice(clientIDprompt)
-    Estimate = input(estimatePrompt)
-    Payout = input(payoutPrompt)
+    Estimate = getUserNumFloat(estimatePrompt)
+    Payout = getUserNumFloat(payoutPrompt)
     Hours = getWholeNumberChoice(hoursPrompt)
     date = datetime.now()
     # "AddJob(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,IN DateIN datetime)"
@@ -60,8 +60,8 @@ def addClientAndJob(mysql_connection):
 
 def addNewClientJobToDB(connection, clientID):
     c = connection.cursor()
-    Estimate = input(estimatePrompt)
-    Payout = input(payoutPrompt)
+    Estimate = getUserNumFloat(estimatePrompt)
+    Payout = getUserNumFloat(payoutPrompt)
     Hours = getWholeNumberChoice(hoursPrompt)
     date = datetime.now()
     # "AddJob(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,IN DateIN datetime)"

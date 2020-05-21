@@ -104,7 +104,7 @@ def CostsOnClient(cursor, client_id):
     if int(numChoice) > lastClientID or int(numChoice) <= 0:
         print('Error, Client does not exist. Please enter a valid ID.')
     else:
-        select_query = 'SELECT DISTINCT JC.Job_ID, J.Client_ID, (MaterialsCost+Additions) AS Total_Invoice,  Additions, MaterialsCost ' \
+        select_query = 'SELECT DISTINCT JC.Job_ID, J.Client_ID, Additions, MaterialsCost, (MaterialsCost+Additions) AS Total_Invoice ' \
                        'FROM Job J ' \
                        'INNER JOIN JobCost JC ON J.JOB_ID = JC.Job_ID ' \
                        'INNER JOIN Job ON JC.Job_ID ' \
