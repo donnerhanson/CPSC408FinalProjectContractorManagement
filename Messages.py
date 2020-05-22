@@ -10,6 +10,7 @@ main_output_message = '1: Access Display Options\n' \
                       '3: Update existing record\n' \
                       '4: Create new record\n' \
                       '5: Delete record/Restore deleted record\n' \
+                      '6: Export Database to CSV\n' \
                       '0: To exit...\n'
 
 # UPDATE TABLE
