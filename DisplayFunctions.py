@@ -48,7 +48,7 @@ def printResultTable(cursor):
 
 
 def printJobCostCalculatedTable(cursor):
-    select_query = "SELECT JobCost_ID, Job_ID, MaterialsCost, Additions, (MaterialsCost + Additions) AS Total_Cost FROM JobCost"
+    select_query = "SELECT JobCost_ID, Job_ID, MaterialsCost, Additions, ROUND(MaterialsCost + Additions, 2) AS Total_Cost FROM JobCost"
     cursor.execute(select_query)
     result = cursor.fetchall()
     any_column_names = [i[0] for i in cursor.description]
@@ -58,7 +58,7 @@ def printJobCostCalculatedTable(cursor):
     # print(query)
 
 def avgJobCost(cursor):
-    select_query = 'SELECT AVG(ROUND(MaterialsCost + Additions, 2)) AS TotalCostAvg ' \
+    select_query = 'SELECT ROUND(AVG(MaterialsCost + Additions), 2) AS TotalCostAvg ' \
                    'FROM JobCost'
     cursor.execute(select_query)
     printResultTable(cursor)

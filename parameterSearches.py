@@ -104,7 +104,7 @@ def CostsOnClient(cursor, client_id):
     if int(numChoice) > lastClientID or int(numChoice) <= 0:
         print('Error, Client does not exist. Please enter a valid ID.')
     else:
-        select_query = 'SELECT DISTINCT JC.Job_ID, J.Client_ID, Additions, MaterialsCost, (MaterialsCost+Additions) AS Total_Invoice ' \
+        select_query = 'SELECT DISTINCT JC.Job_ID, J.Client_ID, Additions, MaterialsCost, ROUND(MaterialsCost+Additions, 2) AS Total_Invoice ' \
                        'FROM Job J ' \
                        'INNER JOIN JobCost JC ON J.JOB_ID = JC.Job_ID ' \
                        'INNER JOIN Job ON JC.Job_ID ' \
@@ -168,7 +168,7 @@ def JobsOnUsers(cursor, user_id):
 
 # may need some sort of checking to make sure record exists
 def getInvoiceByJobID(cursor, job_id):
-    select_query = """SELECT DISTINCT JC.Job_ID, J.Client_ID, (MaterialsCost+Additions) AS Total_Invoice,  Additions, MaterialsCost FROM Job J INNER JOIN JobCost JC ON J.JOB_ID = JC.Job_ID INNER JOIN Job ON JC.Job_ID WHERE J.JOB_ID = %s;""" % job_id
+    select_query = """SELECT DISTINCT JC.Job_ID, J.Client_ID, ROUND(MaterialsCost+Additions, 2) AS Total_Invoice,  Additions, MaterialsCost FROM Job J INNER JOIN JobCost JC ON J.JOB_ID = JC.Job_ID INNER JOIN Job ON JC.Job_ID WHERE J.JOB_ID = %s;""" % job_id
     cursor.execute(select_query, )
     printResultTable(cursor)
 
