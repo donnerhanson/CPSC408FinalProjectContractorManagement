@@ -1,0 +1,125 @@
+CREATE TABLE `Client` (
+  `Client_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ClientName` varchar(32) DEFAULT NULL,
+  `Address` varchar(35) DEFAULT NULL,
+  `City` varchar(32) DEFAULT NULL,
+  `State` char(2) DEFAULT NULL,
+  `Zip` char(5) DEFAULT NULL,
+  `Email` varchar(50) DEFAULT NULL,
+  `Phone` varchar(32) DEFAULT NULL,
+  `NumJobs` int(11) DEFAULT NULL,
+  `DeletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`Client_ID`),
+  UNIQUE KEY `Email` (`Email`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8
+
+CREATE TABLE `CompanyCategoryTableLookup` (
+  `CompanyCategory_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Description` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`CompanyCategory_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+
+CREATE TABLE `Contacts` (
+  `Contact_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `ContactName` varchar(32) DEFAULT NULL,
+  `URL` varchar(50) DEFAULT NULL,
+  `Email` varchar(50) DEFAULT NULL,
+  `Phone` varchar(32) DEFAULT NULL,
+  `CompanyCategory_ID` int(11) DEFAULT NULL,
+  `Notes` varchar(100) DEFAULT NULL,
+  `DeletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`Contact_ID`),
+  UNIQUE KEY `Email` (`Email`),
+  KEY `CompanyCategory_ID` (`CompanyCategory_ID`),
+  CONSTRAINT `Contacts_ibfk_1` FOREIGN KEY (`CompanyCategory_ID`) REFERENCES `CompanyCategoryTableLookup` (`CompanyCategory_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8
+
+CREATE TABLE `Job` (
+  `JOB_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Client_ID` int(11) DEFAULT NULL,
+  `Estimate` float DEFAULT NULL,
+  `Payout` float DEFAULT NULL,
+  `Hours` int(11) DEFAULT NULL,
+  `Last_active` datetime DEFAULT NULL,
+  `JobCost_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`JOB_ID`),
+  KEY `Client_ID` (`Client_ID`),
+  KEY `Job_Last_active_index` (`Last_active`),
+  CONSTRAINT `Job_ibfk_1` FOREIGN KEY (`Client_ID`) REFERENCES `Client` (`Client_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8
+
+CREATE TABLE `JobCost` (
+  `JobCost_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Job_ID` int(11) DEFAULT NULL,
+  `MaterialsCost` float DEFAULT NULL,
+  `Additions` float DEFAULT NULL,
+  PRIMARY KEY (`JobCost_ID`),
+  KEY `Job_ID` (`Job_ID`),
+  CONSTRAINT `JobCost_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `Job` (`JOB_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8
+
+CREATE TABLE `JobSalesDetails` (
+  `SalesDetails_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Job_ID` int(11) DEFAULT NULL,
+  `User_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`SalesDetails_ID`),
+  KEY `Job_ID` (`Job_ID`),
+  KEY `User_ID` (`User_ID`),
+  CONSTRAINT `JobSalesDetails_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `Job` (`JOB_ID`),
+  CONSTRAINT `JobSalesDetails_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Users` (`User_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8
+
+CREATE TABLE `JobStatus` (
+  `JobStatus_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Job_ID` int(11) DEFAULT NULL,
+  `Status_ID` int(11) DEFAULT NULL,
+  `DateCreated` datetime DEFAULT NULL,
+  PRIMARY KEY (`JobStatus_ID`),
+  KEY `Job_ID` (`Job_ID`),
+  KEY `Status_ID` (`Status_ID`),
+  KEY `JobStatus_DateCreated_index` (`DateCreated`),
+  CONSTRAINT `JobStatus_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `Job` (`JOB_ID`),
+  CONSTRAINT `JobStatus_ibfk_2` FOREIGN KEY (`Status_ID`) REFERENCES `StatusDefinition` (`Status_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8
+
+CREATE TABLE `JobSubDetails` (
+  `SubDetails_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Job_ID` int(11) DEFAULT NULL,
+  `Contact_ID` int(11) DEFAULT NULL,
+  PRIMARY KEY (`SubDetails_ID`),
+  KEY `Job_ID` (`Job_ID`),
+  KEY `Contact_ID` (`Contact_ID`),
+  CONSTRAINT `JobSubDetails_ibfk_1` FOREIGN KEY (`Job_ID`) REFERENCES `Job` (`JOB_ID`),
+  CONSTRAINT `JobSubDetails_ibfk_2` FOREIGN KEY (`Contact_ID`) REFERENCES `Contacts` (`Contact_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8
+
+CREATE TABLE `Roles` (
+  `Role_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Description` varchar(32) DEFAULT NULL,
+  PRIMARY KEY (`Role_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8
+
+CREATE TABLE `StatusDefinition` (
+  `Status_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(32) DEFAULT NULL,
+  `Description` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`Status_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8
+
+CREATE TABLE `Users` (
+  `User_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Name` varchar(32) DEFAULT NULL,
+  `Role_ID` int(11) DEFAULT NULL,
+  `Address` varchar(50) DEFAULT NULL,
+  `City` varchar(32) DEFAULT NULL,
+  `State` varchar(2) DEFAULT NULL,
+  `Zip` char(5) DEFAULT NULL,
+  `Phone` varchar(32) DEFAULT NULL,
+  `Email` varchar(50) DEFAULT NULL,
+  `DeletedAt` datetime DEFAULT NULL,
+  PRIMARY KEY (`User_ID`),
+  UNIQUE KEY `Email` (`Email`),
+  KEY `Role_ID` (`Role_ID`),
+  CONSTRAINT `Users_ibfk_1` FOREIGN KEY (`Role_ID`) REFERENCES `Roles` (`Role_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8
+

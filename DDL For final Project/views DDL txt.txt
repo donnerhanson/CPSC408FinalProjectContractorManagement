@@ -1,0 +1,6 @@
+CREATE ALGORITHM=UNDEFINED DEFINER=`Ori Chanael`@`%` SQL SECURITY DEFINER VIEW `ClientView` AS select `Client`.`Client_ID` AS `Client_ID`,`Client`.`ClientName` AS `ClientName`,`Client`.`Address` AS `Address`,`Client`.`City` AS `City`,`Client`.`State` AS `State`,`Client`.`Zip` AS `Zip`,`Client`.`Email` AS `Email`,`Client`.`Phone` AS `Phone`,`Client`.`NumJobs` AS `NumJobs` from `Client` where isnull(`Client`.`DeletedAt`)
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`Donner Hanson`@`%` SQL SECURITY DEFINER VIEW `ContactView` AS select `Contacts`.`Contact_ID` AS `Contact_ID`,`Contacts`.`ContactName` AS `ContactName`,`Contacts`.`URL` AS `URL`,`Contacts`.`Email` AS `Email`,`Contacts`.`Phone` AS `Phone`,`Contacts`.`CompanyCategory_ID` AS `CompanyCategory_ID`,`Contacts`.`Notes` AS `Notes` from `Contacts` where isnull(`Contacts`.`DeletedAt`)
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`Ori Chanael`@`%` SQL SECURITY DEFINER VIEW `UserView` AS select `Users`.`User_ID` AS `User_ID`,`Users`.`Name` AS `Name`,`Users`.`Role_ID` AS `Role_ID`,`Users`.`Address` AS `Address`,`Users`.`City` AS `City`,`Users`.`State` AS `State`,`Users`.`Zip` AS `Zip`,`Users`.`Phone` AS `Phone`,`Users`.`Email` AS `Email` from `Users` where isnull(`Users`.`DeletedAt`)
+

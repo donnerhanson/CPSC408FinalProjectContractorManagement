@@ -1,0 +1,321 @@
+CREATE DEFINER=`root`@`%` PROCEDURE `AddClient`(IN fullnameIn varchar(32), IN addressIn varchar(35), IN cityIn varchar(32),
+                                           IN stateIn char(2), IN zipIn char(5), IN emailIn varchar(50),
+                                           IN phoneIn varchar(32))
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+        INSERT INTO Client(ClientName, Address, City, State, Zip, Email, Phone, NumJobs, DeletedAt)
+        VALUES (fullnameIn, addressIn, cityIn, stateIn, zipIn, emailIn, phoneIn, 0, NULL);
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `AddJob`(IN ClientIDIn int, IN EstimateIn float, IN PayoutIn float, IN HoursIN float,
+                                        IN DateIN datetime)
+BEGIN
+
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO Job(Client_ID, Estimate, Payout, Hours, Last_active, JobCost_ID)
+    VALUES (ClientIDIn, EstimateIn, PayoutIn,
+            HoursIN, DateIN, NULL);
+    SELECT JOB_ID INTO @JobID FROM Job ORDER BY Job.JOB_ID DESC Limit 1;
+    CALL AddJobCostID( @JobID, '0.00', '0.00');
+    SELECT JobCost_ID INTO @Job_Cost_ID  FROM JobCost WHERE (@JobID = Job_ID);
+    UPDATE Job SET JobCost_ID = @Job_Cost_ID WHERE @JobID = Job_ID;
+    # create an associated job lead status
+    SElECT Last_active INTO @DateToInput FROM Job WHERE @JobID = JOB_ID;
+    INSERT INTO JobStatus(Job_ID, Status_ID, DateCreated) VALUES (@JobID, 1, @DateToInput);
+  IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `AddJobCostID`(IN JobIDIn int, IN MaterialsCostIn float, IN AdditionsIn float)
+BEGIN
+    INSERT INTO JobCost(Job_ID, MaterialsCost, Additions)
+    VALUES (JobIDIn, MaterialsCostIn, AdditionsIn);
+end
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateCompanyCategoryID`(IN inDescript VARCHAR(32))
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO CompanyCategoryTableLookup(Description)
+    VALUES (inDescript);
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+end
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateContact`(IN ContactInName varchar(32), IN InURL varchar(50),
+                                               IN emailIn varchar(50), IN PhoneIn varchar(32), IN CompCatIDIn int,
+                                               IN InNotes varchar(100))
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO Contacts(ContactName, URL, Email, Phone, CompanyCategory_ID, Notes, DeletedAt)
+    VALUES (ContactInName, InURL, emailIn, PhoneIn, CompCatIDIn, InNotes, NULL);
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateJobSalesDetails`(IN inJobID INT, IN inUserID INT)
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO JobSalesDetails (Job_ID, User_ID) VALUES (inJobID, inUserID);
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateJobSubDetails`(IN inJobID int, IN inContactID int)
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO JobSubDetails (Job_ID, Contact_ID) VALUES (inJobID, inContactID);
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateRole`(IN roleDescript varchar(32))
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO Roles(Description) VALUE (roleDescript);
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateStatusDefinition`(IN nameIn varchar(32), IN descriptionIn varchar(100))
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+        INSERT INTO StatusDefinition (Name, Description)
+        VALUES (nameIn, descriptionIn);
+     IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `CreateUser`(IN inName varchar(32), IN inRoleID int, IN inAddress varchar(50),
+                                            IN inCity varchar(32), IN inState varchar(2), IN inZip varchar(5),
+                                            IN inPhone varchar(32), IN inEmail varchar(50))
+IF (SELECT EXISTS(SELECT Role_ID FROM Roles WHERE (Role_ID = role_ID)))
+    THEN
+        BEGIN
+            DECLARE _rollback BOOL DEFAULT 0;
+            DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET _rollback = 1;
+            START TRANSACTION;
+            INSERT INTO Users (Name, Role_ID, Address, City, State, Zip, Phone, Email, DeletedAt)
+            VALUES (inName, inRoleID, inAddress, inCity, inState, inZip, inPhone, inEmail, NULL);
+             IF _rollback THEN
+                ROLLBACK;
+            ELSE
+                COMMIT;
+            END IF;
+        end;
+    END IF
+
+CREATE DEFINER=`root`@`%` PROCEDURE `DeleteNullRoles`()
+BEGIN
+           DELETE FROM Roles WHERE (Description IS NULL);
+        end
+
+CREATE DEFINER=`root`@`%` PROCEDURE `DeleteRole`(IN description VARCHAR(32))
+BEGIN
+           DELETE FROM Roles WHERE (Description = description);
+        end
+
+CREATE DEFINER=`root`@`%` PROCEDURE `FRESHDATABASE`()
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    DROP TABLE JobSalesDetails;
+    DROP TABLE JobStatus;
+    DROP TABLE JobSubDetails;
+    DROP TABLE JobCost;
+    DROP TABLE Job;
+    DROP TABLE Contacts;
+    DROP TABLE Client;
+    DROP TABLE Users;
+    DROP TABLE StatusDefinition;
+    DROP TABLE CompanyCategoryTableLookup;
+    DROP TABLE Roles;
+
+    #looks good
+    CREATE TABLE Roles(Role_ID INT PRIMARY KEY AUTO_INCREMENT,
+                 Description VARCHAR(32));
+
+#looks good
+    CREATE TABLE CompanyCategoryTableLookup (CompanyCategory_ID INT PRIMARY KEY AUTO_INCREMENT,
+                                       Description VARCHAR(32));
+
+#looks good
+    CREATE TABLE StatusDefinition(Status_ID INT PRIMARY KEY AUTO_INCREMENT,
+                            Name VARCHAR(32),
+                            Description VARCHAR(100));
+
+
+#looks good
+    CREATE TABLE Users(User_ID INT PRIMARY KEY AUTO_INCREMENT,
+                 Name VARCHAR(32),
+                 Role_ID INT,
+                 Address VARCHAR(50),
+                 City VARCHAR(32),
+                 State VARCHAR(2),
+                 Zip CHAR(5),
+                 Phone VARCHAR(32),
+                 Email VARCHAR(50) UNIQUE,
+                 DeletedAt DATETIME,
+                 FOREIGN KEY (Role_ID) REFERENCES Roles(Role_ID));
+
+#looks good
+    CREATE TABLE Client (Client_ID INT PRIMARY KEY AUTO_INCREMENT,
+                   ClientName VARCHAR(32),
+                   Address VARCHAR(35),
+                   City VARCHAR(32),
+                   State CHAR(2),
+                   Zip CHAR(5),
+                   Email VARCHAR(50) UNIQUE,
+                   Phone VARCHAR(32),
+                   NumJobs INT,
+                   DeletedAt DATETIME);
+
+#Looks good
+    CREATE TABLE Contacts(Contact_ID INT PRIMARY KEY AUTO_INCREMENT,
+                         ContactName VARCHAR(32),
+                         URL VARCHAR(50),
+                         Email VARCHAR(50) UNIQUE,
+                         Phone VARCHAR(32),
+                         CompanyCategory_ID INT, #FK
+                         Notes VARCHAR(100),
+                         DeletedAt DATETIME,
+                         FOREIGN KEY(CompanyCategory_ID) REFERENCES CompanyCategoryTableLookup(CompanyCategory_ID));
+
+
+#looks good
+    CREATE TABLE Job ( JOB_ID INT PRIMARY KEY AUTO_INCREMENT,
+                Client_ID INT,
+                Estimate FLOAT,
+                Payout FLOAT,
+                Hours INT,
+                Last_active DATETIME,
+                JobCost_ID INT, #FK
+                FOREIGN KEY (Client_ID) REFERENCES Client (Client_ID));
+
+    CREATE TABLE JobCost (JobCost_ID INT PRIMARY KEY AUTO_INCREMENT,
+                    Job_ID INT,
+                    MaterialsCost FLOAT,
+                    Additions FLOAT,
+                    FOREIGN KEY(Job_ID) REFERENCES Job(Job_ID));
+
+#Looks good
+
+    CREATE TABLE JobSubDetails (SubDetails_ID INT PRIMARY KEY AUTO_INCREMENT,
+                          Job_ID INT, #FK
+                          Contact_ID INT, #FK
+                          FOREIGN KEY (Job_ID) REFERENCES Job (Job_ID),
+                          FOREIGN KEY (Contact_ID) REFERENCES Contacts (Contact_ID));
+
+
+
+
+#looks good
+    CREATE TABLE JobStatus (JobStatus_ID INT PRIMARY KEY AUTO_INCREMENT,
+                      Job_ID INT,
+                      Status_ID INT,
+                      DateCreated DATETIME,
+                      FOREIGN KEY (Job_ID) REFERENCES Job(Job_ID),
+                      FOREIGN KEY(Status_ID) REFERENCES StatusDefinition(Status_ID));
+
+#Looks good
+    CREATE TABLE JobSalesDetails (SalesDetails_ID INT PRIMARY KEY AUTO_INCREMENT,
+                            Job_ID INT, #FK
+                            User_ID INT, #FK
+                            FOREIGN KEY (Job_ID) REFERENCES Job (Job_ID),
+                            FOREIGN KEY (User_ID) REFERENCES Users (User_ID));
+     IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `GetJobCostCalculatedTable`()
+BEGIN
+     SELECT MaterialsCost, Additions, (MaterialsCost + Additions) AS Total_Cost
+    FROM JobCost;
+end
+
+CREATE DEFINER=`root`@`%` PROCEDURE `GetJobCostWithID`(IN JobCostIDIn INT)
+BEGIN
+    SELECT MaterialsCost, Additions, (MaterialsCost + Additions) AS Total_Cost
+    FROM JobCost
+    WHERE JobCost_ID = JobCostIDIn;
+end
+
+CREATE DEFINER=`root`@`%` PROCEDURE `UpdateJobCost`(IN JobCostIDIn Int, IN MatIn FLOAT, IN AddIn FLOAT)
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    UPDATE JobCost SET MaterialsCost = MatIn WHERE JobCost_ID = JobCostIDIn;
+    UPDATE JobCost SET Additions = AddIn WHERE JobCost_ID = JobCostIDIn;
+    # need to update total cost a different way after the transaction or calculate upon selection
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `UpdateJobStatus`(IN job_ident int, IN stat_ID int, IN date_created datetime)
+BEGIN
+    DECLARE `_rollback` BOOL DEFAULT 0;
+    DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET `_rollback` = 1;
+    START TRANSACTION;
+    INSERT INTO JobStatus(Job_ID, Status_ID, DateCreated) VALUES (job_ident, stat_ID, date_created);
+    UPDATE Job SET Last_active = date_created WHERE Job.JOB_ID = job_ident;
+    IF `_rollback` THEN
+        ROLLBACK;
+    ELSE
+        COMMIT;
+    END IF;
+END
+
+CREATE DEFINER=`root`@`%` PROCEDURE `UpdateUserDelete`(IN user_id INT, IN deleted_at DATETIME)
+begin
+    UPDATE Users SET DeletedAt = deletedAt WHERE (User_ID = user_id);
+end
+
